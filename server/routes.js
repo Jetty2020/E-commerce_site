@@ -4,10 +4,10 @@ const ADMIN = "/admin";
 
 // USER
 
-const JOIN = "/join";
+const USERS = "/api/users";
+const REGISTER = "/register";
 const AUTH = "/auth";
 const LOGIN = "/login";
-const USERS = "/users";
 const LOGOUT = "/logout";
 
 // BOARDS with HOME
@@ -30,7 +30,7 @@ const routes = {
 
   // USER
 
-  join: JOIN,
+  register: REGISTER,
   auth: AUTH,
   login: LOGIN,
   logout: LOGOUT,
