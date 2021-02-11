@@ -19,7 +19,7 @@ function LoginPage(props) {
     }
     //input value를 서버 통신하는데 필요한 함수
     const onSubmitHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault(); //페이지가 새로고침되지 않도록 하는 함수
 
         let body = {
             email: Email,

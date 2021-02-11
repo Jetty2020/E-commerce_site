@@ -38,9 +38,9 @@ app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
 
     user.save((err, userInfo) => {
-        if (err) return res.json({ success: false, err });
+        if (err) return res.json({ registerSuccess: false, err });
         return res.status(200).json({
-            success: true
+            registerSuccess: true
         });
     });
 });
@@ -91,10 +91,10 @@ app.post('/api/users/login', (req, res) => {
 app.get('/api/users/logout', auth, (req, res) => {
     // console.log('req.user', req.user)
     User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-        if (err) return res.json({ success: false, err });
+        if (err) return res.json({ logoutSuccess: false, err });
             
         return res.status(200).send({
-            success: true
+            logoutSuccess: true
         });
     });
 });
