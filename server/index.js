@@ -1,38 +1,16 @@
-const express = require("express");
-const app = express();
-// const cors = require('cors')
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-var dotenv = require('dotenv');
+import dotenv from "dotenv";
+import "./db";
+import app from "./app";
+// import "./models/User";
+// import "./models/Board";
+// import "./models/Comment";
+// import "./models/Ticket";
+// import "./models/Map";
+
 dotenv.config();
 
-// DB setting
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.MONGO_URL);
-var db = mongoose.connection;
-db.once('open', function(){
-    console.log("✅  Connected to DB");
-});
-db.on('error', function(err){
-    console.log(`❌ Error on DB Connection:${err}`);
-});
 
-//to not get any deprecation warning or error
-//support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
-//to get json data
-// support parsing of application/json type post data
-app.use(bodyParser.json());
-app.use(cookieParser());
+const PORT = process.env.PORT || 4000;
+const handleListening = () => console.log(`✅  Listening on: http://localhost:${PORT}`);
 
-app.use('/api/users', require('./routes/users'));
-
-const port = process.env.PORT || 5000
-
-app.listen(port, () => {
-  console.log(`Server Listening on ${port}`)
-});
+app.listen(PORT, handleListening);
