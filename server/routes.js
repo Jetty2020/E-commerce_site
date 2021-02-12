@@ -14,7 +14,7 @@ const LOGOUT = "/logout";
 
 const HOME = "/";
 const BOARDS = "/boards";
-const SHOW = "/show";
+const LOAD_BOARD = "/load";
 const UPLOAD_BOARD = "/upload";
 const EDIT_BOARD = "/edit";
 const SEARCH_BOARD = "/search";
@@ -43,7 +43,7 @@ const routes = {
 
   home: HOME,
   boards: BOARDS,
-  show: SHOW,
+  loadBoard: LOAD_BOARD,
   searchBoard: SEARCH_BOARD,
   uploadBoard: UPLOAD_BOARD,
   editBoard: EDIT_BOARD,

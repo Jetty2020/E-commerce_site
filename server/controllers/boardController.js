@@ -54,8 +54,8 @@ export const editBoard = async (req, res) => {
   }
 };
 
-// show
-export const showBoard = async (req, res) => {
+// load
+export const loadBoard = async (req, res) => {
   try {
     const board = await Board.find({}).sort({ _id: -1 });
     let boardId =[];

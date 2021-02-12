@@ -4,7 +4,7 @@ import {
   auth
 } from "../middleware";
 import{
-  showBoard,
+  loadBoard,
   uploadBoard,
   editBoard,
   searchBoard,
@@ -14,7 +14,7 @@ import{
 
 const boardRouter = express.Router();
 
-boardRouter.get(routes.show, auth, showBoard);
+boardRouter.get(routes.loadBoard, auth, loadBoard);
 boardRouter.post(routes.uploadBoard, auth, uploadBoard);
 boardRouter.post(routes.editBoard, auth, editBoard);
 boardRouter.post(routes.searchBoard, auth, searchBoard);

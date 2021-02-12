@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 const { Title } = Typography;
 
 function LoginPage(props) {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch(); //dispatch for redux
 	const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
 
 	const [formErrorMessage, setFormErrorMessage] = useState('');
@@ -27,17 +27,20 @@ function LoginPage(props) {
 
 	return (
 		<Formik
-			initialValues={{
+			initialValues={{ //초기값
 				email: initialEmail,
 				password: '',
 			}}
-			validationSchema={Yup.object().shape({
-				email: Yup.string()
-						.email('Email is invalid')
-						.required('Email is required'),
-				password: Yup.string()
-							.min(6, 'Password must be at least 6 characters')
-							.required('Password is required'),
+			validationSchema={
+				Yup.object().shape({ //검증 규칙 설정
+				email: Yup
+									.string()
+									.email('Email is invalid')
+									.required('Email is required'),
+				password: Yup
+										.string()
+										.min(6, 'Password must be at least 6 characters')
+										.required('Password is required'),
 			})}
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
@@ -51,18 +54,18 @@ function LoginPage(props) {
 							if (response.payload.loginSuccess) {
 								window.localStorage.setItem('userId', response.payload.userId);
 								if (rememberMe === true) {
-									window.localStorage.setItem('rememberMe', values.id);
+									window.localStorage.setItem('rememberMe', values.email);
 								} else {
 									localStorage.removeItem('rememberMe');
 								}
 								props.history.push("/");
 							} else {
-								setFormErrorMessage('Check out your Account or Password again');
+								setFormErrorMessage('Check out your Account or Password again'); //에러 메세지 세팅
 							}
 						})
 						.catch(err => {
-							setFormErrorMessage('Check out your Account or Password again');
-							setTimeout(() => {
+							setFormErrorMessage('Error occurred');
+							setTimeout(() => { //일정 시간이 지난 후 함수 실행 setTimeout(실행시킬 함수, 시간)
 								setFormErrorMessage("");
 							}, 3000);
 						});
@@ -84,7 +87,6 @@ function LoginPage(props) {
 			} = props;
 			return (
 				<div className="app">
-				  
 					<Title level={2}>Log In</Title>
 					<form onSubmit={handleSubmit} style={{ width: '350px' }}>                    
 						<Form.Item required>

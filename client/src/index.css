@@ -27,8 +27,8 @@ body {
   height: 80vh;
 }
 
-input.error {
-  border-color: red;
+input .error {
+  color: red;
 }
 
 
