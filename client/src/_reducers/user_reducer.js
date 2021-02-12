@@ -3,7 +3,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
-} from '../_actions/types';
+} from '../_actions/_types';
  
 export default function userReducer (state={},action){
   switch(action.type){
