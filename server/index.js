@@ -1,11 +1,8 @@
 import dotenv from "dotenv";
 import "./db";
 import app from "./app";
-// import "./models/User";
-// import "./models/Board";
-// import "./models/Comment";
-// import "./models/Ticket";
-// import "./models/Map";
+import "./models/User";
+import "./models/Board";
 
 dotenv.config();
 

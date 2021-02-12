@@ -14,9 +14,12 @@ const LOGOUT = "/logout";
 
 const HOME = "/";
 const BOARDS = "/boards";
+const SHOW = "/show";
 const UPLOAD_BOARD = "/upload";
-const EDIT_BOARD = "/:id/edit";
-const DELETE_BOARD = "/:id/delete";
+const EDIT_BOARD = "/edit";
+const SEARCH_BOARD = "/search";
+const DETAIL_BOARD = "/detail";
+const DELETE_BOARD = "/delete";
 
 // API
 const API = "/api";
@@ -40,21 +43,12 @@ const routes = {
 
   home: HOME,
   boards: BOARDS,
+  show: SHOW,
+  searchBoard: SEARCH_BOARD,
   uploadBoard: UPLOAD_BOARD,
-  editBoard: id => {
-    if (id) {
-      return `/boards/${id}/edit`;
-    } else {
-      return EDIT_BOARD;
-    }
-  },
-  deleteBoard: id => {
-    if (id) {
-      return `/boards/${id}/delete`;
-    } else {
-      return DELETE_BOARD;
-    }
-  },
+  editBoard: EDIT_BOARD,
+  detailBoard: DETAIL_BOARD,
+  deleteBoard: DELETE_BOARD,
 
   api: API,
 };
