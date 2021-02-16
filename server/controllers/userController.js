@@ -16,7 +16,10 @@ export const authSuccess = async (req, res) => {
 export const register = async (req, res) => {
   const user = new User(req.body);
   user.save((err, doc) => {
-      if (err) return res.json({ success: false, err });
+      if (err) return res.json({ 
+          success: false, 
+          message: "Error occurred at register"
+    });
       return res.status(200).json({
           success: true
       });
@@ -51,7 +54,7 @@ export const postLogin = async (req, res) => {
 
 export const logout = (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
-      if (err) return res.json({ success: false, message: "Error occurred", err });
+      if (err) return res.json({ success: false, message: "Error occurred at logout" });
       return res.status(200).send({
           success: true
       });

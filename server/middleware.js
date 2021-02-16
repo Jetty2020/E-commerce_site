@@ -10,7 +10,7 @@ export const auth = (req, res, next) => {
     if (!user)
         return res.json({
           isAuth: false,
-          message: "Error occurred",
+          message: "Error occurred at auth",
           error: true
         });
     

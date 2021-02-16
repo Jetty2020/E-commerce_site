@@ -27,7 +27,7 @@ export const uploadBoard = async (req, res) => {
   } catch (error) {
     console.log("uploadBoard");
     console.log(error);
-    return res.json({ success: false, message: "Error occurred"});
+    return res.json({ success: false, message: "Error occurred at uploadBoard"});
   };
 };
 // edit
@@ -45,12 +45,12 @@ export const editBoard = async (req, res) => {
         id
       });
     } else {
-      return res.json({ success: false, message: "You do not have permission"});
+      return res.json({ success: false, message: "You don't have permission"});
     }
   } catch (error) {
     console.log("postEditBoard");
     console.log(error);
-    return res.json({ success: false, message: "Error occurred"});
+    return res.json({ success: false, message: "Error occurred at editBoard"});
   }
 };
 
@@ -67,7 +67,7 @@ export const loadBoard = async (req, res) => {
   } catch (error) {
     console.log("showBoard");
     console.log(error);
-    return res.json({ success: false, message: "Error occurred"});
+    return res.json({ success: false, message: "Error occurred at loadBoard"});
   }
 };
 
@@ -89,7 +89,7 @@ try {
 });
 } catch (error) {
   console.log(error);
-  return res.json({ success: false, message: "Error occurred"});
+  return res.json({ success: false, message: "Error occurred at detailBoard"});
 }
 };
 
@@ -111,7 +111,7 @@ try {
 });
 } catch (error) {
   console.log(error);
-  return res.json({ success: false, message: "Error occurred"});
+  return res.json({ success: false, message: "Error occurred at searchBoard"});
 }
 };
 
@@ -136,6 +136,6 @@ export const deleteBoard = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.json({ success: false, message: "Error occurred" });
+    return res.json({ success: false, message: "Error occurred at deleteBoard" });
   }
 };

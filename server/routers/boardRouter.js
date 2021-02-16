@@ -14,7 +14,7 @@ import{
 
 const boardRouter = express.Router();
 
-boardRouter.get(routes.loadBoard, auth, loadBoard);
+boardRouter.get(routes.loadBoard, loadBoard);
 boardRouter.post(routes.uploadBoard, auth, uploadBoard);
 boardRouter.post(routes.editBoard, auth, editBoard);
 boardRouter.post(routes.searchBoard, auth, searchBoard);
