@@ -20,3 +20,5 @@ db.query(`SELECT * FROM user`, function(error,user){
     console.log("✅  Connected to DB");
   };
 });
+
+export default db;
