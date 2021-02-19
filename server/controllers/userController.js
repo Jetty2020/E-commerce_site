@@ -1,8 +1,16 @@
 import db from "../db";
 import {
-  comparePassword,
   generateToken
 } from "../util";
+
+export const authSuccess = async (req, res) => {
+  res.status(200).json({
+    userID: req.user[0].userID,
+    isAuth: true,
+    email: req.user[0].userEmail,
+    name: req.user[0].name,
+  });
+};
 
 export const register = function (req, res) {
   db.query(`INSERT INTO USER (userEmail, userPassword) VALUES('${req.body.email}', '${req.body.password}');`, 
