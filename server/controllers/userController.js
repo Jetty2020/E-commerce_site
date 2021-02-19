@@ -52,3 +52,13 @@ export const postLogin = async (req, res) => {
     });
   });
 };
+
+export const logout = (req, res) => {
+  db.query(`UPDATE USER SET token = null, tokenExp = null WHERE userID = '${req.user[0].userID}';`,
+  function (err, user) {
+    if (err) return res.json({ success: false, message: "Error occurred at logout" });
+    return res.status(200).send({
+      success: true
+    });
+  });
+};
