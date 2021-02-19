@@ -1,10 +1,11 @@
+const USERS = "/api/users";
+const BOARDS = "/api/boards";
 // Admin
 
 const ADMIN = "/admin";
 
 // USER
 
-const USERS = "/api/users";
 const REGISTER = "/register";
 const AUTH = "/auth";
 const LOGIN = "/login";
@@ -13,7 +14,6 @@ const LOGOUT = "/logout";
 // BOARDS with HOME
 
 const HOME = "/";
-const BOARDS = "/boards";
 const LOAD_BOARD = "/load";
 const UPLOAD_BOARD = "/upload";
 const EDIT_BOARD = "/edit";
