@@ -11,13 +11,11 @@ const db = mysql.createConnection({
   database : `${process.env.DATABASE}`,
 });
 
-db.connect();
-
-db.query(`SELECT * FROM user`, function(error,user){
-  if(error){
-    console.log(`❌ Error on DB Connection:${error}`);
+db.connect(function (err) {
+  if (err) {
+    console.error(`❌ Error on DB Connection:${err}`);
   } else {
-    console.log("✅  Connected to DB");
+    console.info("✅  Connected to DB");
   };
 });
 
