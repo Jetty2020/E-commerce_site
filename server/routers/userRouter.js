@@ -9,6 +9,7 @@ import{
   register,
   postLogin,
   logout,
+  checkEmail,
 } from "../controllers/userController"
 
 import{
@@ -25,6 +26,7 @@ const userRouter = express.Router();
 userRouter.get(routes.auth, auth, authSuccess );
 userRouter.post(routes.register, register);
 userRouter.post(routes.login, postLogin);
+userRouter.post(routes.checkEmail, auth, checkEmail);
 userRouter.get(routes.logout, auth, logout);
 userRouter.get(routes.kakao, kakaoLogin);
 userRouter.get(

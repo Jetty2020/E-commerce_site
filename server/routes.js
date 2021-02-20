@@ -10,6 +10,7 @@ const REGISTER = "/register";
 const AUTH = "/auth";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
+const CHECKEMAIL = "/checkEmail";
 
 // BOARDS with HOME
 
@@ -45,6 +46,7 @@ const routes = {
   register: REGISTER,
   auth: AUTH,
   login: LOGIN,
+  checkEmail: CHECKEMAIL,
   logout: LOGOUT,
   users: USERS,
 

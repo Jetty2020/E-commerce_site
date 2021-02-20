@@ -10,8 +10,6 @@ import {
 import routes from "./routes";
 
 
-// passport.use(User.createStrategy());
-
 passport.use(
   new KakaoStrategy({
     clientID: process.env.KKO_ID,

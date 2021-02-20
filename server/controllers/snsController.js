@@ -4,6 +4,7 @@ import db from "../db";
 export const kakaoLogin = passport.authenticate("kakao");
 
 export const kakaoLoginCallback = async (_, __, profile, cb) => {
+  
   const {
     _json: { id }
   } = profile;
@@ -13,30 +14,47 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
   const {
     kakao_account: { email }
   } = profile._json;
+  console.log(id, name, email);
   try {
     db.query(`SELECT * from USER where kkoEmail = '${email}';`,
     function (err, user) {
+      console.log(user);
       if (!(user.length == 0)) {
         db.query(`UPDATE USER SET kkoID = ${id} where kkoEmail = '${email}';`,
           function (err, user) {
-            return cb(null, user);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, user);
+            }
           }
         );
       } else {
         if (email){
-          db.query(`INSERT INTO USER (kkoID, kkoEmail, name) VALUES('${id}', '${email}', '${name}');`, 
+          console.log(1);
+          db.query(`INSERT INTO USER (kkoID, kkoEmail, name, emailChecked) VALUES('${id}', '${email}', '${name}', TRUE);`, 
           function (err, newUser) {
-            return cb(null, newUser);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, newUser);
+            }
           });
         } else {
-          db.query(`INSERT INTO USER (kkoID, name) VALUES('${id}', '${name}');`, 
+          db.query(`INSERT INTO USER (kkoID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
           function (err, newUser) {
-            return cb(null, newUser);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, newUser);
+            }
           });
         };
       };
-    }
-    );
+    });
   } catch (error) {
     console.log("kakaoLoginCallback");
     console.log(error);
@@ -63,24 +81,38 @@ export const naverLoginCallback = async (_, __, profile, cb) => {
       if (!(user.length == 0)) {
         db.query(`UPDATE USER SET nvrID = ${id} where nvrEmail = '${email}';`,
           function (err, user) {
-            return cb(null, user);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, user);
+            }
           }
         );
       } else {
         if (email){
-          db.query(`INSERT INTO USER (nvrID, nvrEmail, name) VALUES('${id}', '${email}', '${name}');`, 
+          db.query(`INSERT INTO USER (nvrID, nvrEmail, name, emailChecked) VALUES('${id}', '${email}', '${name}', TRUE);`, 
           function (err, newUser) {
-            return cb(null, newUser);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, newUser);
+            }
           });
         } else {
-          db.query(`INSERT INTO USER (nvrID, name) VALUES('${id}', '${name}');`, 
+          db.query(`INSERT INTO USER (nvrID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
           function (err, newUser) {
-            return cb(null, newUser);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, newUser);
+            }
           });
         };
       };
-    }
-    );
+    });
   } catch (error) {
     console.log("naverLoginCallback");
     console.log(error);
@@ -99,7 +131,7 @@ export const googleLogin = passport.authenticate("google", { scope: ['profile'] 
 
 export const googleLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { sub : id,displayName : name }
+    _json: { sub : id, name }
   } = profile;
   try {
     db.query(`SELECT * from USER where gglID = '${id}';`,
@@ -107,13 +139,17 @@ export const googleLoginCallback = async (_, __, profile, cb) => {
       if (!(user.length == 0)) {
         return cb(null, user);
       } else {
-        db.query(`INSERT INTO USER (gglID, name) VALUES('${id}', '${name}');`, 
+        db.query(`INSERT INTO USER (gglID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
           function (err, newUser) {
-            return cb(null, newUser);
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, newUser);
+            }
           });
       };
-    }
-    );
+    });
   } catch (error) {
     console.log("googleLoginCallback");
     console.log(error);

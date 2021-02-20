@@ -57,28 +57,3 @@ export const mailSender = {
 		});
 	}
 };
-
-
-
-// export const sendEmail = async(req, res) => {
-//   const number = generateRandom(111111,999999);
-//   const email = req.body.email;
-//   console.log(email);
-
-//   const mailOptions = await smtpTransport.sendMail({
-//     from: `곰방`,
-//     to: email,
-//     subject: '회원가입을 위한 인증번호를 입력해주세요.',
-//     text: "오른쪽 숫자 6자리를 입력해주세요 : " + number
-//   });
-
-//   smtpTransport.sendMail(mailOptions, function (error, info) {
-//     if (error) {
-//         console.log(error);
-//     }
-//     console.log(info);
-//     console.log("Finish sending email : " + info.response);
-//     res.send(number);
-//     smtpTransport.close();
-//   });
-// };
