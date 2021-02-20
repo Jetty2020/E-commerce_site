@@ -1,7 +1,10 @@
 import passport from "passport";
 import KakaoStrategy from "passport-kakao";
-// import User from "./models/User";
-import { kakaoLoginCallback } from "./controllers/userController";
+import NaverStrategy from "passport-naver";
+import { 
+  kakaoLoginCallback,
+  naverLoginCallback
+} from "./controllers/snsController";
 import routes from "./routes";
 
 
@@ -14,6 +17,16 @@ passport.use(
     callbackURL: `http://localhost:4000/api/users${routes.kakaoCallback}`
   },
   kakaoLoginCallback
+  )
+);
+
+passport.use(
+  new NaverStrategy({
+    clientID: process.env.NVR_ID,
+    clientSecret: process.env.NVR_SECRET,
+    callbackURL: `http://localhost:4000/api/users${routes.naverCallback}`
+  },
+  naverLoginCallback
   )
 );
 

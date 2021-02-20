@@ -66,56 +66,6 @@ export const postLogin = async (req, res) => {
   });
 };
 
-export const kakaoLogin = passport.authenticate("kakao");
-
-export const kakaoLoginCallback = async (_, __, profile, cb) => {
-  const {
-    _json: { id }
-  } = profile;
-  const {
-    properties: { nickname: name }
-  } = profile._json;
-  const {
-    kakao_account: { email }
-  } = profile._json;
-  try {
-    db.query(`SELECT * from USER where snsEmail = '${email}';`,
-    function (err, user) {
-      if (!(user.length == 0)) {
-        db.query(`UPDATE USER SET snsID = ${id} where snsEmail = '${email}';`,
-          function (err, user) {
-            return cb(null, user);
-          }
-        );
-      } else {
-        if (email){
-          db.query(`INSERT INTO USER (snsID, snsEmail, name) VALUES('${id}', '${email}', '${name}');`, 
-          function (err, newUser) {
-            return cb(null, newUser);
-          });
-        } else {
-          db.query(`INSERT INTO USER (snsID, name) VALUES('${id}', '${name}');`, 
-          function (err, newUser) {
-            return cb(null, newUser);
-          });
-        };
-      };
-    }
-    );
-  } catch (error) {
-    console.log("kakaoLoginCallback");
-    console.log(error);
-    return cb(error);
-  }
-};
-
-export const postKakaoLogIn = (req, res) => {
-  return res.json({
-    success: true,
-  });
-};
-
-
 export const logout = (req, res) => {
   db.query(`UPDATE USER SET token = null, tokenExp = null WHERE userID = '${req.user[0].userID}';`,
   function (err, user) {

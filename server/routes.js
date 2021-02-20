@@ -28,6 +28,8 @@ const API = "/api";
 
 const KAKAO = "/oauth/kakao";
 const KAKAO_CALLBACK = "/auth/kakao/callback";
+const NAVER = "/oauth/naver";
+const NAVER_CALLBACK = "/auth/naver/callback";
 
 
 const routes = {
@@ -58,6 +60,9 @@ const routes = {
   api: API,
   kakao: KAKAO,
   kakaoCallback: KAKAO_CALLBACK,
+
+  naver: NAVER,
+  naverCallback: NAVER_CALLBACK,
 
 };
 
