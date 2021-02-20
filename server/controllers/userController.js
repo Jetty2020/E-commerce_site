@@ -7,7 +7,6 @@ import {
 } from "../util";
 
 export const authSuccess = async (req, res) => {
-  console.log("authSuccess",req.user);
   res.status(200).json({
     userID: req.user[0].userID,
     isAdmin: req.user.role === 0 ? false : true,
