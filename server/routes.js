@@ -24,6 +24,11 @@ const DELETE_BOARD = "/delete";
 // API
 const API = "/api";
 
+// Kakao
+
+const KAKAO = "/oauth/kakao";
+const KAKAO_CALLBACK = "/auth/kakao/callback";
+
 
 const routes = {
   
@@ -51,6 +56,9 @@ const routes = {
   deleteBoard: DELETE_BOARD,
 
   api: API,
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK,
+
 };
 
 export default routes;

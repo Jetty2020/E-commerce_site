@@ -1,6 +1,7 @@
 import db from "../db";
 import {
-  generateToken
+  generateToken,
+  mailSender
 } from "../util";
 
 export const authSuccess = async (req, res) => {
@@ -13,18 +14,29 @@ export const authSuccess = async (req, res) => {
 };
 
 export const register = function (req, res) {
-  db.query(`INSERT INTO USER (userEmail, userPassword) VALUES('${req.body.email}', '${req.body.password}');`, 
+  db.query(`SELECT userEmail FROM USER WHERE userEmail = '${req.body.email}';`, 
   function (err, results) {
-    if (err) {
-      console.log(err);
-      return res.json({ 
-        success: false, 
-        message: "Error occurred at register"
+    if (results.length == 0) { //이매일 중복 확인
+      db.query(`INSERT INTO USER (userEmail, userPassword) VALUES('${req.body.email}', '${req.body.password}');`, 
+      function (err, results) {
+        if (err) {
+          console.log(err);
+          return res.json({ 
+            success: false, 
+            message: "Error occurred at register"
+          });
+        };
+        mailSender.sendGmail(req);
+        return res.status(200).json({
+            success: true
+        });
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "The email is already exsisted."
       });
     };
-    return res.status(200).json({
-        success: true
-    });
   });
 };
 
