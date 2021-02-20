@@ -20,3 +20,12 @@ export const auth = (req, res, next) => {
     next();
   });
 };
+
+export const localsMiddleware = (req, res, next) => {
+  db.query(`SELECT * from USER where token = '${token}';`, 
+  function (err, user) {
+    res.locals.user = user || null;
+
+  });
+  next();
+};

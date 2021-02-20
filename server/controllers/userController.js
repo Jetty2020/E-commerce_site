@@ -1,13 +1,16 @@
-import passport from "passport";
 import db from "../db";
+import jwt from "jsonwebtoken";
+import moment from "moment";
 import {
   generateToken,
   mailSender
 } from "../util";
 
 export const authSuccess = async (req, res) => {
+  console.log("authSuccess",req.user);
   res.status(200).json({
     userID: req.user[0].userID,
+    isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user[0].userEmail,
     name: req.user[0].name,
@@ -53,31 +56,33 @@ export const postLogin = async (req, res) => {
       if (user[0].userPassword !== req.body.password) {
         return res.json({ success: false, message: "Wrong password" });
       } else {
-        if (!user[0].emailChecked) {
-          generateToken(user, (err, user) => {
-            if (err) return res.status(400).send(err);
-            res.cookie("w_authExp", user.tokenExp);
-            res
-              .cookie("w_auth", user[0].token)
-              .status(200)
-              .json({
-                success: true, 
-                userId: user[0].userID,
-                message: "Unchecked email"
-              });
-          });
-        } else {
-          generateToken(user, (err, user) => {
-            if (err) return res.status(400).send(err);
-            res.cookie("w_authExp", user.tokenExp);
-            res
-              .cookie("w_auth", user[0].token)
-              .status(200)
-              .json({
-                success: true, userId: user[0].userID
-              });
-          });
-        }
+        var token =  jwt.sign(user[0].userID,'secret');
+        var halfHour = moment().add(0.5, 'hour').valueOf();
+        db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' WHERE userID = '${user[0].userID}';`,
+        function (err, updateUser) {
+          if (err) {
+            return res.status(400).send(err);
+          } else {
+            res.cookie("w_authExp", halfHour);
+            if (!user[0].emailChecked) {
+              res
+                .cookie("w_auth", token)
+                .status(200)
+                .json({
+                  success: true, 
+                  userId: user[0].userID,
+                  message: "Unchecked email"
+                });
+            } else {
+              res
+                .cookie("w_auth", token)
+                .status(200)
+                .json({
+                  success: true, userId: user[0].userID
+                });
+            }
+          }
+        });
       };
     };
   });
@@ -102,7 +107,6 @@ export const checkEmail = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  console.log(req);
   db.query(`UPDATE USER SET token = null, tokenExp = null WHERE userID = '${req.user[0].userID}';`,
   function (err, user) {
     if (err){

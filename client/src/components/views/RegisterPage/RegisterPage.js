@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+// import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
@@ -48,8 +48,8 @@ function RegisterPage(props) {
 			validationSchema={Yup.object().shape({
 				name: Yup.string()
 						.required('Name is required'),
-				lastName: Yup.string()
-							.required('Last Name is required'),
+				// lastName: Yup.string()
+				// 			.required('Last Name is required'),
 				email: Yup.string()
 						.email('Email is invalid')
 						.required('Email is required'),
@@ -66,8 +66,8 @@ function RegisterPage(props) {
 						email: values.email,
 						password: values.password,
 						name: values.name,
-						lastname: values.lastname,
-						image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
+						// lastname: values.lastname,
+						// image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
 					};
 				  
 					dispatch(registerUser(dataToSubmit)).then(response => {
@@ -116,7 +116,7 @@ function RegisterPage(props) {
 								)}
 							</Form.Item>
 								
-							<Form.Item required label="Last Name">
+							{/* <Form.Item required label="Last Name">
 								<Input
 									id="lastName"
 									placeholder="Enter your Last Name"
@@ -131,7 +131,7 @@ function RegisterPage(props) {
 								{errors.lastName && touched.lastName && (
 									<div className="input-feedback">{errors.lastName}</div>
 								)}
-							</Form.Item>
+							</Form.Item> */}
 								
 							<Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
 								<Input
