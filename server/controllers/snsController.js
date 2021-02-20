@@ -44,7 +44,7 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
   }
 };
 
-export const postKakaoLogIn = (req, res) => {
+export const postKakaoLogin = (req, res) => {
   return res.json({
     success: true,
   });
@@ -54,10 +54,6 @@ export const postKakaoLogIn = (req, res) => {
 export const naverLogin = passport.authenticate("naver");
 
 export const naverLoginCallback = async (_, __, profile, cb) => {
-  // console.log(profile);
-  // console.log(profile.emails[0].value);
-  // console.log(profile.id);
-  // console.log(profile._json);
   const {
     _json: { id, email, nickname : name }
   } = profile;
@@ -86,13 +82,46 @@ export const naverLoginCallback = async (_, __, profile, cb) => {
     }
     );
   } catch (error) {
-    console.log("kakaoLoginCallback");
+    console.log("naverLoginCallback");
     console.log(error);
     return cb(error);
   }
 };
 
-export const postNaverLogIn = (req, res) => {
+export const postNaverLogin = (req, res) => {
+  return res.json({
+    success: true,
+  });
+};
+
+
+export const googleLogin = passport.authenticate("google", { scope: ['profile'] });
+
+export const googleLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { sub : id,displayName : name }
+  } = profile;
+  try {
+    db.query(`SELECT * from USER where gglID = '${id}';`,
+    function (err, user) {
+      if (!(user.length == 0)) {
+        return cb(null, user);
+      } else {
+        db.query(`INSERT INTO USER (gglID, name) VALUES('${id}', '${name}');`, 
+          function (err, newUser) {
+            return cb(null, newUser);
+          });
+      };
+    }
+    );
+  } catch (error) {
+    console.log("googleLoginCallback");
+    console.log(error);
+    return cb(error);
+  }
+};
+
+export const postGoogleLogin = (req, res) => {
   return res.json({
     success: true,
   });

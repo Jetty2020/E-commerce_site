@@ -30,6 +30,8 @@ const KAKAO = "/oauth/kakao";
 const KAKAO_CALLBACK = "/auth/kakao/callback";
 const NAVER = "/oauth/naver";
 const NAVER_CALLBACK = "/auth/naver/callback";
+const GOOGLE = "/oauth/google";
+const GOOGLE_CALLBACK = "/auth/google/callback";
 
 
 const routes = {
@@ -63,6 +65,9 @@ const routes = {
 
   naver: NAVER,
   naverCallback: NAVER_CALLBACK,
+
+  google: GOOGLE,
+  googleCallback: GOOGLE_CALLBACK,
 
 };
 

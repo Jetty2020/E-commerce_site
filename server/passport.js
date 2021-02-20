@@ -1,9 +1,11 @@
 import passport from "passport";
 import KakaoStrategy from "passport-kakao";
 import NaverStrategy from "passport-naver";
+import GoogleStrategy from "passport-google-oauth20";
 import { 
   kakaoLoginCallback,
-  naverLoginCallback
+  naverLoginCallback,
+  googleLoginCallback
 } from "./controllers/snsController";
 import routes from "./routes";
 
@@ -30,6 +32,15 @@ passport.use(
   )
 );
 
+passport.use(
+  new GoogleStrategy({
+    clientID: process.env.GGL_ID,
+    clientSecret: process.env.GGL_SECRET,
+    callbackURL: `http://localhost:4000/api/users${routes.googleCallback}`
+  },
+  googleLoginCallback
+  )
+);
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
