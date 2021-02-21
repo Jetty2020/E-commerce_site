@@ -17,3 +17,17 @@ export const uploadItem = function (req, res) {
     });
   });
 };
+
+export const loadItem = (req, res) => {
+  db.query(`SELECT * FROM ITEM WHERE userID = '${req.user[0].userID}';`, 
+  function (err, item) {
+    if (err){
+      console.log(err);
+      return res.json({ success: false, message: "Error occurred at loadItem" });
+    } 
+    return res.status(200).send({
+      success: true,
+      item: item
+    });
+  });
+};

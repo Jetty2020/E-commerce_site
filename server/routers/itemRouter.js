@@ -4,11 +4,13 @@ import {
   auth
 } from "../middleware";
 import{
+  loadItem,
   uploadItem
 } from "../controllers/itemController"
 
 const itemRouter = express.Router();
 
+itemRouter.get(routes.loadItem, auth, loadItem);
 itemRouter.post(routes.uploadItem, auth, uploadItem);
 
 
