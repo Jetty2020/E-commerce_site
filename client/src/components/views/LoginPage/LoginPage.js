@@ -9,10 +9,9 @@ import {
 	LockOutlined
 } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
-// import {
-// 	kakao
-// } from '/imgs/kakao.png';
+import KakaoBtn from "../SNSButton/KakaoBtn";
+import GoogleBtn from "../SNSButton/GoogleBtn";
+import NaverBtn from "../SNSButton/NaverBtn";
 
 const { Title } = Typography;
 
@@ -28,66 +27,6 @@ function LoginPage(props) {
 	};
 
 	const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
-
-	const KaKaoBtn = styled.button`
-	margin-top: 8px;	
-  width: 350px;
-  height: 32px;
-  color: #000000;
-  background-color: #FFEB01;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    /* box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.2); */
-  }
-`;
-const GoogleBtn = styled.button`
-	margin-top: 8px;	
-  width: 350px;
-  height: 32px;
-  color: #8E95A9;
-  background-color: #FFFFFF;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    /* box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.2); */
-  }
-`;
-
-const NaverBtn = styled.button`
-	margin-top: 8px;	
-  width: 350px;
-  height: 32px;
-  color: #FFFFFF;
-  background-color: #1EC800;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    /* box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.2); */
-  }
-`;
-
-const Logo = styled.img`
-  width: 25px;
-  height: 25px;
-`;
-
-const NaverLogo = styled.img`
-  width: 30px;
-  height: 30px;
-`;
 
 	return (
 		<Formik
@@ -216,37 +155,9 @@ const NaverLogo = styled.img`
 									Log in
 								</Button>
 							</div>
-							<div>
-								<a 
-								href="/oauth/kakao"
-								>
-									<KaKaoBtn type="button" >
-									<Logo src={"/imgs/kakao.png"} alt="kakao" />
-										카카오 로그인
-									</KaKaoBtn>
-								</a>
-							</div>
-							<div>
-								<a 
-								href="/oauth/google"
-								>
-									<GoogleBtn type="button" >
-									<Logo src={"/imgs/google.jpg"} alt="google" />
-										구글 로그인
-									</GoogleBtn>
-								</a>
-							</div>
-
-							<div>
-								<a 
-								href="/oauth/naver"
-								>
-									<NaverBtn type="button" >
-									<NaverLogo src={"/imgs/naver.png"} alt="naver" />
-										네이버 로그인
-									</NaverBtn>
-								</a>
-							</div>
+							<KakaoBtn />
+							<GoogleBtn />
+							<NaverBtn />
 							
 							<a href="/register">
 								register now!
