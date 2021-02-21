@@ -1,5 +1,5 @@
 const USERS = "/api/users";
-const BOARDS = "/api/boards";
+const ITEMS = "/api/items";
 // Admin
 
 const ADMIN = "/admin";
@@ -12,15 +12,15 @@ const LOGIN = "/login";
 const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
 
-// BOARDS with HOME
+// ITEMS with HOME
 
 const HOME = "/";
-const LOAD_BOARD = "/load";
-const UPLOAD_BOARD = "/upload";
-const EDIT_BOARD = "/edit";
-const SEARCH_BOARD = "/search";
-const DETAIL_BOARD = "/detail";
-const DELETE_BOARD = "/delete";
+const LOAD_ITEM = "/load";
+const UPLOAD_ITEM = "/upload";
+const EDIT_ITEM = "/edit";
+const SEARCH_ITEM = "/search";
+const DETAIL_ITEM = "/detail";
+const DELETE_ITEM = "/delete";
 
 // API
 const API = "/api";
@@ -37,6 +37,8 @@ const GOOGLE_CALLBACK = "/auth/google/callback";
 
 const routes = {
   
+  home: HOME,
+  
   //ADMIN
   
   admin: ADMIN,
@@ -50,24 +52,23 @@ const routes = {
   logout: LOGOUT,
   users: USERS,
 
-  // BOARDS with HOME
+  // ITEMS
 
-  home: HOME,
-  boards: BOARDS,
-  loadBoard: LOAD_BOARD,
-  searchBoard: SEARCH_BOARD,
-  uploadBoard: UPLOAD_BOARD,
-  editBoard: EDIT_BOARD,
-  detailBoard: DETAIL_BOARD,
-  deleteBoard: DELETE_BOARD,
+  items: ITEMS,
+  loadItem: LOAD_ITEM,
+  searchItem: SEARCH_ITEM,
+  uploadItem: UPLOAD_ITEM,
+  editItem: EDIT_ITEM,
+  detailItem: DETAIL_ITEM,
+  deleteItem: DELETE_ITEM,
 
   api: API,
+
+  //SNS_LOGINS
   kakao: KAKAO,
   kakaoCallback: KAKAO_CALLBACK,
-
   naver: NAVER,
   naverCallback: NAVER_CALLBACK,
-
   google: GOOGLE,
   googleCallback: GOOGLE_CALLBACK,
 

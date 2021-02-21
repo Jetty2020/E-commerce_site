@@ -5,6 +5,7 @@ import passport from "passport";
 import routes from "./routes";
 import "./passport";
 import userRouter from "./routers/userRouter";
+import itemRouter from "./routers/itemRouter";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +18,7 @@ app.use(passport.session());
 
 
 app.use(routes.users, userRouter);
+app.use(routes.items, itemRouter);
 
 
 export default app;
