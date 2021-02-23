@@ -28,9 +28,7 @@ function KakaoBtn(props) {
 
 	return (
     <div>
-      <a 
-      href="/oauth/naver"
-      >
+      <a href="http://localhost:4000/api/users/oauth/naver">
         <NaverBtn type="button" >
         <NaverLogo src={"/imgs/naver.png"} alt="naver" />
           네이버 로그인

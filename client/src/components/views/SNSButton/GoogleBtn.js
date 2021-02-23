@@ -28,9 +28,7 @@ function GoogleBtn(props) {
   
 	return (
     <div>
-      <a 
-      href="/oauth/google"
-      >
+      <a href="http://localhost:4000/api/users/oauth/google">
         <GoogleBtn type="button" >
         <Logo src={"/imgs/google.jpg"} alt="google" />
           구글 로그인

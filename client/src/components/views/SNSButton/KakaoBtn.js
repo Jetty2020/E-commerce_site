@@ -1,28 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { kkoLogin } from "../../../_actions/user_actions";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 
 function KakaoBtn(props) {
 	
-	const dispatch = useDispatch(); //dispatch for redux
-
-	const onSubmitHandler = (event) => {
-		event.preventDefault();
-
-		dispatch(kkoLogin())
-				.then(response => {
-						if (response.payload.success) {
-								props.history.push('/')
-						} else {
-								alert('Error˝')
-						}
-				})
-
-
-}
-
 	const KaKaoBtn = styled.button`
 		margin-top: 8px;	
 	  width: 350px;
@@ -47,10 +28,12 @@ function KakaoBtn(props) {
 
 	return (
 		<div>
-			<KaKaoBtn type="button" onClick={onSubmitHandler} >
+			<a href="http://localhost:4000/api/users/oauth/kakao">
+			<KaKaoBtn type="button" >
 			<Logo src={"/imgs/kakao.png"} alt="kakao" />
 				카카오 로그인
 			</KaKaoBtn>
+			</a>
 		</div>
 	);
 };

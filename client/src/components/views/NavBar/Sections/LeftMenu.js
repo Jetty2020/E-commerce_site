@@ -7,7 +7,7 @@ function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
     <Menu.Item key="mail">
-      <a href="/">Home</a>
+      <a href="http://localhost:4000/api/users/oauth/kakao">Home</a>
     </Menu.Item>
     <Menu.Item key="Upload">
       <a href="/upload">Upload</a>

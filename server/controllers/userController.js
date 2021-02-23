@@ -2,7 +2,6 @@ import db from "../db";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import {
-  generateToken,
   mailSender
 } from "../util";
 

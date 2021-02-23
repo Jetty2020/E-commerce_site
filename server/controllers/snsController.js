@@ -1,10 +1,11 @@
 import passport from "passport";
 import db from "../db";
+import jwt from "jsonwebtoken";
+import moment from "moment";
 
 export const kakaoLogin = passport.authenticate("kakao");
 
 export const kakaoLoginCallback = async (_, __, profile, cb) => {
-  
   const {
     _json: { id }
   } = profile;
@@ -14,42 +15,41 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
   const {
     kakao_account: { email }
   } = profile._json;
-  console.log(id, name, email);
   try {
-    db.query(`SELECT * from USER where kkoEmail = '${email}';`,
+    db.query(`SELECT * from USER where kkoID = '${id}';`,
     function (err, user) {
-      console.log(user);
+      var token =  jwt.sign(user[0].userID,'secret');
+      var halfHour = moment().add(0.5, 'hour').valueOf();
       if (!(user.length == 0)) {
-        db.query(`UPDATE USER SET kkoID = ${id} where kkoEmail = '${email}';`,
+        db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' where kkoEmail = '${email}';`,
           function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, user);
+              return cb(null, { token, halfHour});
             }
           }
         );
       } else {
         if (email){
-          console.log(1);
-          db.query(`INSERT INTO USER (kkoID, kkoEmail, name, emailChecked) VALUES('${id}', '${email}', '${name}', TRUE);`, 
-          function (err, newUser) {
+          db.query(`INSERT INTO USER (kkoID, kkoEmail, name, emailChecked, token, tokenExp) VALUES('${id}', '${email}', '${name}', TRUE, ${token}, ${halfHour});`, 
+          function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, newUser);
+              return cb(null, { token, halfHour});
             }
           });
         } else {
-          db.query(`INSERT INTO USER (kkoID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
-          function (err, newUser) {
+          db.query(`INSERT INTO USER (kkoID, name, emailChecked, token, tokenExp) VALUES('${id}', '${name}', TRUE, ${token}, ${halfHour});`, 
+          function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, newUser);
+              return cb(null, { token, halfHour});
             }
           });
         };
@@ -63,9 +63,13 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
 };
 
 export const postKakaoLogin = (req, res) => {
-  return res.json({
-    success: true,
-  });
+  var {
+    user: { token, halfHour }
+  } = req;
+  return res
+  .cookie("w_auth", token)
+  .cookie("w_authExp", halfHour)
+  .redirect("http://localhost:3000");
 };
 
 
@@ -78,36 +82,38 @@ export const naverLoginCallback = async (_, __, profile, cb) => {
   try {
     db.query(`SELECT * from USER where nvrEmail = '${email}';`,
     function (err, user) {
+      var token =  jwt.sign(user[0].userID,'secret');
+      var halfHour = moment().add(0.5, 'hour').valueOf();
       if (!(user.length == 0)) {
-        db.query(`UPDATE USER SET nvrID = ${id} where nvrEmail = '${email}';`,
+        db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' where nvrEmail = '${email}';`,
           function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, user);
+              return cb(null, { token, halfHour});
             }
           }
         );
       } else {
         if (email){
-          db.query(`INSERT INTO USER (nvrID, nvrEmail, name, emailChecked) VALUES('${id}', '${email}', '${name}', TRUE);`, 
-          function (err, newUser) {
+          db.query(`INSERT INTO USER (nvrID, nvrEmail, name, emailChecked, token, tokenExp) VALUES('${id}', '${email}', '${name}', TRUE, ${token}, ${halfHour});`, 
+          function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, newUser);
+              return cb(null, { token, halfHour});
             }
           });
         } else {
-          db.query(`INSERT INTO USER (nvrID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
-          function (err, newUser) {
+          db.query(`INSERT INTO USER (nvrID, name, emailChecked, token, tokenExp) VALUES('${id}', '${name}', TRUE, ${token}, ${halfHour});`, 
+          function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, newUser);
+              return cb(null, { token, halfHour});
             }
           });
         };
@@ -121,9 +127,13 @@ export const naverLoginCallback = async (_, __, profile, cb) => {
 };
 
 export const postNaverLogin = (req, res) => {
-  return res.json({
-    success: true,
-  });
+  var {
+    user: { token, halfHour }
+  } = req;
+  return res
+  .cookie("w_auth", token)
+  .cookie("w_authExp", halfHour)
+  .redirect("http://localhost:3000");
 };
 
 
@@ -136,16 +146,27 @@ export const googleLoginCallback = async (_, __, profile, cb) => {
   try {
     db.query(`SELECT * from USER where gglID = '${id}';`,
     function (err, user) {
+      var token =  jwt.sign(user[0].userID,'secret');
+      var halfHour = moment().add(0.5, 'hour').valueOf();
       if (!(user.length == 0)) {
-        return cb(null, user);
-      } else {
-        db.query(`INSERT INTO USER (gglID, name, emailChecked) VALUES('${id}', '${name}', TRUE);`, 
-          function (err, newUser) {
+        db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' where gglID = '${id}';`,
+          function (err, user) {
             if(err){
               console.log(err);
               return cb(err);
             } else {
-              return cb(null, newUser);
+              return cb(null, { token, halfHour});
+            }
+          }
+        );
+      } else {
+        db.query(`INSERT INTO USER (gglID, name, emailChecked, token, tokenExp) VALUES('${id}', '${name}', TRUE, ${token}, ${halfHour});`, 
+          function (err, user) {
+            if(err){
+              console.log(err);
+              return cb(err);
+            } else {
+              return cb(null, { token, halfHour});
             }
           });
       };
@@ -158,7 +179,11 @@ export const googleLoginCallback = async (_, __, profile, cb) => {
 };
 
 export const postGoogleLogin = (req, res) => {
-  return res.json({
-    success: true,
-  });
+  var {
+    user: { token, halfHour }
+  } = req;
+  return res
+  .cookie("w_auth", token)
+  .cookie("w_authExp", halfHour)
+  .redirect("http://localhost:3000");
 };
