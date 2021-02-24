@@ -8,11 +8,9 @@ import {
   Input, 
   Button, 
   Typography, 
-  Upload, 
-  // message 
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
+import ImageUploader from 'react-images-upload';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -21,7 +19,11 @@ function UploadPage(props) {
   const dispatch = useDispatch(); //dispatch for redux
   
 	const [formErrorMessage, setFormErrorMessage] = useState('');
-
+	const [fileData, setFileData] = useState('');
+	const onFileHandler = (event) => {
+		// console.log(event[0]);
+		setFileData(event[0])
+	}
 	return (
 		<Formik
 			initialValues={{ //초기값
@@ -37,14 +39,14 @@ function UploadPage(props) {
 					  .string()
 					  .required('Description is required'),
 			})}
-			onSubmit={(values, { setSubmitting }) => {
+			onSubmit = {(values, { setSubmitting }) => {
 				setTimeout(() => {
-					let dataToSubmit = {
-						name: values.name,
-						description: values.description,
-					};
-				  
-					dispatch(uploadItem(dataToSubmit))
+					var dataForm = new FormData();
+					// console.log(fileData);
+					dataForm.append("file", fileData, fileData.name);
+					dataForm.append("name", values.name);
+					dataForm.append("description", values.description);
+					dispatch(uploadItem(dataForm))
 						.then(response => {
 							if (response.payload.success) {
 								props.history.push("/");
@@ -77,7 +79,17 @@ function UploadPage(props) {
 			return (
 				<div className="app">
 					<Title level={2}>Upload</Title>
-					<form onSubmit={handleSubmit} style={{ width: '350px' }}>                    
+					<form onSubmit={handleSubmit} style={{ width: '350px' }} encType="multipart/form-data">   
+						<Form.Item required>
+							<ImageUploader
+            	  withIcon={true}
+								withPreview={true}
+            	  buttonText='Choose images'
+            	  onChange={onFileHandler}
+            	  imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
+            	  maxFileSize={5242880}
+            	/>
+            </Form.Item>                 
 						<Form.Item required>
 							<Input
 								id="name"
@@ -127,11 +139,6 @@ function UploadPage(props) {
 								</p>
 							</label>
 						)}
-            <Form.Item required>
-            <Upload {...props}>
-              <Button icon={<UploadOutlined />}>Select File</Button>
-            </Upload>
-            </Form.Item>
 						<Form.Item>
 							<div>
 								<Button 

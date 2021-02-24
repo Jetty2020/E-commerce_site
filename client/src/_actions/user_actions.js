@@ -4,9 +4,6 @@ import {
 	REGISTER_USER,
 	AUTH_USER,
 	LOGOUT_USER,
-	KKO_LOGIN,
-	// GGL_LOGIN,
-	// NVR_LOGIN,
 } from './_types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -24,15 +21,6 @@ export function loginUser(dataToSubmit){
 											.then(response => response.data);
 	return {
 			type: LOGIN_USER,
-			payload: request
-	};
-};
-
-export function kkoLogin(){
-	const request = axios.get(`${USER_SERVER}/oauth/kakao`)
-											.then(response => response.data);
-	return {
-			type: KKO_LOGIN,
 			payload: request
 	};
 };
