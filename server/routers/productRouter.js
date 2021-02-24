@@ -7,7 +7,8 @@ import {
 import{
   loadProduct,
   uploadProduct,
-  editProduct
+  editProduct,
+  deleteProduct
 } from "../controllers/productController"
 
 const productRouter = express.Router();
@@ -15,6 +16,7 @@ const productRouter = express.Router();
 productRouter.get(routes.loadProduct, auth, loadProduct);
 productRouter.post(routes.uploadProduct, auth, uploadFile.uploadImageToS3, uploadProduct);
 productRouter.post(routes.editProduct, auth, editProduct);
+productRouter.post(routes.deleteProduct, auth, deleteProduct);
 
 
 export default productRouter;

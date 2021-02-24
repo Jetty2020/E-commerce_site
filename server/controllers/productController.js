@@ -47,11 +47,27 @@ export const editProduct = (req, res) => {
   function (err, product) {
     if (err){
       console.log(err);
-      return res.json({ success: false, message: "Error occurred at loadproduct" });
+      return res.json({ success: false, message: "Error occurred at editProduct" });
     } 
     return res.status(200).send({
       success: true,
       productID: productID
+    });
+  });
+};
+
+export const deleteProduct = (req, res) => {
+  const {
+    body: { productID }
+  } = req;
+  db.query(`DELETE FROM PRODUCT WHERE productID = '${productID}';`,
+  function (err, product) {
+    if (err){
+      console.log(err);
+      return res.json({ success: false, message: "Error occurred at deleteProduct" });
+    } 
+    return res.status(200).send({
+      success: true,
     });
   });
 };
