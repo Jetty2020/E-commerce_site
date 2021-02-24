@@ -1,10 +1,10 @@
 import {
-  UPLOAD_ITEM
+  UPLOAD_PRODUCT
 } from '../_actions/_types';
  
-export default function itemReducer (state={},action){
+export default function productReducer (state={},action){
   switch(action.type){
-    case UPLOAD_ITEM:
+    case UPLOAD_PRODUCT:
       return {...state, upload: action.payload };
     default:
       return state;

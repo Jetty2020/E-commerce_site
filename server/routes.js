@@ -1,5 +1,5 @@
 const USERS = "/api/users";
-const ITEMS = "/api/items";
+const PRODUCTS = "/api/products";
 // Admin
 
 const ADMIN = "/admin";
@@ -12,15 +12,15 @@ const LOGIN = "/login";
 const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
 
-// ITEMS with HOME
+// PRODUCTS with HOME
 
 const HOME = "/";
-const LOAD_ITEM = "/load";
-const UPLOAD_ITEM = "/upload";
-const EDIT_ITEM = "/edit";
-const SEARCH_ITEM = "/search";
-const DETAIL_ITEM = "/detail";
-const DELETE_ITEM = "/delete";
+const LOAD_PRODUCT = "/load";
+const UPLOAD_PRODUCT = "/upload";
+const EDIT_PRODUCT = "/edit";
+const SEARCH_PRODUCT = "/search";
+const DETAIL_PRODUCT = "/detail";
+const DELETE_PRODUCT = "/delete";
 
 // API
 const API = "/api";
@@ -52,15 +52,15 @@ const routes = {
   logout: LOGOUT,
   users: USERS,
 
-  // ITEMS
+  // PRODUCTS
 
-  items: ITEMS,
-  loadItem: LOAD_ITEM,
-  searchItem: SEARCH_ITEM,
-  uploadItem: UPLOAD_ITEM,
-  editItem: EDIT_ITEM,
-  detailItem: DETAIL_ITEM,
-  deleteItem: DELETE_ITEM,
+  products: PRODUCTS,
+  loadProduct: LOAD_PRODUCT,
+  searchProduct: SEARCH_PRODUCT,
+  uploadProduct: UPLOAD_PRODUCT,
+  editProduct: EDIT_PRODUCT,
+  detailProduct: DETAIL_PRODUCT,
+  deleteProduct: DELETE_PRODUCT,
 
   api: API,
 

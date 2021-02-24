@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { uploadItem } from "../../../_actions/item_actions";
+import { uploadProduct } from "../../../_actions/product_actions";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { 
@@ -21,7 +21,6 @@ function UploadPage(props) {
 	const [formErrorMessage, setFormErrorMessage] = useState('');
 	const [fileData, setFileData] = useState('');
 	const onFileHandler = (event) => {
-		// console.log(event[0]);
 		setFileData(event[0])
 	}
 	return (
@@ -42,11 +41,10 @@ function UploadPage(props) {
 			onSubmit = {(values, { setSubmitting }) => {
 				setTimeout(() => {
 					var dataForm = new FormData();
-					// console.log(fileData);
 					dataForm.append("file", fileData, fileData.name);
 					dataForm.append("name", values.name);
 					dataForm.append("description", values.description);
-					dispatch(uploadItem(dataForm))
+					dispatch(uploadProduct(dataForm))
 						.then(response => {
 							if (response.payload.success) {
 								props.history.push("/");
@@ -124,21 +122,20 @@ function UploadPage(props) {
 								<div className="input-feedback">{errors.description}</div>
 							)}
 						</Form.Item>
-
-						{formErrorMessage && (
-							<label >
-								<p style={{ 
-									color: '#ff0000bf', 
-									fontSize: '0.7rem',
-									border: '1px solid', 
-									padding: '1rem', 
-									borderRadius: '10px' 
-									}}
-								>
-									{formErrorMessage}
-								</p>
-							</label>
-						)}
+							{formErrorMessage && (
+								<label >
+									<p style={{ 
+										color: '#ff0000bf', 
+										fontSize: '0.7rem',
+										border: '1px solid', 
+										padding: '1rem', 
+										borderRadius: '10px' 
+										}}
+									>
+										{formErrorMessage}
+									</p>
+								</label>
+							)}
 						<Form.Item>
 							<div>
 								<Button 
@@ -152,9 +149,7 @@ function UploadPage(props) {
 									Submit
 								</Button>
 							</div>
-							
 						</Form.Item>
-            
 					</form>
 				</div>
 			);
