@@ -6,13 +6,15 @@ import {
 } from "../middleware";
 import{
   loadProduct,
-  uploadProduct
+  uploadProduct,
+  editProduct
 } from "../controllers/productController"
 
 const productRouter = express.Router();
 
 productRouter.get(routes.loadProduct, auth, loadProduct);
 productRouter.post(routes.uploadProduct, auth, uploadFile.uploadImageToS3, uploadProduct);
+productRouter.post(routes.editProduct, auth, editProduct);
 
 
 export default productRouter;

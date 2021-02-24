@@ -22,7 +22,7 @@ export const uploadProduct = function (req, res) {
 };
 
 export const loadProduct = (req, res) => {
-  db.query(`SELECT * FROM product WHERE userID = '${req.user[0].userID}';`, 
+  db.query(`SELECT * FROM PRODUCT WHERE userID = '${req.user[0].userID}';`, 
   function (err, product) {
     if (err){
       console.log(err);
@@ -31,6 +31,27 @@ export const loadProduct = (req, res) => {
     return res.status(200).send({
       success: true,
       product: product
+    });
+  });
+};
+
+export const editProduct = (req, res) => {
+  const {
+    body: { 
+      productID, 
+      productName,
+      productDes,
+    }
+  } = req;
+  db.query(`UPDATE PRODUCT SET productName = '${productName}', productDes = '${productDes}' WHERE productID = '${productID}';`,
+  function (err, product) {
+    if (err){
+      console.log(err);
+      return res.json({ success: false, message: "Error occurred at loadproduct" });
+    } 
+    return res.status(200).send({
+      success: true,
+      productID: productID
     });
   });
 };
