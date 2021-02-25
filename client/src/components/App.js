@@ -6,6 +6,7 @@ import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import UploadPage from "./views/UploadPage/UploadPage.js";
+import SubPage from "./views/SubPage/SubPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/upload" component={Auth(UploadPage, true)} />
+          <Route exact path="/sub" component={Auth(SubPage, null)} />
         </Switch>
       </div>
       <Footer />
