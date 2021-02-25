@@ -11,6 +11,8 @@ const AUTH = "/auth";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
+const DETAIL_USER = "/detail";
+const EDIT_USER = "/edit";
 
 // PRODUCTS with HOME
 
@@ -45,12 +47,14 @@ const routes = {
 
   // USER
 
+  users: USERS,
   register: REGISTER,
   auth: AUTH,
   login: LOGIN,
   checkEmail: CHECKEMAIL,
   logout: LOGOUT,
-  users: USERS,
+  editUser: EDIT_USER,
+  detailUser: DETAIL_USER,
 
   // PRODUCTS
 

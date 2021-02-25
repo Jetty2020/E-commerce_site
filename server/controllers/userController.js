@@ -15,6 +15,16 @@ export const authSuccess = async (req, res) => {
   });
 };
 
+export const detailUser = async (req, res) => {
+  res.status(200).json({
+    userID: req.user[0].userID,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user[0].userEmail,
+    name: req.user[0].name,
+  });
+};
+
 export const register = function (req, res) {
   db.query(`SELECT userEmail FROM USER WHERE userEmail = '${req.body.email}';`, 
   function (err, results) {

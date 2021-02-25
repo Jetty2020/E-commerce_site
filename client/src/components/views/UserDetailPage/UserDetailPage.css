@@ -1,0 +1,14 @@
+.topContainer {
+  background: #F7F7F7;
+  height: 374px;
+}
+.userContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+.userItemContainer {
+  float: left;
+  height: 196px;
+  background: #ffffff;
+  margin: 50px 0.5% 0 0;
+}

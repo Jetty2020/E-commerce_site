@@ -14,6 +14,7 @@
     "http-proxy-middleware": "^1.0.6",
     "react": "^17.0.1",
     "react-app-polyfill": "^2.0.0",
+    "react-async": "^10.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-images-upload": "^1.2.8",

@@ -6,6 +6,8 @@ import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import UploadPage from "./views/UploadPage/UploadPage.js";
+import UserDetailPage from "./views/UserDetailPage/UserDetailPage.js";
+import UserEditPage from "./views/UserEditPage/UserEditPage.js";
 import SubPage from "./views/SubPage/SubPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
@@ -21,10 +23,12 @@ function App() {
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
+          <Route exact path="/sub" component={Auth(SubPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/upload" component={Auth(UploadPage, true)} />
-          <Route exact path="/sub" component={Auth(SubPage, null)} />
+          <Route exact path="/account" component={Auth(UserDetailPage, true)} />
+          <Route exact path="/account/edit" component={Auth(UserEditPage, true)} />
         </Switch>
       </div>
       <Footer />
