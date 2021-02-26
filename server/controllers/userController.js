@@ -15,9 +15,9 @@ export const authSuccess = async (req, res) => {
   });
 };
 
-export const detailUser = async (req, res) => {
+export const userDetail = async (req, res) => {
   res.status(200).json({
-    userID: req.user[0].userID,
+    userID: req.user[0].userID, //수정
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user[0].userEmail,
