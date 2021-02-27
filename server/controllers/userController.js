@@ -6,15 +6,25 @@ import { mailSender } from "../util";
 import dotenv from "dotenv";
 dotenv.config();
 
-// export const authSuccess = async (req, res) => {
-//   res.status(200).json({
-//     userID: req.user[0].userID,
-//     isAdmin: req.user.role === 0 ? false : true,
-//     isAuth: true,
-//     email: req.user[0].userEmail,
-//     name: req.user[0].name,
-//   });
-// };
+export const authSuccess = async (req, res) => {
+  try {
+    res.status(200).json({
+      userID: req.user.userID,
+      isAdmin: req.user.role === 0 ? false : true,
+      isAuth: true,
+      email: req.user.userEmail,
+      name: req.user.name,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400)
+    // .send(err)
+    .json({ 
+      success: false, 
+      message: "Error occurred at authSuccess"
+    })
+  }
+};
 
 // export const userDetail = async (req, res) => {
 //   res.status(200).json({
@@ -30,13 +40,13 @@ export const register = async (req, res) => {
   const { 
     body : {email, password},
   } = req;
-  const user= await User.findOne({
-    attributes: ['id'],
-    where: {
-      userEmail: email,
-    },
-  });
   try {
+    const user= await User.findOne({
+      attributes: ['id'],
+      where: {
+        userEmail: email,
+      },
+    });
     if (!user) { //이매일 중복 확인
       User.create({
         userEmail: email,
@@ -65,13 +75,13 @@ export const login = async (req, res) => {
   const { 
     body : {email, password},
   } = req;
-  const userState = await User.findOne({
-    attributes: ['id', 'userEmail', 'userPassword'],
-    where: {
-      userEmail: email,
-    },
-  });
   try {
+    const userState = await User.findOne({
+      attributes: ['id', 'userEmail', 'userPassword'],
+      where: {
+        userEmail: email,
+      },
+    });
     if (!userState) {
       return res.status(200).json({
         success: false,
@@ -96,6 +106,7 @@ export const login = async (req, res) => {
         if (!user.emailChecked) {
           return res
             .status(200)
+            .cookie("w_auth", token)
             .json({
               success: true,
               emailChecked: false, 
@@ -117,7 +128,7 @@ export const login = async (req, res) => {
     console.log(err);
     return res
       .status(400)
-      // .send(err)
+      .send(err)
       .json({ 
         success: false, 
         message: "Error occurred at login"

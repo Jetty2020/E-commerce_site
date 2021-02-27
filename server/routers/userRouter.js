@@ -1,11 +1,11 @@
 import express from "express";
 // import passport from "passport";
 import routes from "../routes";
-// import {
-//   auth
-// } from "../middleware";
+import {
+  auth
+} from "../middleware";
 import{
-  // authSuccess,
+  authSuccess,
   register,
   login,
   // userDetail,
@@ -23,7 +23,7 @@ import{
 
 const userRouter = express.Router();
 
-// userRouter.get(routes.auth, auth, authSuccess );
+userRouter.get(routes.auth, auth, authSuccess );
 userRouter.post(routes.register, register);
 userRouter.post(routes.login, login);
 // userRouter.post(routes.checkEmail, auth, checkEmail);

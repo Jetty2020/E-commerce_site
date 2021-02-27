@@ -1,38 +1,50 @@
-import db from "./db";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
 import uuid from "uuid/v4";
+import { User } from "./models";
 
-export const auth = (req, res, next) => {
+export const auth = async (req, res, next) => {
   //인증 처리를 하는곳 
   //클라이언트 쿠키에서 토큰을 가져온다.
-  const token = req.cookies.w_auth;
-  // 토큰을 복호화 한후  유저를 찾는다.
-  db.query(`SELECT * from USER where token = '${token}';`, 
-  function (err, user) {
-    if (err) throw err;
-    if (user.length == 0) {
+  try {
+    const token = req.cookies.w_auth;
+    // 토큰을 복호화 한후  유저를 찾는다.
+    const userState= await User.findOne({
+      attributes: ['id', 'role', 'userEmail', 'name'],
+      where: {
+        token
+      },
+    });
+    if (user) {
+      const {
+        dataValues: user
+      } = userState;
+      req.token = token;
+      req.user = user;
+      next();
+    } else {
       return res.json({
         isAuth: false,
         message: "Error occurred at auth",
         error: true
       });
-    };
-    req.token = token;
-    req.user = user;
-    next();
-  });
+    }
+  }
+  catch (err) {
+    throw err
+  }
 };
 
-export const localsMiddleware = (req, res, next) => {
-  db.query(`SELECT * from USER where token = '${token}';`, 
-  function (err, user) {
-    res.locals.user = user || null;
-
-  });
-  next();
-};
+// export const localsMiddleware = (req, res, next) => {
+//   const user= await User.findOne({
+//     where: {
+//       token
+//     },
+//   });
+//   res.locals.user = user.dataValues || null;
+//   next();
+// };
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_KEY,
