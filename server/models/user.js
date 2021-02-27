@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 			unique: true,
 		},
 		gglID: {
-			type: DataTypes.STRING(10),
+			type: DataTypes.STRING(30),
 			unique: true,
 		},
 		created_at: {
