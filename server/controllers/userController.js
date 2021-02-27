@@ -136,23 +136,42 @@ export const login = async (req, res) => {
   }
 };
 
-// export const checkEmail = async (req, res) => {
-//   db.query(`SELECT * from USER WHERE userID = '${req.user[0].userID}';`, 
-//   function (err, user) {
-//     if (req.body.emailHash == user[0].emailHash) {
-//       db.query(`UPDATE USER SET emailChecked = TRUE, emailHash = NULL WHERE userID = '${req.user[0].userID}';`,
-//       function (err, user) {
-//         if (err){
-//           console.log(err);
-//           return res.json({ success: false, message: "Error occurred at checkEmail" });
-//         } 
-//         return res.status(200).send({
-//           success: true
-//         });
-//       });
-//     }
-//   });
-// };
+export const checkEmail = async (req, res) => {
+  const { 
+    user: {userID: id},
+    body: {emailHash}
+  } = req;
+  try {
+    const {
+      dataValues: user
+    } = await User.findOne({
+      attributes: ['userEmail', 'userPassword', 'emailHash'],
+      where: {
+        id,
+      },
+    });
+    console.log(user);
+    if (emailHash == user.emailHash) {
+      User.update({
+        emailChecked: true,
+        emailHash: null,
+      }, {
+          where: { id },
+      });
+      return res.status(200).json({
+        success: true
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "Wrong emailHash!"
+      });
+    }
+  } catch (err){
+    console.log(err);
+    return res.json({ success: false, message: "Error occurred at checkEmail" });
+  }
+};
 
 // export const logout = (req, res) => {
 //   db.query(`UPDATE USER SET token = null, tokenExp = null WHERE userID = '${req.user[0].userID}';`,

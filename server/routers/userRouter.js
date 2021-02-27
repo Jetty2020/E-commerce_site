@@ -10,7 +10,7 @@ import{
   login,
   // userDetail,
   // logout,
-  // checkEmail,
+  checkEmail,
 } from "../controllers/userController"
 // import{
 //   kakaoLogin,
@@ -26,7 +26,7 @@ const userRouter = express.Router();
 userRouter.get(routes.auth, auth, authSuccess );
 userRouter.post(routes.register, register);
 userRouter.post(routes.login, login);
-// userRouter.post(routes.checkEmail, auth, checkEmail);
+userRouter.post(routes.checkEmail, auth, checkEmail);
 // userRouter.get(routes.userDetail, auth, userDetail);
 // userRouter.get(routes.logout, auth, logout);
 // userRouter.get(routes.kakao, kakaoLogin);

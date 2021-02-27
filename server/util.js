@@ -1,5 +1,6 @@
 import db from "./db";
 import nodemailer from "nodemailer";
+import { User } from "./models";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -38,7 +39,11 @@ export const mailSender = {
 			if (error) {
 				console.log(error);
 			} else {
-				db.query(`UPDATE USER SET emailHash = '${hash}' WHERE userEmail = '${email}';`);
+				User.update({
+					emailHash: hash,
+				}, {
+						where: { userEmail: email },
+				})
 				console.log('Email sent: ' + info.response);
 			}
 		});
