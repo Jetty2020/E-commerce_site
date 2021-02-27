@@ -7,7 +7,7 @@ import routes from "../routes";
 import{
   // authSuccess,
   register,
-  // postLogin,
+  login,
   // userDetail,
   // logout,
   // checkEmail,
@@ -25,7 +25,7 @@ const userRouter = express.Router();
 
 // userRouter.get(routes.auth, auth, authSuccess );
 userRouter.post(routes.register, register);
-// userRouter.post(routes.login, postLogin);
+userRouter.post(routes.login, login);
 // userRouter.post(routes.checkEmail, auth, checkEmail);
 // userRouter.get(routes.userDetail, auth, userDetail);
 // userRouter.get(routes.logout, auth, logout);
