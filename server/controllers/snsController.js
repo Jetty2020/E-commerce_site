@@ -24,12 +24,9 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
         kkoID,
       },
     });
-    if (userState) {
-      const {
-        dataValues: user
-      } = userState;
-      var token =  jwt.sign(user.userID, process.env.SALT);
-      var tokenExp = moment().add(0.5, 'hour').valueOf();
+    var token =  jwt.sign(kkoID, process.env.SALT).substr(3, 20);
+    var tokenExp = moment().add(0.5, 'hour').valueOf();
+    if (!userState) {
       if (kkoEmail){
         User.create({
           kkoID,
@@ -55,7 +52,7 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
         token,
         tokenExp
       }, {
-        where: { kkoEmail }
+        where: { kkoID }
       })
       return cb(null, { token, tokenExp});
     }
@@ -67,6 +64,68 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
 };
 
 export const postKakaoLogin = (req, res) => {
+  var {
+    user: { token, tokenExp }
+  } = req;
+  return res
+  .cookie("w_auth", token)
+  .cookie("w_authExp", tokenExp)
+  .redirect("http://localhost:3000");
+};
+
+export const naverLogin = passport.authenticate("naver");
+
+export const naverLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id: nvrID, email: nvrEmail, nickname : name }
+  } = profile;
+  try {
+    const userState = await User.findOne({
+      // attributes: ['id', 'userEmail', 'userPassword'],
+      where: {
+        nvrID,
+      },
+    });
+    var token =  jwt.sign(nvrID, process.env.SALT).substr(3, 20);
+    var tokenExp = moment().add(0.5, 'hour').valueOf();
+    if (!userState) {
+      if (nvrEmail){
+        User.create({
+          nvrID,
+          nvrEmail,
+          name,
+          emailChecked: true,
+          token,
+          tokenExp,
+        })
+        return cb(null, { token, tokenExp});
+      } else {
+        User.create({
+          nvrID,
+          name,
+          emailChecked: true,
+          token,
+          tokenExp,
+        })
+        return cb(null, { token, tokenExp});
+      };
+    } else {
+      User.update({
+        token,
+        tokenExp
+      }, {
+        where: { nvrID }
+      })
+      return cb(null, { token, tokenExp});
+    }
+  } catch (error) {
+    console.log("naverLoginCallback");
+    console.log(error);
+    return cb(error);
+  }
+};
+
+export const postNaverLogin = (req, res) => {
   var {
     user: { token, tokenExp }
   } = req;

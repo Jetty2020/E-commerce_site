@@ -4,7 +4,7 @@ import NaverStrategy from "passport-naver";
 import GoogleStrategy from "passport-google-oauth20";
 import { 
   kakaoLoginCallback,
-  // naverLoginCallback,
+  naverLoginCallback,
   // googleLoginCallback
 } from "./controllers/snsController";
 import routes from "./routes";
@@ -20,15 +20,15 @@ passport.use(
   )
 );
 
-// passport.use(
-//   new NaverStrategy({
-//     clientID: process.env.NVR_ID,
-//     clientSecret: process.env.NVR_SECRET,
-//     callbackURL: `http://localhost:4000/api/users${routes.naverCallback}`
-//   },
-//   naverLoginCallback
-//   )
-// );
+passport.use(
+  new NaverStrategy({
+    clientID: process.env.NVR_ID,
+    clientSecret: process.env.NVR_SECRET,
+    callbackURL: `http://localhost:4000/api/users${routes.naverCallback}`
+  },
+  naverLoginCallback
+  )
+);
 
 // passport.use(
 //   new GoogleStrategy({

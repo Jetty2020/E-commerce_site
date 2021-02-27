@@ -15,8 +15,8 @@ import{
 import{
   kakaoLogin,
   postKakaoLogin,
-  // naverLogin,
-  // postNaverLogin,
+  naverLogin,
+  postNaverLogin,
   // googleLogin,
   // postGoogleLogin,
 } from "../controllers/snsController"
@@ -36,12 +36,12 @@ userRouter.get(
   postKakaoLogin
 );
 
-// userRouter.get(routes.naver, naverLogin);
-// userRouter.get(
-//   routes.naverCallback,
-//   passport.authenticate("naver", { failureRedirect: routes.login }),
-//   postNaverLogin
-// );
+userRouter.get(routes.naver, naverLogin);
+userRouter.get(
+  routes.naverCallback,
+  passport.authenticate("naver", { failureRedirect: routes.login }),
+  postNaverLogin
+);
 
 // userRouter.get(routes.google, googleLogin);
 // userRouter.get(
