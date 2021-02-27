@@ -1,39 +1,65 @@
 // import db from "../db";
+import { Product, User, Sequelize as Op } from "../models";
 
-// export const uploadProduct = function (req, res) {
-//   const {
-//     body: { name, description }
-//   } = req;
-//   const { location } = req;
-//   db.query(`INSERT INTO PRODUCT (userID, productName, productDes, fileURL) VALUES('${req.user[0].userID}', '${name}', '${description}', '${location}');`, 
-//   function (err, product) {
-//     if (err) {
-//       console.log(err);
-//       return res.json({ 
-//         success: false, 
-//         message: "Error occurred at uploadProduct"
-//       });
-//     };
-//     return res.status(200).json({
-//         success: true,
-//         productID: product.productId,
-//     });
-//   });
-// };
+export const uploadProduct = async (req, res) => {
+  const {
+    body: { name: productName, description: productDes },
+    user: { id: producter }
+  } = req;
+  const { location: fileURL } = req;
+  try {
+    const { 
+      dataValues: product 
+    } = await Product.create({
+      productName,
+      productDes,
+      fileURL,
+      producter
+    })
+    return res.status(200).json({
+      success: true,
+      productID: product.id,
+    });
+  } catch (err) {
+    console.log("uploadProduct");
+    console.log(err);
+    return res.json({ 
+      success: false, 
+      message: "Error occurred at uploadProduct"
+    });
+  }
+};
 
-// export const loadProduct = (req, res) => {
-//   db.query(`SELECT * FROM PRODUCT WHERE userID = '${req.user[0].userID}';`, 
-//   function (err, product) {
-//     if (err){
-//       console.log(err);
-//       return res.json({ success: false, message: "Error occurred at loadproduct" });
-//     } 
-//     return res.status(200).send({
-//       success: true,
-//       product: product
-//     });
-//   });
-// };
+export const loadProduct = async (req, res) => {
+  try{
+    const productState = await Product.findAll({
+      include: [
+        {
+          model: User,
+          // attributes: ['name', 'u']
+        }
+     ],
+      // attributes: ['id', 'userEmail', 'userPassword'],
+      where: { producter: req.body.id },
+    });
+    // console.log(productState[1].dataValues);
+    if (productState) {
+      return res.status(200).json({
+        success: true,
+        product: productState
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        product: null
+      });
+    }
+  } catch (err) {
+    console.log("loadProduct");
+    console.log(err);
+    return res.json({ success: false, message: "Error occurred at loadproduct" });
+  }
+};
 
 // export const editProduct = (req, res) => {
 //   const {
