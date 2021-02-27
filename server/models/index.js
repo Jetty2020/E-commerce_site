@@ -1,4 +1,3 @@
-// const Sequelize = require('sequelize');
 import Sequelize from "sequelize";
 
 const env = process.env.NODE_ENV || 'development';

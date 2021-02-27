@@ -15,6 +15,7 @@ export const authSuccess = async (req, res) => {
       name: req.user.name,
     });
   } catch (err) {
+    console.log("authSuccess");
     console.log(err);
     return res.status(400)
     .send(err)
@@ -62,6 +63,7 @@ export const register = async (req, res) => {
       });
     };
   } catch (err) {
+    console.log("register");
     console.log(err);
     return res.status(400).send(err).json({ 
       success: false, 
@@ -124,6 +126,7 @@ export const login = async (req, res) => {
       };
     };
   } catch (err) {
+    console.log("login");
     console.log(err);
     return res
       .status(400)
@@ -166,6 +169,7 @@ export const checkEmail = async (req, res) => {
       });
     }
   } catch (err){
+    console.log("checkEmail");
     console.log(err);
     return res
       .status(400)
@@ -189,6 +193,7 @@ export const logout = (req, res) => {
       success: true
     });
   } catch (err) {
+    console.log("logout");
     console.log(err);
     return res
       .status(400)
