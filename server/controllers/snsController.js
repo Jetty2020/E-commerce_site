@@ -19,7 +19,7 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
   } = profile._json;
   try {
     const userState = await User.findOne({
-      // attributes: ['id', 'userEmail', 'userPassword'],
+      attributes: ['id'],
       where: {
         kkoID,
       },
@@ -81,7 +81,7 @@ export const naverLoginCallback = async (_, __, profile, cb) => {
   } = profile;
   try {
     const userState = await User.findOne({
-      // attributes: ['id', 'userEmail', 'userPassword'],
+      attributes: ['id'],
       where: {
         nvrID,
       },
@@ -135,118 +135,53 @@ export const postNaverLogin = (req, res) => {
   .redirect("http://localhost:3000");
 };
 
+export const googleLogin = passport.authenticate("google", { scope: ['profile'] });
 
-// export const naverLogin = passport.authenticate("naver");
+export const googleLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { sub : gglID, name }
+  } = profile;
+  console.log(profile);
+  try {
+    const userState = await User.findOne({
+      attributes: ['id'],
+      where: {
+        gglID,
+      },
+    });
+    var token =  jwt.sign(gglID, process.env.SALT).substr(3, 20);
+    var tokenExp = moment().add(0.5, 'hour').valueOf();
+    if (!userState) {
+      User.create({
+        gglID,
+        name,
+        emailChecked: true,
+        token,
+        tokenExp,
+      })
+      return cb(null, { token, tokenExp});
+    } else {
+      User.update({
+        token,
+        tokenExp
+      }, {
+        where: { gglID }
+      })
+      return cb(null, { token, tokenExp});
+    }
+  } catch (error) {
+    console.log("googleLoginCallback");
+    console.log(error);
+    return cb(error);
+  }
+};
 
-// export const naverLoginCallback = async (_, __, profile, cb) => {
-//   const {
-//     _json: { id, email, nickname : name }
-//   } = profile;
-//   try {
-//     db.query(`SELECT * from USER where nvrEmail = '${email}';`,
-//     function (err, user) {
-//       var token =  jwt.sign(user[0].userID,'secret');
-//       var halfHour = moment().add(0.5, 'hour').valueOf();
-//       if (!(user.length == 0)) {
-//         db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' where nvrEmail = '${email}';`,
-//           function (err, user) {
-//             if(err){
-//               console.log(err);
-//               return cb(err);
-//             } else {
-//               return cb(null, { token, halfHour});
-//             }
-//           }
-//         );
-//       } else {
-//         if (email){
-//           db.query(`INSERT INTO USER (nvrID, nvrEmail, name, emailChecked, token, tokenExp) VALUES('${id}', '${email}', '${name}', TRUE, ${token}, ${halfHour});`, 
-//           function (err, user) {
-//             if(err){
-//               console.log(err);
-//               return cb(err);
-//             } else {
-//               return cb(null, { token, halfHour});
-//             }
-//           });
-//         } else {
-//           db.query(`INSERT INTO USER (nvrID, name, emailChecked, token, tokenExp) VALUES('${id}', '${name}', TRUE, ${token}, ${halfHour});`, 
-//           function (err, user) {
-//             if(err){
-//               console.log(err);
-//               return cb(err);
-//             } else {
-//               return cb(null, { token, halfHour});
-//             }
-//           });
-//         };
-//       };
-//     });
-//   } catch (error) {
-//     console.log("naverLoginCallback");
-//     console.log(error);
-//     return cb(error);
-//   }
-// };
-
-// export const postNaverLogin = (req, res) => {
-//   var {
-//     user: { token, halfHour }
-//   } = req;
-//   return res
-//   .cookie("w_auth", token)
-//   .cookie("w_authExp", halfHour)
-//   .redirect("http://localhost:3000");
-// };
-
-
-// export const googleLogin = passport.authenticate("google", { scope: ['profile'] });
-
-// export const googleLoginCallback = async (_, __, profile, cb) => {
-//   const {
-//     _json: { sub : id, name }
-//   } = profile;
-//   try {
-//     db.query(`SELECT * from USER where gglID = '${id}';`,
-//     function (err, user) {
-//       var token =  jwt.sign(user[0].userID,'secret');
-//       var halfHour = moment().add(0.5, 'hour').valueOf();
-//       if (!(user.length == 0)) {
-//         db.query(`UPDATE USER SET token = '${token}', tokenExp = '${halfHour}' where gglID = '${id}';`,
-//           function (err, user) {
-//             if(err){
-//               console.log(err);
-//               return cb(err);
-//             } else {
-//               return cb(null, { token, halfHour});
-//             }
-//           }
-//         );
-//       } else {
-//         db.query(`INSERT INTO USER (gglID, name, emailChecked, token, tokenExp) VALUES('${id}', '${name}', TRUE, ${token}, ${halfHour});`, 
-//           function (err, user) {
-//             if(err){
-//               console.log(err);
-//               return cb(err);
-//             } else {
-//               return cb(null, { token, halfHour});
-//             }
-//           });
-//       };
-//     });
-//   } catch (error) {
-//     console.log("googleLoginCallback");
-//     console.log(error);
-//     return cb(error);
-//   }
-// };
-
-// export const postGoogleLogin = (req, res) => {
-//   var {
-//     user: { token, halfHour }
-//   } = req;
-//   return res
-//   .cookie("w_auth", token)
-//   .cookie("w_authExp", halfHour)
-//   .redirect("http://localhost:3000");
-// };
+export const postGoogleLogin = (req, res) => {
+  var {
+    user: { token, tokenExp }
+  } = req;
+  return res
+  .cookie("w_auth", token)
+  .cookie("w_authExp", tokenExp)
+  .redirect("http://localhost:3000");
+};

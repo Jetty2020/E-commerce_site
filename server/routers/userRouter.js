@@ -17,8 +17,8 @@ import{
   postKakaoLogin,
   naverLogin,
   postNaverLogin,
-  // googleLogin,
-  // postGoogleLogin,
+  googleLogin,
+  postGoogleLogin,
 } from "../controllers/snsController"
 
 const userRouter = express.Router();
@@ -43,11 +43,11 @@ userRouter.get(
   postNaverLogin
 );
 
-// userRouter.get(routes.google, googleLogin);
-// userRouter.get(
-//   routes.googleCallback,
-//   passport.authenticate("google", { failureRedirect: routes.login }),
-//   postGoogleLogin
-// );
+userRouter.get(routes.google, googleLogin);
+userRouter.get(
+  routes.googleCallback,
+  passport.authenticate("google", { failureRedirect: routes.login }),
+  postGoogleLogin
+);
 
 export default userRouter;
