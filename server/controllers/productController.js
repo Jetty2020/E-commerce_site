@@ -3,7 +3,7 @@ import { Product, User, Sequelize as Op } from "../models";
 
 export const uploadProduct = async (req, res) => {
   const {
-    body: { name: productName, description: productDes },
+    body: { productName, productDes },
     user: { id: producter }
   } = req;
   const { location: fileURL } = req;
@@ -61,39 +61,50 @@ export const loadProduct = async (req, res) => {
   }
 };
 
-// export const editProduct = (req, res) => {
-//   const {
-//     body: { 
-//       productID, 
-//       productName,
-//       productDes,
-//     }
-//   } = req;
-//   db.query(`UPDATE PRODUCT SET productName = '${productName}', productDes = '${productDes}' WHERE productID = '${productID}';`,
-//   function (err, product) {
-//     if (err){
-//       console.log(err);
-//       return res.json({ success: false, message: "Error occurred at editProduct" });
-//     } 
-//     return res.status(200).send({
-//       success: true,
-//       productID: productID
-//     });
-//   });
-// };
+export const editProduct = (req, res) => {
+  const {
+    body: { 
+      productID: id, 
+      productName,
+      productDes,
+    }
+  } = req;
+  try {
+    Product.update({
+      productName,
+      productDes
+    }, {
+      where: {
+        id
+      }
+    });
+    return res.status(200).json({
+      success: true,
+      productID: productID
+    });
+  } catch (err) {
+    console.log("editProduct");
+    console.log(err);
+    return res.json({ success: false, message: "Error occurred at editProduct" });
+  }
+};
 
-// export const deleteProduct = (req, res) => {
-//   const {
-//     body: { productID }
-//   } = req;
-//   db.query(`DELETE FROM PRODUCT WHERE productID = '${productID}';`,
-//   function (err, product) {
-//     if (err){
-//       console.log(err);
-//       return res.json({ success: false, message: "Error occurred at deleteProduct" });
-//     } 
-//     return res.status(200).send({
-//       success: true,
-//     });
-//   });
-// };
+export const deleteProduct = (req, res) => {
+  const {
+    body: { productID: id }
+  } = req;
+  try {
+    Product.destroy({
+      where: {
+        id
+      }
+    });
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (err) {
+    console.log("deleteProduct");
+    console.log(err);
+    return res.json({ success: false, message: "Error occurred at deleteProduct" });
+  }
+};

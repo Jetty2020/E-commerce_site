@@ -42,8 +42,8 @@ function UploadPage(props) {
 				setTimeout(() => {
 					var dataForm = new FormData();
 					dataForm.append("file", fileData, fileData.name);
-					dataForm.append("name", values.name);
-					dataForm.append("description", values.description);
+					dataForm.append("productName", values.name);
+					dataForm.append("productDes", values.description);
 					dispatch(uploadProduct(dataForm))
 						.then(response => {
 							if (response.payload.success) {
