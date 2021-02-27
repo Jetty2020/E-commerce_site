@@ -94,7 +94,6 @@ export const login = async (req, res) => {
         return res.status(200).json({ success: false, message: "Wrong password" });
       } else {
         var token =  jwt.sign(user.id, process.env.SALT).substr(3, 20);
-        console.log(token);
         var tokenExp = moment().add(0.5, 'hour').valueOf();
         User.update({
           token,

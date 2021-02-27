@@ -41,16 +41,6 @@ export const auth = async (req, res, next) => {
   }
 };
 
-// export const localsMiddleware = (req, res, next) => {
-//   const user= await User.findOne({
-//     where: {
-//       token
-//     },
-//   });
-//   res.locals.user = user.dataValues || null;
-//   next();
-// };
-
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_KEY,
   secretAccessKey: process.env.AWS_PRIVATE_KEY,
