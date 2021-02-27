@@ -1,4 +1,3 @@
-// import db from "../db";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import { User, Sequelize as Op } from "../models";
@@ -18,7 +17,7 @@ export const authSuccess = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(400)
-    // .send(err)
+    .send(err)
     .json({ 
       success: false, 
       message: "Error occurred at authSuccess"
@@ -94,7 +93,8 @@ export const login = async (req, res) => {
       if (user.userPassword !== password) {
         return res.status(200).json({ success: false, message: "Wrong password" });
       } else {
-        var token =  jwt.sign(user.id, process.env.SALT);
+        var token =  jwt.sign(user.id, process.env.SALT).substr(3, 20);
+        console.log(token);
         var tokenExp = moment().add(0.5, 'hour').valueOf();
         User.update({
           token,
@@ -150,7 +150,6 @@ export const checkEmail = async (req, res) => {
         id,
       },
     });
-    console.log(user);
     if (emailHash == user.emailHash) {
       User.update({
         emailChecked: true,
@@ -169,19 +168,32 @@ export const checkEmail = async (req, res) => {
     }
   } catch (err){
     console.log(err);
-    return res.json({ success: false, message: "Error occurred at checkEmail" });
+    return res
+      .status(400)
+      .send(err)
+      .json({ success: false, message: "Error occurred at checkEmail" });
   }
 };
 
-// export const logout = (req, res) => {
-//   db.query(`UPDATE USER SET token = null, tokenExp = null WHERE userID = '${req.user[0].userID}';`,
-//   function (err, user) {
-//     if (err){
-//       console.log(err);
-//       return res.json({ success: false, message: "Error occurred at logout" });
-//     } 
-//     return res.status(200).send({
-//       success: true
-//     });
-//   });
-// };
+export const logout = (req, res) => {
+  const { 
+    user: {id},
+  } = req;
+  try {
+    User.update({
+      token: null,
+      tokenExp: null,
+    }, {
+      where: { id }
+    });
+    return res.status(200).send({
+      success: true
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(400)
+      .send(err)
+      .json({ success: false, message: "Error occurred at logout" });
+  }
+};

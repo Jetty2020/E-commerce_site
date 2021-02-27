@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.BOOLEAN,
 		},
 		token: {
-			type: DataTypes.STRING(50),
+			type: DataTypes.STRING(30),
 		},
 		tokenExp: {
 			type: DataTypes.STRING(15),

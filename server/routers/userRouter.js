@@ -9,7 +9,7 @@ import{
   register,
   login,
   // userDetail,
-  // logout,
+  logout,
   checkEmail,
 } from "../controllers/userController"
 // import{
@@ -28,7 +28,7 @@ userRouter.post(routes.register, register);
 userRouter.post(routes.login, login);
 userRouter.post(routes.checkEmail, auth, checkEmail);
 // userRouter.get(routes.userDetail, auth, userDetail);
-// userRouter.get(routes.logout, auth, logout);
+userRouter.get(routes.logout, auth, logout);
 // userRouter.get(routes.kakao, kakaoLogin);
 // userRouter.get(
 //   routes.kakaoCallback,

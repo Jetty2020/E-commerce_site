@@ -11,12 +11,12 @@ export const auth = async (req, res, next) => {
     const token = req.cookies.w_auth;
     // 토큰을 복호화 한후  유저를 찾는다.
     const userState= await User.findOne({
-      attributes: ['id', 'role', 'userEmail', 'name'],
+      // attributes: ['id', 'role', 'userEmail', 'name'],
       where: {
         token
       },
     });
-    if (user) {
+    if (userState) {
       const {
         dataValues: user
       } = userState;
@@ -26,12 +26,17 @@ export const auth = async (req, res, next) => {
     } else {
       return res.json({
         isAuth: false,
-        message: "Error occurred at auth",
+        message: "No user at auth",
         error: true
       });
     }
   }
   catch (err) {
+    res.json({
+      isAuth: false,
+      message: "Error occurred at auth",
+      error: true
+    });
     throw err
   }
 };
