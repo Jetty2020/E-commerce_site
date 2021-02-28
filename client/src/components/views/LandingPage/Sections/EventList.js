@@ -27,7 +27,7 @@ function EventList() {
     },
   ];
   return (
-    <div style={{ textAlign: 'center', margin: '8rem 0' }}>
+    <div style={{ textAlign: 'center', margin: '5rem 0' }}>
       <h2 style={{ marginBottom: '1.5rem' }}>Events</h2>
       <ul className="main_list events">
         {eventList.map((event) => (

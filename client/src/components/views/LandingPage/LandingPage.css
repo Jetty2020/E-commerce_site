@@ -9,9 +9,10 @@ h2 {
   font-size: 1.5rem;
 }
 
+/* VisualSlider */
 .visual_box {
   position: relative;
-  margin-top: -7px;
+  margin-top: -7px; /* ?? */
 }
 .visual_box .visual_slide {
   height: 500px;
@@ -22,11 +23,10 @@ h2 {
 }
 .visual_box .visual_button {
   position: absolute;
-  top: 50%;
-  margin-top: -25px;
+  top: 45%;
   padding: 10px;
   font-size: 40px;
-  z-index: 10;
+  z-index: 1;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   cursor: pointer;
@@ -41,6 +41,7 @@ h2 {
   right: 40px;
 }
 
+/* RecoList, NnHList, SaleList, KeyList, EventList */
 .main_list {
   display: flex;
   flex-wrap: wrap;
@@ -48,14 +49,23 @@ h2 {
 }
 .main_list li {
   cursor: pointer;
-}
-.main_list li img {
+  margin-top: 10px;
+  /* margin-inline-start: 2rem; */
+  /* width: 350px;
+  height: 400px;
+  justify-content: center;
+  align-items: center; */
 }
 .main_list li p {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
+  font-weight: bold;
 }
 .main_list li span {
-  margin-top: -0.5rem;
+  display: block;
+  margin-top: -0.6rem; /* span tag에서는 display: block이 필요함 */
+}
+.main_list .discount_rate {
+  display: inline;
 }
 
 .events {
@@ -99,14 +109,14 @@ h2 {
 .keywords_button.left {
   top: 50%;
   left: 0;
-  margin-top: -27px;
+  margin-top: -1rem;
 }
 .keywords_button.right {
   top: 50%;
   right: 0;
-  margin-top: -27px;
+  margin-top: -1rem;
 }
 .keywords_box:hover .keywords_button {
   opacity: 1;
-  transition: all 0.4s;
+  transition: all 0.5s;
 }

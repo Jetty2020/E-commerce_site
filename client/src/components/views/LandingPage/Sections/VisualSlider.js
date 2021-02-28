@@ -24,7 +24,7 @@ function VisualSlider() {
           </div>
         </Carousel>
         <LeftOutlined className="visual_button prev" />
-        <RightOutlined className="visual_button next"/>
+        <RightOutlined className="visual_button next" />
       </div>     
     </div>
   );

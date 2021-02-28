@@ -41,10 +41,10 @@ function SaleList() {
           <li key={product.id}>
             <img src={product.image} alt='sale' />
             <p>Sale {product.name}</p>
-            <span style={{ color: '#fa5252', fontWeight: 'bold' }}>
+            <span className="discount_rate" style={{ color: '#fa5252', fontWeight: 'bold' }}>
               10%{' '}
             </span>
-            <span>{product.price}</span>
+            <span className="discount_rate" >{product.price}</span>
             <span
               style={{
                 display: 'block',
