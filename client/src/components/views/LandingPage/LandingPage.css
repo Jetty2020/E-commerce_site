@@ -23,7 +23,8 @@ h2 {
 }
 .visual_box .visual_button {
   position: absolute;
-  top: 45%;
+  top: 50%;
+  margin-top: -25px;
   padding: 10px;
   font-size: 40px;
   z-index: 1;
