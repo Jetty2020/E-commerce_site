@@ -247,3 +247,51 @@ export const removeCart = async (req, res) => {
       .json({ success: false, message: "존재하지 않은 상품입니다." });
   }
 };
+
+export const addWishList = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.addWishList(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
+  }
+};
+
+export const removeWishList = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.removeWishList(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
+  }
+};
