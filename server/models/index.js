@@ -16,14 +16,34 @@ db.Sequelize = Sequelize;
 
 db.User = require("./user")(sequelize, Sequelize);
 db.Product = require("./product")(sequelize, Sequelize);
+db.Comment = require("./comment")(sequelize, Sequelize);
 
-db.User.belongsToMany(db.Product, { as: "cartProduct", through: "cart" });
-db.Product.belongsToMany(db.User, { as: "userCart", through: "cart" });
+db.User.belongsToMany(db.Product, {
+  as: "Cart",
+  through: "cart",
+  foreignKey: "userId",
+});
 
-db.User.belongsToMany(db.Product, { as: "wishList", through: "wish" });
-db.Product.belongsToMany(db.User, { as: "userWish", through: "wish" });
+db.Product.belongsToMany(db.User, {
+  as: "UserCart",
+  through: "cart",
+  foreignKey: "productId",
+});
 
-db.User.belongsToMany(db.Product, { as: "commentProduct", through: "comment" });
-db.Product.belongsToMany(db.User, { as: "userComment", through: "comment" });
+db.User.belongsToMany(db.Product, {
+  as: "WishList",
+  through: "wish",
+  foreignKey: "userId",
+});
+db.Product.belongsToMany(db.User, {
+  as: "WishList",
+  through: "wish",
+  foreignKey: "productId",
+});
+
+db.Comment.belongsTo(db.User);
+db.User.hasMany(db.Comment);
+db.Comment.belongsTo(db.Product);
+db.Product.hasMany(db.Comment);
 
 module.exports = db;
