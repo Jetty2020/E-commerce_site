@@ -13,6 +13,11 @@ const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
+const ADD_CART = "/addCart";
+const ADD_WISHLIST = "/addWishList";
+const REMOVE_CART = "/removeCart";
+const REMOVE_WISHLIST = "/removeWishList";
+const ADD_COMMENT = "/addComment";
 
 // PRODUCTS with HOME
 
@@ -36,13 +41,11 @@ const NAVER_CALLBACK = "/auth/naver/callback";
 const GOOGLE = "/oauth/google";
 const GOOGLE_CALLBACK = "/auth/google/callback";
 
-
 const routes = {
-  
   home: HOME,
-  
+
   //ADMIN
-  
+
   admin: ADMIN,
 
   // USER
@@ -56,6 +59,11 @@ const routes = {
   editUser: EDIT_USER,
   userDetail: USER_DETAIL,
 
+  addCart: ADD_CART,
+  removeCart: REMOVE_CART,
+  addWishList: ADD_WISHLIST,
+  removeWishList: REMOVE_WISHLIST,
+
   // PRODUCTS
 
   products: PRODUCTS,
@@ -65,6 +73,7 @@ const routes = {
   editProduct: EDIT_PRODUCT,
   detailProduct: DETAIL_PRODUCT,
   deleteProduct: DELETE_PRODUCT,
+  addComment: ADD_COMMENT,
 
   api: API,
 
@@ -75,7 +84,6 @@ const routes = {
   naverCallback: NAVER_CALLBACK,
   google: GOOGLE,
   googleCallback: GOOGLE_CALLBACK,
-
 };
 
 export default routes;
