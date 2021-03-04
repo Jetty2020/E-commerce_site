@@ -17,7 +17,9 @@ const ADD_CART = "/addCart";
 const ADD_WISHLIST = "/addWishList";
 const REMOVE_CART = "/removeCart";
 const REMOVE_WISHLIST = "/removeWishList";
-const ADD_COMMENT = "/addComment";
+const ADD_COMMENT = "/addComment/:id";
+const EDIT_COMMENT = "/editComment/:id";
+const REMOVE_COMMENT = "/removeComment/:id";
 
 // PRODUCTS with HOME
 
@@ -74,6 +76,8 @@ const routes = {
   detailProduct: DETAIL_PRODUCT,
   deleteProduct: DELETE_PRODUCT,
   addComment: ADD_COMMENT,
+  editComment: EDIT_COMMENT,
+  removeComment: REMOVE_COMMENT,
 
   api: API,
 
