@@ -30,17 +30,25 @@ export const uploadProduct = async (req, res) => {
 
 export const loadProduct = async (req, res) => {
   try {
-    const productState = await Product.findAll({
-      // include: [
-      //   {
-      //     model: User,
-      //     // attributes: ['name', 'u']
-      //   },
-      // ],
-      // attributes: ['id', 'userEmail', 'userPassword'],
-      // where: { producter: req.body.id },
-    });
-    // console.log(productState[1].dataValues);
+    const {
+      body: { sector },
+    } = req;
+    let productState = [];
+    if ( sector === "newProduct" ) {
+      productState = await Product.findAll({
+        where: { newProduct: true },
+      });
+    } else if ( sector === "saleProduct" ) {
+      productState = await Product.findAll({
+        where: { saleProduct: true },
+      });
+    } else if ( sector === "recoProduct" ) {
+      productState = await Product.findAll({
+        where: { recoProduct: true },
+      });
+    } else {
+      productState = await Product.findAll({});
+    }
     if (productState) {
       return res.status(200).json({
         success: true,
@@ -61,6 +69,46 @@ export const loadProduct = async (req, res) => {
     });
   }
 };
+
+// export const bySectorProduct = async (req, res) => {
+//   try {
+//     const {
+//       body: { sector },
+//     } = req;
+//     const productState = [];
+//     if ( sector === "newProduct" ) {
+//       productState = await Product.findAll({
+//         where: { newProduct: true },
+//       });
+//     } else if ( sector === "saleProduct" ) {
+//       productState = await Product.findAll({
+//         where: { saleProduct: true },
+//       });
+//     } else {
+//       productState = await Product.findAll({
+//         where: { recoProduct: true },
+//       });
+//     }
+//     if (productState) {
+//       return res.status(200).json({
+//         success: true,
+//         product: productState,
+//       });
+//     } else {
+//       return res.status(200).json({
+//         success: true,
+//         product: null,
+//       });
+//     }
+//   } catch (err) {
+//     console.log("loadProduct");
+//     console.log(err);
+//     return res.json({
+//       success: false,
+//       message: "Error occurred at loadproduct",
+//     });
+//   }
+// };
 
 export const searchProduct = async (req, res) => {
   try {

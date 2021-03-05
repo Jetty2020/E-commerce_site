@@ -8,6 +8,15 @@ module.exports = (sequelize, DataTypes) => {
     productDes: {
       type: DataTypes.STRING(1024),
     },
+    newProduct: {
+      type: DataTypes.BOOLEAN,
+    },
+    saleProduct: {
+      type: DataTypes.BOOLEAN,
+    },
+    recoProduct: {
+      type: DataTypes.BOOLEAN,
+    },
     fileURL: {
       type: DataTypes.STRING(150),
     },
