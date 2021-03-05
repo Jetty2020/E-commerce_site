@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import moment from "moment";
-import { User, Sequelize as Op } from "../models";
+import { Product, User, Sequelize as Op } from "../models";
 import { mailSender } from "../util";
 import dotenv from "dotenv";
 dotenv.config();
@@ -17,12 +17,10 @@ export const authSuccess = async (req, res) => {
   } catch (err) {
     console.log("authSuccess");
     console.log(err);
-    return res.status(400)
-    .send(err)
-    .json({ 
-      success: false, 
-      message: "Error occurred at authSuccess"
-    })
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at authSuccess",
+    });
   }
 };
 
@@ -37,48 +35,50 @@ export const authSuccess = async (req, res) => {
 // };
 
 export const register = async (req, res) => {
-  const { 
-    body : {email, password},
+  const {
+    body: { email, password },
   } = req;
+  console.log("data:", req.body);
   try {
-    const user= await User.findOne({
-      attributes: ['id'],
+    const user = await User.findOne({
+      attributes: ["id"],
       where: {
         userEmail: email,
       },
     });
-    if (!user) { //이매일 중복 확인
+    if (!user) {
+      //이매일 중복 확인
       User.create({
         userEmail: email,
         userPassword: password,
       });
       mailSender.sendGmail(req);
       return res.status(200).json({
-        success: true
+        success: true,
       });
     } else {
       return res.status(200).json({
         success: false,
-        message: "The email is already exsisted."
+        message: "The email is already exsisted.",
       });
-    };
+    }
   } catch (err) {
     console.log("register");
     console.log(err);
-    return res.status(400).send(err).json({ 
-      success: false, 
-      message: "Error occurred at register"
-    })
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at register",
+    });
   }
 };
 
 export const login = async (req, res) => {
-  const { 
-    body : {email, password},
+  const {
+    body: { email, password },
   } = req;
   try {
     const userState = await User.findOne({
-      attributes: ['id', 'userEmail', 'userPassword'],
+      attributes: ["id", "userEmail", "userPassword"],
       where: {
         userEmail: email,
       },
@@ -86,89 +86,85 @@ export const login = async (req, res) => {
     if (!userState) {
       return res.status(200).json({
         success: false,
-        message: "Auth failed, email is not found"
+        message: "Auth failed, email is not found",
       });
     } else {
-      const {
-        dataValues: user
-      } = userState;
+      const { dataValues: user } = userState;
       if (user.userPassword !== password) {
-        return res.status(200).json({ success: false, message: "Wrong password" });
+        return res
+          .status(200)
+          .json({ success: false, message: "Wrong password" });
       } else {
-        var token =  jwt.sign(user.id, process.env.SALT).substr(3, 20);
-        var tokenExp = moment().add(0.5, 'hour').valueOf();
-        User.update({
-          token,
-          tokenExp,
-        }, {
+        var token = jwt.sign(user.id, process.env.SALT).substr(3, 20);
+        var tokenExp = moment().add(0.5, "hour").valueOf();
+        User.update(
+          {
+            token,
+            tokenExp,
+          },
+          {
             where: { id: user.id },
-        });
+          }
+        );
         res.cookie("w_authExp", tokenExp);
         if (!user.emailChecked) {
-          return res
-            .status(200)
-            .cookie("w_auth", token)
-            .json({
-              success: true,
-              emailChecked: false, 
-              userId: user.id,
-              message: "Email unchecked account."
-            });
+          return res.status(200).cookie("w_auth", token).json({
+            success: true,
+            emailChecked: false,
+            userId: user.id,
+            message: "Email unchecked account.",
+          });
         } else {
-          return res
-            .cookie("w_auth", token).status(200)
-            .json({
-              success: true,
-              emailChecked: true,
-              userId: user.id
-            });
+          return res.cookie("w_auth", token).status(200).json({
+            success: true,
+            emailChecked: true,
+            userId: user.id,
+          });
         }
-      };
-    };
+      }
+    }
   } catch (err) {
     console.log("login");
     console.log(err);
-    return res
-      .status(400)
-      .send(err)
-      .json({ 
-        success: false, 
-        message: "Error occurred at login"
-      })
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at login",
+    });
   }
 };
 
 export const checkEmail = async (req, res) => {
-  const { 
-    user: {userID: id},
-    body: {emailHash}
+  const {
+    user: { userID: id },
+    body: { emailHash },
   } = req;
   try {
-    const {
-      dataValues: user
-    } = await User.findOne({
-      attributes: ['userEmail', 'userPassword', 'emailHash'],
+    const { dataValues: user } = await User.findOne({
+      attributes: ["userEmail", "userPassword", "emailHash"],
       where: {
         id,
       },
     });
     if (emailHash == user.emailHash) {
-      User.update({
-        emailChecked: true,
-        emailHash: null,
-      }, {
+      User.update(
+        {
+          emailChecked: true,
+          emailHash: null,
+        },
+        {
           where: { id },
-      });
+        }
+      );
       return res.status(200).json({
-        success: true
+        success: true,
       });
     } else {
       return res.status(200).json({
         success: false,
-        message: "Wrong emailHash!"
+        message: "Wrong emailHash!",
       });
     }
-  } catch (err){
+  } catch (err) {
     console.log("checkEmail");
     console.log(err);
     return res
@@ -179,18 +175,21 @@ export const checkEmail = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  const { 
-    user: {id},
+  const {
+    user: { id },
   } = req;
   try {
-    User.update({
-      token: null,
-      tokenExp: null,
-    }, {
-      where: { id }
-    });
+    User.update(
+      {
+        token: null,
+        tokenExp: null,
+      },
+      {
+        where: { id },
+      }
+    );
     return res.status(200).send({
-      success: true
+      success: true,
     });
   } catch (err) {
     console.log("logout");
@@ -199,5 +198,100 @@ export const logout = (req, res) => {
       .status(400)
       .send(err)
       .json({ success: false, message: "Error occurred at logout" });
+  }
+};
+
+export const addCart = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.addUserCart(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
+  }
+};
+export const removeCart = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.removeUserCart(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
+  }
+};
+
+export const addWishList = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.addWishList(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
+  }
+};
+
+export const removeWishList = async (req, res) => {
+  const {
+    body: { productId },
+    user: { id: producter },
+  } = req;
+
+  try {
+    console.log(productId, producter);
+    const findProduct = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    findProduct.removeWishList(producter);
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: "존재하지 않은 상품입니다." });
   }
 };
