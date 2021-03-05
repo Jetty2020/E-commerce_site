@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import { Product, User, Sequelize as Op } from "../models";
-import { mailSender } from "../util";
+import { mailSender, generateRandom } from "../util";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -47,12 +47,16 @@ export const register = async (req, res) => {
     });
     if (!user) {
       //이매일 중복 확인
+      const hash = await generateRandom(111111, 999999);
+      const subject = "회원가입을 위한 인증번호를 입력해주세요.";
+      const text = "오른쪽 숫자 6자리를 입력해주세요 : " + hash;
       User.create({
         userID,
         userEmail: email,
         userPassword: password,
+        emailHash: hash,
       });
-      mailSender.sendGmail(req);
+      mailSender.sendGmail(email, subject, text, hash);
       return res.status(200).json({
         success: true,
       });
@@ -171,6 +175,34 @@ export const checkEmail = async (req, res) => {
       .status(400)
       .send(err)
       .json({ success: false, message: "Error occurred at checkEmail" });
+  }
+};
+
+export const findID = async (req, res) => {
+  const {
+    body: { email },
+  } = req;
+  const subject = "요청하신 ID 입니다";
+  try {
+    const { dataValues: user } = await User.findOne({
+      attributes: ["userEmail", "userID"],
+      where: {
+        userEmail: email,
+      },
+    });
+    const userID = user.userID.slice(0,user.userID.length-3) +'***';
+    const text = "회원님의 ID 입니다 : " + userID;
+    mailSender.sendGmail(email, subject, text);
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("findID");
+    console.log(err);
+    return res
+      .status(400)
+      .send(err)
+      .json({ success: false, message: "Error occurred at findID" });
   }
 };
 

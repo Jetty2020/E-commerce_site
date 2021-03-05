@@ -11,6 +11,7 @@ const AUTH = "/auth";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
+const FINDID = "/findID";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 const ADD_CART = "/addCart";
@@ -57,6 +58,7 @@ const routes = {
   auth: AUTH,
   login: LOGIN,
   checkEmail: CHECKEMAIL,
+  findID: FINDID,
   logout: LOGOUT,
   editUser: EDIT_USER,
   userDetail: USER_DETAIL,

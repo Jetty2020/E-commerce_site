@@ -9,6 +9,7 @@ import {
   // userDetail,
   logout,
   checkEmail,
+  findID,
   addCart,
   removeCart,
   addWishList,
@@ -29,6 +30,7 @@ userRouter.get(routes.auth, auth, authSuccess);
 userRouter.post(routes.register, register);
 userRouter.post(routes.login, login);
 userRouter.post(routes.checkEmail, auth, checkEmail);
+userRouter.post(routes.findID, findID);
 // userRouter.get(routes.userDetail, auth, userDetail);
 userRouter.get(routes.logout, auth, logout);
 

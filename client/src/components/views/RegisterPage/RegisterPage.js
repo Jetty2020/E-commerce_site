@@ -64,7 +64,6 @@ function RegisterPage(props) {
             name: values.name,
             // image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
-					console.log(dataToSubmit);
 
           dispatch(registerUser(dataToSubmit)).then((response) => {
             if (response.payload.success) {
