@@ -12,6 +12,7 @@ const LOGIN = "/login";
 const LOGOUT = "/logout";
 const CHECKEMAIL = "/checkEmail";
 const FINDID = "/findID";
+const FINDPASSWORD = "/findPassword";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 const ADD_CART = "/addCart";
@@ -59,6 +60,7 @@ const routes = {
   login: LOGIN,
   checkEmail: CHECKEMAIL,
   findID: FINDID,
+  findPassword: FINDPASSWORD,
   logout: LOGOUT,
   editUser: EDIT_USER,
   userDetail: USER_DETAIL,

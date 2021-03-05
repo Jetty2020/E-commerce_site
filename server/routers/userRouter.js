@@ -10,6 +10,7 @@ import {
   logout,
   checkEmail,
   findID,
+  findPassword,
   addCart,
   removeCart,
   addWishList,
@@ -31,6 +32,7 @@ userRouter.post(routes.register, register);
 userRouter.post(routes.login, login);
 userRouter.post(routes.checkEmail, auth, checkEmail);
 userRouter.post(routes.findID, findID);
+userRouter.post(routes.findPassword, findPassword);
 // userRouter.get(routes.userDetail, auth, userDetail);
 userRouter.get(routes.logout, auth, logout);
 

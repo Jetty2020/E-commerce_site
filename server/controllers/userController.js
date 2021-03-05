@@ -116,7 +116,7 @@ export const login = async (req, res) => {
             success: true,
             emailChecked: false,
             userId: user.id,
-            message: "Email unchecked account.",
+            message: "Email unchecked account",
           });
         } else {
           return res.cookie("w_auth", token).status(200).json({
@@ -203,6 +203,36 @@ export const findID = async (req, res) => {
       .status(400)
       .send(err)
       .json({ success: false, message: "Error occurred at findID" });
+  }
+};
+
+export const findPassword = async (req, res) => {
+  const {
+    body: { email },
+  } = req;
+  try {
+    const subject = "새 비밀번호입니다";
+    const newPassword = await generateRandom(111111, 999999);
+    const text = "새로운 비밀번호 : " + newPassword;
+    User.update(
+      {
+        userPassword: newPassword,
+      },
+      {
+        where: { userEmail: email },
+      }
+    );
+    mailSender.sendGmail(email, subject, text);
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("findPassword");
+    console.log(err);
+    return res
+      .status(400)
+      .send(err)
+      .json({ success: false, message: "Error occurred at findPassword" });
   }
 };
 
