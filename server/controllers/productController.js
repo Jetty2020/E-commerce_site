@@ -75,7 +75,6 @@ export const makeEventProduct = async (req, res) => {
     const {
       body: { sector, id },
     } = req;
-    let productState = [];
     if ( sector === "newProduct" ) {
       id.map(
         id => 
@@ -105,11 +104,54 @@ export const makeEventProduct = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log("loadProduct");
+    console.log("makeEventProduct");
     console.log(err);
     return res.json({
       success: false,
-      message: "Error occurred at loadproduct",
+      message: "Error occurred at makeEventProduct",
+    });
+  }
+};
+
+export const removeEventProduct = async (req, res) => {
+  try {
+    const {
+      body: { sector, id },
+    } = req;
+    if ( sector === "newProduct" ) {
+      id.map(
+        id => 
+        Product.update(
+          { newProduct: false },
+          { where: { id }, }
+        )
+      );
+    } else if ( sector === "saleProduct" ) {
+      id.map(
+        id =>
+        Product.update(
+          { saleProduct: false },
+          { where: { id }, }
+        )
+      );
+    } else if ( sector === "recoProduct" ) {
+      id.map(
+        id =>
+        Product.update(
+          { recoProduct: false },
+          { where: { id }, }
+        )
+      );
+    }
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("makeEventProduct");
+    console.log(err);
+    return res.json({
+      success: false,
+      message: "Error occurred at makeEventProduct",
     });
   }
 };

@@ -28,6 +28,7 @@ const REMOVE_COMMENT = "/removeComment/:id";
 const HOME = "/";
 const LOAD_PRODUCT = "/load";
 const MAKE_EVENT_PRODUCT = "/makeEvent";
+const REMOVE_EVENT_PRODUCT = "/removeEvent";
 const UPLOAD_PRODUCT = "/upload";
 const EDIT_PRODUCT = "/edit";
 const SEARCH_PRODUCT = "/search";
@@ -76,6 +77,7 @@ const routes = {
   products: PRODUCTS,
   loadProduct: LOAD_PRODUCT,
   makeEventProduct: MAKE_EVENT_PRODUCT,
+  removeEventProduct: REMOVE_EVENT_PRODUCT,
   searchProduct: SEARCH_PRODUCT,
   uploadProduct: UPLOAD_PRODUCT,
   editProduct: EDIT_PRODUCT,
