@@ -1,10 +1,10 @@
 // import db from "../db";
-import { Product, User, Comment, Sequelize as Op } from "../models";
+import { Product, User, Comment, Sequelize } from "../models";
 
 export const uploadProduct = async (req, res) => {
   const {
     body: { productName, productDes },
-    user: { id: producter },
+    // user: { id: producter },
   } = req;
   const { location: fileURL } = req;
   try {
@@ -12,7 +12,7 @@ export const uploadProduct = async (req, res) => {
       productName,
       productDes,
       fileURL,
-      producter,
+      // producter,
     });
     return res.status(200).json({
       success: true,
@@ -31,14 +31,14 @@ export const uploadProduct = async (req, res) => {
 export const loadProduct = async (req, res) => {
   try {
     const productState = await Product.findAll({
-      include: [
-        {
-          model: User,
-          // attributes: ['name', 'u']
-        },
-      ],
+      // include: [
+      //   {
+      //     model: User,
+      //     // attributes: ['name', 'u']
+      //   },
+      // ],
       // attributes: ['id', 'userEmail', 'userPassword'],
-      where: { producter: req.body.id },
+      // where: { producter: req.body.id },
     });
     // console.log(productState[1].dataValues);
     if (productState) {
@@ -58,6 +58,57 @@ export const loadProduct = async (req, res) => {
     return res.json({
       success: false,
       message: "Error occurred at loadproduct",
+    });
+  }
+};
+
+export const searchProduct = async (req, res) => {
+  try {
+    const Op = Sequelize.Op;
+    const {
+      body: { searchKey },
+    } = req;
+    const productState = await Product.findAll({
+      // include: [
+      //   {
+      //     model: User,
+      //     // attributes: ['name', 'u']
+      //   },
+      // ],
+      // attributes: ['id', 'userEmail', 'userPassword'],
+      // where: { productName },
+      where: { 
+        // [Op.or]: {
+        //   productName:{
+        //     [Op.like]: "%" + searchKey + "%"
+        //   },
+        //   productDes:{
+        //     [Op.like]: "%" + searchKey + "%"
+        //   }
+        // }
+        productName:{
+          [Op.like]: "%" + searchKey + "%"
+        }
+      },
+    });
+
+    if (productState.length != 0) {
+      return res.status(200).json({
+        success: true,
+        product: productState,
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        product: null,
+      });
+    }
+  } catch (err) {
+    console.log("searchProduct");
+    console.log(err);
+    return res.json({
+      success: false,
+      message: "Error occurred at searchProduct",
     });
   }
 };
