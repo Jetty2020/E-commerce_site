@@ -36,19 +36,19 @@ export const authSuccess = async (req, res) => {
 
 export const register = async (req, res) => {
   const {
-    body: { email, password },
+    body: { userID, email, password },
   } = req;
-  console.log("data:", req.body);
   try {
     const user = await User.findOne({
       attributes: ["id"],
       where: {
-        userEmail: email,
+        userID,
       },
     });
     if (!user) {
       //이매일 중복 확인
       User.create({
+        userID,
         userEmail: email,
         userPassword: password,
       });
@@ -74,13 +74,13 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const {
-    body: { email, password },
+    body: { userID, password },
   } = req;
   try {
     const userState = await User.findOne({
-      attributes: ["id", "userEmail", "userPassword"],
+      attributes: ["id", "userID", "userEmail", "userPassword"],
       where: {
-        userEmail: email,
+        userID,
       },
     });
     if (!userState) {
@@ -140,7 +140,7 @@ export const checkEmail = async (req, res) => {
   } = req;
   try {
     const { dataValues: user } = await User.findOne({
-      attributes: ["userEmail", "userPassword", "emailHash"],
+      attributes: ["userID", "userEmail", "userPassword", "emailHash"],
       where: {
         id,
       },

@@ -26,20 +26,21 @@ function LoginPage(props) {
 		setRememberMe(!rememberMe);
 	};
 
-	const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+	const initialID = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
 
 	return (
 		<Formik
 			initialValues={{ //초기값
-				email: initialEmail,
+				userID: initialID,
 				password: '',
 			}}
 			validationSchema={
 				Yup.object().shape({ //검증 규칙 설정
-				email: Yup
+					userID: Yup
 									.string()
-									.email('Email is invalid')
-									.required('Email is required'),
+									// .email('Email is invalid')
+									.min(6, 'ID must be at least 6 characters')
+									.required('ID is required'),
 				password: Yup
 										.string()
 										.min(6, 'Password must be at least 6 characters')
@@ -48,7 +49,7 @@ function LoginPage(props) {
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
 					let dataToSubmit = {
-						email: values.email,
+						userID: values.userID,
 						password: values.password
 					};
 				  
@@ -57,7 +58,7 @@ function LoginPage(props) {
 							if (response.payload.success) {
 								window.localStorage.setItem('userId', response.payload.userId);
 								if (rememberMe === true) {
-									window.localStorage.setItem('rememberMe', values.email);
+									window.localStorage.setItem('rememberMe', values.userID);
 								} else {
 									localStorage.removeItem('rememberMe');
 								}
@@ -94,19 +95,19 @@ function LoginPage(props) {
 					<form onSubmit={handleSubmit} style={{ width: '350px' }}>                    
 						<Form.Item required>
 							<Input
-								id="email"
+								id="userID"
 								prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-								placeholder="Enter your email"
-								type="email"
-								value={values.email}
+								placeholder="Enter your ID"
+								type="text"
+								value={values.userID}
 								onChange={handleChange}
 								onBlur={handleBlur}
 								className={
-									errors.email && touched.email ? 'text-input error' : 'text-input'
+									errors.userID && touched.userID ? 'text-input error' : 'text-input'
 								}
 							/>
-							{errors.email && touched.email && (
-								<div className="input-feedback">{errors.email}</div>
+							{errors.userID && touched.userID && (
+								<div className="input-feedback">{errors.userID}</div>
 							)}
 						</Form.Item>
 
