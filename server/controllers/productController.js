@@ -70,45 +70,49 @@ export const loadProduct = async (req, res) => {
   }
 };
 
-// export const bySectorProduct = async (req, res) => {
-//   try {
-//     const {
-//       body: { sector },
-//     } = req;
-//     const productState = [];
-//     if ( sector === "newProduct" ) {
-//       productState = await Product.findAll({
-//         where: { newProduct: true },
-//       });
-//     } else if ( sector === "saleProduct" ) {
-//       productState = await Product.findAll({
-//         where: { saleProduct: true },
-//       });
-//     } else {
-//       productState = await Product.findAll({
-//         where: { recoProduct: true },
-//       });
-//     }
-//     if (productState) {
-//       return res.status(200).json({
-//         success: true,
-//         product: productState,
-//       });
-//     } else {
-//       return res.status(200).json({
-//         success: true,
-//         product: null,
-//       });
-//     }
-//   } catch (err) {
-//     console.log("loadProduct");
-//     console.log(err);
-//     return res.json({
-//       success: false,
-//       message: "Error occurred at loadproduct",
-//     });
-//   }
-// };
+export const makeEventProduct = async (req, res) => {
+  try {
+    const {
+      body: { sector, id },
+    } = req;
+    let productState = [];
+    if ( sector === "newProduct" ) {
+      id.map(
+        id => 
+        Product.update(
+          { newProduct: true },
+          { where: { id }, }
+        )
+      );
+    } else if ( sector === "saleProduct" ) {
+      id.map(
+        id =>
+        Product.update(
+          { saleProduct: true },
+          { where: { id }, }
+        )
+      );
+    } else if ( sector === "recoProduct" ) {
+      id.map(
+        id =>
+        Product.update(
+          { recoProduct: true },
+          { where: { id }, }
+        )
+      );
+    }
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("loadProduct");
+    console.log(err);
+    return res.json({
+      success: false,
+      message: "Error occurred at loadproduct",
+    });
+  }
+};
 
 export const searchProduct = async (req, res) => {
   try {

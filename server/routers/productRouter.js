@@ -3,6 +3,7 @@ import routes from "../routes";
 import { auth, uploadFile } from "../middleware";
 import {
   loadProduct,
+  makeEventProduct,
   searchProduct,
   uploadProduct,
   editProduct,
@@ -15,6 +16,7 @@ import {
 const productRouter = express.Router();
 
 productRouter.get(routes.loadProduct, loadProduct);
+productRouter.get(routes.makeEventProduct, makeEventProduct);
 productRouter.post(routes.searchProduct, searchProduct);
 productRouter.post(
   routes.uploadProduct,
