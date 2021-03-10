@@ -35,7 +35,7 @@ function RegisterPage(props) {
   return (
     <Formik
       initialValues={{
-        role: 'general',
+        // role: 'general',
         email: '',
         lastName: '',
         name: '',
@@ -61,7 +61,7 @@ function RegisterPage(props) {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
-            role: values.role,
+            // role: values.role,
             email: values.email,
             userID: values.userID,
             password: values.password,
@@ -105,7 +105,7 @@ function RegisterPage(props) {
               {...formItemLayout}
               onSubmit={handleSubmit}
             >
-              <Form.Item required label="구분">
+              {/* <Form.Item required label="구분">
                 <select
                   id="role"
                   onChange={handleChange}
@@ -122,7 +122,7 @@ function RegisterPage(props) {
                   </option>
                   <option value="seller">판매자</option>
                 </select>
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item required label="성명">
                 <Input
