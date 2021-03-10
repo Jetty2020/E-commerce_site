@@ -10,6 +10,8 @@ import { Result, Empty } from 'antd';
 import Axios from 'axios';
 import Paypal from '../../utils/Paypal';
 function CartPage(props) {
+  // 삭제 필요
+
   const dispatch = useDispatch();
   const [Total, setTotal] = useState(0);
   const [ShowTotal, setShowTotal] = useState(false);
@@ -75,7 +77,6 @@ function CartPage(props) {
   const transactionCanceled = () => {
     console.log('Transaction canceled');
   };
-
   return (
     <div style={{ width: '85%', margin: '3rem auto' }}>
       <h1>My Cart</h1>
