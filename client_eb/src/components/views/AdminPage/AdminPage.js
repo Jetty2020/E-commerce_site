@@ -106,7 +106,7 @@ const MyCartPage = () => {
     let index = products.findIndex((product) => product.id === id);
     if (!products[index].checked) {
       setCheckedID((checkedID) => checkedID.concat(id));
-      console.log(index);
+      // console.log(index);
     } else {
       checkedID.splice(checkedID.indexOf(id), 1);
     }
@@ -114,16 +114,12 @@ const MyCartPage = () => {
 
   //상품 삭제
   const onRemove = (id) => {
-    console.log(id);
+    // console.log(id);
     setProducts(products.filter((product) => product.id !== id));
   };
   const onRemoveSelect = () => {
-    console.log(checkedID);
-    // checkedID.map((id) => )
-    for (let id of checkedID) {
-      // console.log(id);
-      setProducts(products.filter((product) => product.id !== id))
-    }
+    // console.log(checkedID);
+    setProducts(products.filter((product) => !checkedID.includes(product.id)))
     
   };
   //추천 상품
