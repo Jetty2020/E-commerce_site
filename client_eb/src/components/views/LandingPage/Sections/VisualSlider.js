@@ -7,23 +7,20 @@ function VisualSlider() {
   //sample
   const images = [
     {
-      src:
-        'https://www.advokatfirmaet-ge.dk/wp-content/uploads/2019/02/Ledige_stillinger_advokatfirmaet_grotkjaer_elmstroem_1920x500.jpg',
+      src: 'https://anedit.com/anedit/main/main03.jpg',
       title: '1',
     },
     {
-      src:
-        'https://www.vodafoneinnovus.com/wp-content/uploads/2017/07/IoT-platform-header_1920x500.jpg',
+      src: 'http://ahwe.co.kr/morenvyimg/main01.jpg',
       title: '2',
     },
     {
       src:
-        'https://hotel-adrema.de/wp-content/uploads/2017/11/Weihnachten_1920x500.jpg',
+        'https://img.ssfshop.com/display/category/THM/A31/A01/contents/10782_133427_29_KOR_20210310113430.jpg',
       title: '3',
     },
     {
-      src:
-        'https://lindenmuehle.de/wp-content/uploads/2016/12/bg-header-1920x500_standard_zimmer.jpg',
+      src: 'http://ahwe.co.kr/morenvyimg/event_ban01.jpg',
       title: '4',
     },
   ];
@@ -60,7 +57,8 @@ function VisualSlider() {
     text-align: center;
     img {
       width: 100%;
-      height: 100%;
+      height: 500px;
+      object-fit: cover;
       vertical-align: top;
     }
   `;

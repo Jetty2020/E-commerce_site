@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
+// import { products } from '../../_datas/productsData.json';
 
 function CreateProducts({ products, onRemove }) {
   const Ul = styled.ul`
@@ -77,7 +78,7 @@ function CreateProducts({ products, onRemove }) {
             {product.image && (
               <img
                 src={product.image}
-                style={{ width: '300px', height: '370px' }}
+                style={{ width: '300px', height: '370px', objectFit: 'cover' }}
               />
             )}
             {product.name && <Name>{product.name}</Name>}

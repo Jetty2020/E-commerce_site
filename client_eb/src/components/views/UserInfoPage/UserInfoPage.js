@@ -1,5 +1,5 @@
-import React, { useReducer, useState,useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useReducer, useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import './UserInfoPage.css';
@@ -8,7 +8,7 @@ import { Button, Input, Modal } from 'antd';
 
 function UserInfoPage() {
   //example user
-  const {userData} = useSelector(state => state.user);
+  const { userData } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({
     role: '',
@@ -19,18 +19,19 @@ function UserInfoPage() {
     modify: false,
   });
   useEffect(() => {
-   if(userData){
-     setUser({...user,
-      role: userData.isAdmin,
-      name: userData.name,
-      userID: userData.userID,
-      email: userData.userEmail,
-      password: userData.password,
-      modify: false,
-    });
-    // console.log(user);
-   }
-  }, [userData])
+    if (userData) {
+      setUser({
+        ...user,
+        role: userData.isAdmin,
+        name: userData.name,
+        userID: userData.userID,
+        email: userData.userEmail,
+        password: userData.password,
+        modify: false,
+      });
+      // console.log(user);
+    }
+  }, [userData]);
 
   const [sns, setSNS] = useState([
     { corp: 'kakao', title: '카카오 로그인', connect: false },
@@ -39,26 +40,29 @@ function UserInfoPage() {
     { corp: 'facebook', title: '페이스북 로그인', connect: false },
   ]);
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setUser({
+        ...user,
+        [name]: value,
+      });
+    },
+    [user],
+  );
 
-  const onModify = () => {
+  const onModify = useCallback(() => {
     setUser({ ...user, modify: !user.modify });
-  };
+  }, [user]);
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setUser({ ...user, modify: !user.modify });
-  };
+  }, [user]);
 
-  const onSend = () => {
+  const onSend = useCallback(() => {
     alert('이메일을 확인해 주세요.');
     setUser({ ...user, modify: !user.modify });
-  };
+  }, [user]);
 
   const onWithdraw = () => {
     alert('정말로 탈퇴하시겠습니까?');
@@ -153,44 +157,43 @@ function UserInfoPage() {
             </div>
             {userData ? (
               <div className="info_container">
-              <h3 className="info_title">회원 정보</h3>
-              {user.modify ? (
-                <div className="info">
-                  <div className="info_detail">
-                    <span>성명</span> {user.name}
+                <h3 className="info_title">회원 정보</h3>
+                {user.modify ? (
+                  <div className="info">
+                    <div className="info_detail">
+                      <span>성명</span> {user.name}
+                    </div>
+                    <div className="info_detail">
+                      <span>아이디</span> {user.userID}
+                    </div>
+                    <div className="info_detail">
+                      <span>이메일</span>{' '}
+                      <Input
+                        type="text"
+                        name="email"
+                        value={user.email}
+                        style={{ width: '200px' }}
+                        onChange={onChange}
+                      />
+                    </div>
                   </div>
-                  <div className="info_detail">
-                    <span>아이디</span> {user.userID}
+                ) : (
+                  <div className="info">
+                    <div className="info_detail">
+                      <span>성명</span> {user.name}
+                    </div>
+                    <div className="info_detail">
+                      <span>아이디</span> {user.userID}
+                    </div>
+                    <div className="info_detail">
+                      <span>이메일</span> {user.email}
+                    </div>
                   </div>
-                  <div className="info_detail">
-                    <span>이메일</span>{' '}
-                    <Input
-                      type="text"
-                      name="email"
-                      value={user.email}
-                      style={{ width: '200px' }}
-                      onChange={onChange}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="info">
-                  <div className="info_detail">
-                    <span>성명</span> {user.name}
-                  </div>
-                  <div className="info_detail">
-                    <span>아이디</span> {user.userID}
-                  </div>
-                  <div className="info_detail">
-                    <span>이메일</span> {user.email}
-                  </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
             ) : (
               <></>
             )}
-            
 
             {user.modify ? (
               <>
