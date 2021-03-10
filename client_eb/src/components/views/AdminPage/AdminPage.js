@@ -190,7 +190,7 @@ const MyCartPage = () => {
               <div
                 style={{ width: '23%', display: 'flex', alignItems: 'center' }}
               >
-                <img src={product.image} width="100px" height="100px" />
+                <img src={product.image} width="100px" height="100px" alt="img" />
                 <div style={{ marginLeft: '15px' }}>
                   {product.recommend ? (
                     <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
