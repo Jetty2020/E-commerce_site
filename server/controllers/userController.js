@@ -7,12 +7,16 @@ dotenv.config();
 
 export const authSuccess = async (req, res) => {
   try {
+    const {
+      user: { userID, role, userEmail, name, password },
+    } = req;
     res.status(200).json({
-      userID: req.user.userID,
-      isAdmin: req.user.role === 0 ? false : true,
+      userID,
+      isAdmin: role === 0 ? false : true,
       isAuth: true,
-      email: req.user.userEmail,
-      name: req.user.name,
+      userEmail,
+      name,
+      password,
     });
   } catch (err) {
     console.log("authSuccess");
@@ -63,7 +67,7 @@ export const register = async (req, res) => {
     } else {
       return res.status(200).json({
         success: false,
-        message: "The email is already exsisted.",
+        message: "The userID is already exsisted.",
       });
     }
   } catch (err) {

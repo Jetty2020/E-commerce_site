@@ -1,0 +1,24 @@
+.sns button {
+  width: 165px;
+  height: 32px;
+  background: url('../images/bg_sns.png') no-repeat;
+  margin: 0.15rem;
+  padding-left: 45px;
+  border: none;
+  text-align: left;
+  letter-spacing: -0.7px;
+  font-size: 0.78rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.sns .kakao {
+}
+.sns .naver {
+  background-position-y: -64px;
+}
+.sns .google {
+  background-position-y: -96px;
+}
+.sns .facebook {
+  background-position-y: -32px;
+}

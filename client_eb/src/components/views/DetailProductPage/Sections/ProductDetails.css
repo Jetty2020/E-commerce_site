@@ -1,0 +1,22 @@
+.tabs_box {
+  margin-top: 100px;
+}
+.tabs_box .tabs_list {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
+}
+.tabs_box .tabs_list .tab {
+  width: 100%;
+  padding-bottom: 15px;
+  text-align: center;
+  cursor: pointer;
+}
+.tabs_box .tabs_list .tab.on {
+  border-bottom: 3px solid #1890ff;
+  color: rgba(0, 0, 0, 0.65);
+}
+.tabs_box .tabs_list .tab.off {
+  border-bottom: 3px solid #ddd;
+  color: rgba(0, 0, 0, 0.3);
+}
