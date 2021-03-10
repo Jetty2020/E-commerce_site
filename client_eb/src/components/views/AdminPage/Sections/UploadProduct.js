@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button, Form, Input, Select } from 'antd';
 import FileUpload from '../../../utils/FileUpload';
 import Axios from 'axios';
+import ImageUploader from 'react-images-upload';
 import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
