@@ -40,7 +40,7 @@ export const authSuccess = async (req, res) => {
 
 export const register = async (req, res) => {
   const {
-    body: { userID, email, password },
+    body: { userID, email, password, name },
   } = req;
   try {
     const user = await User.findOne({
@@ -56,6 +56,7 @@ export const register = async (req, res) => {
       const text = '오른쪽 숫자 6자리를 입력해주세요 : ' + hash;
       User.create({
         userID,
+        name,
         userEmail: email,
         userPassword: password,
         emailHash: hash,
