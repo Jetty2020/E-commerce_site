@@ -117,7 +117,15 @@ const MyCartPage = () => {
     console.log(id);
     setProducts(products.filter((product) => product.id !== id));
   };
-
+  const onRemoveSelect = () => {
+    console.log(checkedID);
+    // checkedID.map((id) => )
+    for (let id of checkedID) {
+      // console.log(id);
+      setProducts(products.filter((product) => product.id !== id))
+    }
+    
+  };
   //추천 상품
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -314,7 +322,7 @@ const MyCartPage = () => {
         <Button
           type="primary"
           style={{ marginLeft: '5px' }}
-          onClick={() => onRemove(checked.id)}
+          onClick={() => onRemoveSelect()}
         >
           선택상품 삭제
         </Button>

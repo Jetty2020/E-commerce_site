@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
 	UPLOAD_PRODUCT
-} from './_types';
+} from './types';
 import { PRODUCT_SERVER } from '../components/Config.js';
 
 export function uploadProduct(dataToSubmit){
