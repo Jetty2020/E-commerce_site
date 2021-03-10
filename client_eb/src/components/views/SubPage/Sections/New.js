@@ -1,26 +1,10 @@
 import React from 'react';
+import { products } from '../../../../_datas/productsData.json';
 import { Select } from 'antd';
 import ProductsList from '../../../utils/ProductsList';
 
 const New = () => {
   const { Option } = Select;
-
-  //example new products
-  const products = [];
-  const createProducts = () => {
-    for (let i = 1; i <= 20; i++) {
-      products.push({
-        id: i,
-        image: `https://www.kingplastic.com/wp-content/uploads/2014/12/Charcoal-Gray-300x300.jpg`,
-        name: `New Product ${i}`,
-        price: 30000,
-        likes: 234,
-        reviews: 10,
-      });
-    }
-    return products;
-  };
-  createProducts();
 
   return (
     <div>
