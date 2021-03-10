@@ -26,13 +26,11 @@ function UploadProduct(props) {
   return (
     <Formik
       initialValues={{
-        //초기값
         name: "",
         description: "",
         price: "",
         rate: "",
         stock: "",
-        delivery: "",
       }}
       validationSchema={Yup.object().shape({
         //검증 규칙 설정
@@ -49,10 +47,8 @@ function UploadProduct(props) {
           .integer("Rate is integer"),
         stock: Yup.number("Stock is number.")
           .positive("Stock is positive number.")
-          .integer("Stock is integer"),
-        delivery: Yup.number("Delivery is number.")
-          .positive("Delivery is positive number.")
-          .integer("Delivery is integer"),
+          .integer("Stock is integer")
+          .required("Stock is required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -63,11 +59,11 @@ function UploadProduct(props) {
           dataForm.append("price", values.price);
           dataForm.append("rate", values.rate);
           dataForm.append("stock", values.stock);
-          dataForm.append("delivery", values.delivery);
           dispatch(uploadProduct(dataForm))
             .then((response) => {
               if (response.payload.success) {
-                props.history.push("/");
+                // props.history.push("/");
+                alert("상품이 업로드되었습니다.");
               } else {
                 setFormErrorMessage("Error occurred"); //에러 메세지 세팅
               }
@@ -100,10 +96,6 @@ function UploadProduct(props) {
             <div style={{ marginBottom: "2rem" }}>
               <Title level={3}>상품 등록</Title>
             </div>
-
-            {/* <Form onSubmit={onSubmit}> */}
-            {/* DropZone */}
-            {/* <FileUpload refreshFunction={updateImages} /> */}
             <form
               onSubmit={handleSubmit}
               style={{ width: "350px" }}
@@ -119,9 +111,6 @@ function UploadProduct(props) {
                   maxFileSize={5242880}
                 />
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
-              {/* <br /> */}
               <div
                 style={{
                   display: "flex",
@@ -136,9 +125,7 @@ function UploadProduct(props) {
                   <Option value="discount">Discount</Option>
                 </Select>
               </div>
-              {/* <br /> */}
               <Form.Item label={"상품명"} required>
-                {/* <label>상품명</label> */}
                 <Input 
                   id="name"
                   placeholder="Product name"
@@ -155,14 +142,10 @@ function UploadProduct(props) {
                   <div className="input-feedback">{errors.name}</div>
                 )}
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
-              {/* <label>상품 설명</label> */}
               <Form.Item label={"상품 설명"} required>
               <TextArea
                 id="description"
                 placeholder="Description"
-                // type="description"
                 rows={6}
                 value={values.description}
                 onChange={handleChange}
@@ -177,17 +160,12 @@ function UploadProduct(props) {
                 <div className="input-feedback">{errors.description}</div>
               )}
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
               <Form.Item label={"판매금액(원)"} required>
-              {/* <label>판매금액(원)</label> */}
               <Input
                 id="price"
-                // placeholder="price"
                 value={values.price}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // type="number"
                 className={
                   errors.price && touched.price
                     ? "text-input error"
@@ -195,16 +173,12 @@ function UploadProduct(props) {
                 }
               />
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
-              <Form.Item label={"할인율(%)"} required>
-              {/* <label>할인율(%)</label> */}
+              <Form.Item label={"할인율(%)"}>
               <Input
                 id="rate"
                 value={values.rate}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // type="number"
                 className={
                   errors.rate && touched.rate
                     ? "text-input error"
@@ -212,16 +186,12 @@ function UploadProduct(props) {
                 }
               />
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
               <Form.Item label={"재고수량(개)"} required>
-              {/* <label>재고수량(개)</label> */}
               <Input
                 id="stock"
                 value={values.stock}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // type="number"
                 className={
                   errors.stock && touched.stock
                     ? "text-input error"
@@ -229,31 +199,6 @@ function UploadProduct(props) {
                 }
               />
               </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
-              {/* <label>
-                배송비(원){" "}
-                <span style={{ color: "#adb5bd" }}>
-                  무료일 경우 0으로 입력해 주세요.
-                </span>
-              </label> */}
-              <Form.Item label={"배송비(원)"} required>
-              <Input
-                id="delivery"
-                placeholder={"무료일 경우 0으로 입력해 주세요."}
-                value={values.delivery}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // type="number"
-                className={
-                  errors.delivery && touched.delivery
-                    ? "text-input error"
-                    : "text-input"
-                }
-              />
-              </Form.Item>
-              {/* <br /> */}
-              {/* <br /> */}
               <div
                 style={{
                   display: "flex",

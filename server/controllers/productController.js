@@ -3,7 +3,7 @@ import { Product, User, Comment, Sequelize } from "../models";
 
 export const uploadProduct = async (req, res) => {
   const {
-    body: { productName, productDes },
+    body: { productName, productDes, price, stock },
     // user: { id: producter },
   } = req;
   const { location: fileURL } = req;
@@ -12,7 +12,8 @@ export const uploadProduct = async (req, res) => {
       productName,
       productDes,
       fileURL,
-      // producter,
+      price,
+      stock,
     });
     return res.status(200).json({
       success: true,

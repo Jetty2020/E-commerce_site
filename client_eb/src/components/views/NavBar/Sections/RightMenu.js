@@ -142,17 +142,6 @@ function RightMenu(props) {
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>
         </Menu.Item>
-        {/* <Menu.Item key="userInfo">
-          <Link to="/user/info">My Page</Link>
-        </Menu.Item>
-
-        <Menu.Item key="history">
-          <Link to="/history">History</Link>
-        </Menu.Item>
-
-        <Menu.Item key="logout">
-          <Link onClick={logoutHandler}>Logout</Link>
-        </Menu.Item> */}
       </Menu>
     );
   }
