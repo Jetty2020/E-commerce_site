@@ -8,6 +8,16 @@ module.exports = (sequelize, DataTypes) => {
     productDes: {
       type: DataTypes.STRING(1024),
     },
+    price: {
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
+    rate: {
+      type: DataTypes.INTEGER.UNSIGNED,
+			defaultValue: 0,
+    },
+    stock: {
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
     newProduct: {
       type: DataTypes.BOOLEAN,
     },

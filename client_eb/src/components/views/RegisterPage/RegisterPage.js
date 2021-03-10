@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
@@ -35,16 +35,14 @@ function RegisterPage(props) {
   return (
     <Formik
       initialValues={{
-        role: 'general',
         email: '',
-        lastName: '',
+        userID: '',
         name: '',
         password: '',
         confirmPassword: '',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required('성명을 입력해 주세요'),
-        // lastName: Yup.string().required('Last Name is required'),
         email: Yup.string()
           .email('이메일을 올바르게 입력해 주세요')
           .required('이메일을 입력해 주세요'),
@@ -61,13 +59,11 @@ function RegisterPage(props) {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
-            role: values.role,
             email: values.email,
             userID: values.userID,
             password: values.password,
             name: values.name,
-            lastname: values.lastname,
-            image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
+            // image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
           };
 
           dispatch(registerUser(dataToSubmit)).then((response) => {
@@ -105,25 +101,6 @@ function RegisterPage(props) {
               {...formItemLayout}
               onSubmit={handleSubmit}
             >
-              <Form.Item required label="구분">
-                <select
-                  id="role"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  style={{
-                    border: '1px solid #dbdbdb',
-                    borderRadius: '4px',
-                    padding: '0.3rem 0.5rem',
-                    paddingRight: '10.6rem',
-                  }}
-                >
-                  <option value="general" selected>
-                    일반
-                  </option>
-                  <option value="seller">판매자</option>
-                </select>
-              </Form.Item>
-
               <Form.Item required label="성명">
                 <Input
                   id="name"
@@ -142,25 +119,6 @@ function RegisterPage(props) {
                   <div className="input-feedback">{errors.name}</div>
                 )}
               </Form.Item>
-
-              {/* <Form.Item required label="Last Name">
-                <Input
-                  id="lastName"
-                  placeholder="Enter your Last Name"
-                  type="text"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.lastName && touched.lastName
-                      ? 'text-input error'
-                      : 'text-input'
-                  }
-                />
-                {errors.lastName && touched.lastName && (
-                  <div className="input-feedback">{errors.lastName}</div>
-                )}
-              </Form.Item> */}
 
               <Form.Item
                 required
