@@ -45,7 +45,6 @@ function ProductReviews({ reviews, onClickReview }) {
               <div style={{ float: 'right' }}>{review.date}</div>
             </div>
             <div style={{ position: 'relative', marginTop: '5px' }}>
-              <div style={{ color: '#adb5bd' }}>[옵션] {review.option}</div>
               {review.clicked ? (
                 <>
                   <div
@@ -57,7 +56,6 @@ function ProductReviews({ reviews, onClickReview }) {
                   >
                     {review.text}
                   </div>
-                  <img width="250px" height="250px" src={review.image} />
                 </>
               ) : (
                 <>
@@ -72,14 +70,6 @@ function ProductReviews({ reviews, onClickReview }) {
                     }}
                   >
                     {review.text}
-                  </div>
-                  <div>
-                    <img
-                      src={review.image}
-                      style={{ position: 'absolute', top: '5px', right: '0' }}
-                      width="50px"
-                      height="50px"
-                    />
                   </div>
                 </>
               )}

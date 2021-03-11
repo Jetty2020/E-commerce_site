@@ -124,7 +124,7 @@ function RightMenu(props) {
           </Menu.Item>
         </SubMenu>
         <Menu.Item key="setting:3">
-          <Link to="/admin/upload">upload</Link>
+          <Link to="/admin/upload">Upload</Link>
         </Menu.Item>
         <Menu.Item key="cart">
           <Link to="/user/cart">
