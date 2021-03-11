@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
-// import { products } from '../../_datas/productsData.json';
 
 function CreateProducts({ products, onRemove }) {
   const Ul = styled.ul`
@@ -67,7 +66,7 @@ function CreateProducts({ products, onRemove }) {
     background-color: rgba(0, 0, 0, 0.5);
     font-size: 40px;
     color: #fff;
-    z-index: 5;
+    z-index: 10;
   `;
 
   return (

@@ -228,7 +228,7 @@ function RegisterPage(props) {
               </Form.Item>
             </Form>
 
-            <div className="sns">
+            <div className="sns_register">
               <div style={{ marginTop: '1.5rem' }}>
                 <button className="kakao">카카오 간편가입</button>
                 <button className="naver">네이버 간편가입</button>

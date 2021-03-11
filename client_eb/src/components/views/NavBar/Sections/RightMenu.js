@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import styled from "styled-components";
-import { Menu, Icon, Badge, Modal, Button } from "antd";
-import { USER_SERVER } from "../../../Config";
-import { withRouter, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import SearchFeature from "../../LandingPage/Sections/SearchFeature";
+import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
+import styled from 'styled-components';
+import { Menu, Icon, Badge, Modal, Button } from 'antd';
+import { USER_SERVER } from '../../../Config';
+import { withRouter, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import SearchFeature from '../../LandingPage/Sections/SearchFeature';
 const SubMenu = Menu.SubMenu;
 function RightMenu(props) {
   const user = useSelector((state) => state.user);
@@ -14,9 +14,9 @@ function RightMenu(props) {
   const logoutHandler = () => {
     Axios.get(`${USER_SERVER}/logout`).then((response) => {
       if (response.status === 200) {
-        props.history.push("/login");
+        props.history.push('/login');
       } else {
-        alert("Log Out Failed");
+        alert('Log Out Failed');
       }
     });
   };
@@ -49,7 +49,7 @@ function RightMenu(props) {
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(8);
   const [PostSize, setPostSize] = useState();
-  const [SearchTerms, setSearchTerms] = useState("");
+  const [SearchTerms, setSearchTerms] = useState('');
 
   const [Filters, setFilters] = useState({
     continents: [],
@@ -66,7 +66,7 @@ function RightMenu(props) {
   }, []);
 
   const getProducts = (variables) => {
-    Axios.post("/api/product/getProducts", variables).then((response) => {
+    Axios.post('/api/product/getProducts', variables).then((response) => {
       if (response.data.success) {
         if (variables.loadMore) {
           setProducts([...Products, ...response.data.products]);
@@ -75,7 +75,7 @@ function RightMenu(props) {
         }
         setPostSize(response.data.postSize);
       } else {
-        alert("Failed to fectch product datas");
+        alert('Failed to fectch product datas');
       }
     });
   };
@@ -96,7 +96,7 @@ function RightMenu(props) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: 'relative' }}>
         <Menu mode={props.mode}>
           <Menu.Item key="mail">
             <Link to="/login">Signin</Link>
@@ -119,18 +119,18 @@ function RightMenu(props) {
           <Menu.Item key="userInfo">
             <Link to="/user/info">My Page</Link>
           </Menu.Item>
-          <Menu.Item key="history">
-            <Link to="/history">History</Link>
+          <Menu.Item key="wishlist">
+            <Link to="/user/wishlist">Wishlist</Link>
           </Menu.Item>
         </SubMenu>
         <Menu.Item key="setting:3">
-          <Link to="/admin/upload">upload</Link>
+          <Link to="/admin/upload">Upload</Link>
         </Menu.Item>
         <Menu.Item key="cart">
           <Link to="/user/cart">
             <Badge
               // count={user.userData && user.userData.cart.length}
-              style={{ color: "#108ee9" }}
+              style={{ color: '#108ee9' }}
             >
               Cart
             </Badge>
