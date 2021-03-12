@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
+import { products } from '../../_datas/productsData.json';
 
-function ProductsList({ products, onRemove }) {
+console.log(products.filter(product => product.wishlist === true));
+function ProductsList() {
+  const wishItem = products.filter(product => product.wishlist === true);
+  const [wishlists, setwishlists] = useState(wishItem);
+  const onRemove = (id) => {
+    console.log(id);
+    setwishlists(wishlists.filter((item) => item.id !== id));
+  };
   const Ul = styled.ul`
     display: flex;
     flex-wrap: wrap;
@@ -71,13 +79,14 @@ function ProductsList({ products, onRemove }) {
 
   return (
     <Ul>
-      {products.map((product) => (
+      {wishlists.map((product) => (
         <Li key={product.id}>
           <Link to="/product/:productId">
             {product.image && (
               <img
                 src={product.image}
                 style={{ width: '300px', height: '370px', objectFit: 'cover' }}
+                alt="img"
               />
             )}
             {product.name && <Name>{product.name}</Name>}
