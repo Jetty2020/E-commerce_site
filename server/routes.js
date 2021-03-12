@@ -10,9 +10,10 @@ const REGISTER = "/register";
 const AUTH = "/auth";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
-const CHECKEMAIL = "/checkEmail";
-const FINDID = "/findID";
-const FINDPASSWORD = "/findPassword";
+const CHECK_EMAIL = "/checkEmail";
+const FIND_ID = "/findID";
+const FIND_PASSWORD = "/findPassword";
+const EDIT_PASSWORD = "/editPassword";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 const ADD_CART = "/addCart";
@@ -60,9 +61,10 @@ const routes = {
   register: REGISTER,
   auth: AUTH,
   login: LOGIN,
-  checkEmail: CHECKEMAIL,
-  findID: FINDID,
-  findPassword: FINDPASSWORD,
+  checkEmail: CHECK_EMAIL,
+  editPassword: EDIT_PASSWORD,
+  findID: FIND_ID,
+  findPassword: FIND_PASSWORD,
   logout: LOGOUT,
   editUser: EDIT_USER,
   userDetail: USER_DETAIL,

@@ -6,7 +6,7 @@ import {
   authSuccess,
   register,
   login,
-  // userDetail,
+  editPassword,
   logout,
   checkEmail,
   findID,
@@ -33,7 +33,7 @@ userRouter.post(routes.login, login);
 userRouter.post(routes.checkEmail, auth, checkEmail);
 userRouter.post(routes.findID, findID);
 userRouter.post(routes.findPassword, findPassword);
-// userRouter.get(routes.userDetail, auth, userDetail);
+userRouter.post(routes.editPassword, editPassword);
 userRouter.get(routes.logout, auth, logout);
 
 userRouter.get(routes.kakao, kakaoLogin);
