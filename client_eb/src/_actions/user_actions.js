@@ -1,16 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
+  EDIT_PASSWORD,
   FIND_ID,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
-} from './types';
-import { USER_SERVER } from '../components/Config.js';
+} from "./types";
+import { USER_SERVER } from "../components/Config.js";
 
 export function findID(dataToSubmit) {
   const request = axios
@@ -63,6 +64,17 @@ export function logoutUser() {
 
   return {
     type: LOGOUT_USER,
+    payload: request,
+  };
+}
+
+export function editPassword(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/editPassword`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: EDIT_PASSWORD,
     payload: request,
   };
 }

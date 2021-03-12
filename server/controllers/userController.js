@@ -144,12 +144,13 @@ export const login = async (req, res) => {
 
 export const editPassword = async (req, res) => {
   const {
-    body: { id, userPassword },
+    body: { userID, userPassword },
   } = req;
   try {
+    console.log(userID, userPassword);
     User.update(
       { userPassword },
-      { where: { id } }
+      { where: { userID } }
     );
     return res.status(200).json({
       success: true,
