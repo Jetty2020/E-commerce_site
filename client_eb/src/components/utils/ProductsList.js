@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 
-function CreateProducts({ products, onRemove }) {
+function ProductsList({ products, onRemove }) {
   const Ul = styled.ul`
     display: flex;
     flex-wrap: wrap;
@@ -117,4 +117,4 @@ function CreateProducts({ products, onRemove }) {
   );
 }
 
-export default CreateProducts;
+export default ProductsList;

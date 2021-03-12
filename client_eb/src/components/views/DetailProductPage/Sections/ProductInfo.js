@@ -26,7 +26,7 @@ function ProductInfo(props) {
             00000원
           </td>
         </tr>
-        <tr style={{ backgroundColor: '#fff' }}>
+        <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
           <td
             colSpan="2"
             style={{
@@ -39,12 +39,12 @@ function ProductInfo(props) {
             <p>배송비 0000원</p>
           </td>
         </tr>
-        <tr style={{ backgroundColor: '#fff' }}>
+        <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
           <td colSpan="2" style={{ paddingTop: '50px', textAlign: 'right' }}>
             총 구매금액
           </td>
         </tr>
-        <tr style={{ backgroundColor: '#fff' }}>
+        <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
           <td colSpan="2" style={{ border: 'hidden' }}>
             <Button
               size="large"

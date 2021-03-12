@@ -6,6 +6,8 @@ import ProductsList from '../../../utils/ProductsList';
 const New = () => {
   const { Option } = Select;
 
+  const NEW = products.filter((product) => product.new === true);
+
   return (
     <div>
       <h2 style={{ margin: '70px 5px 30px' }}>New</h2>
@@ -28,7 +30,7 @@ const New = () => {
       </div>
 
       {/* products */}
-      <ProductsList products={products} />
+      <ProductsList products={NEW} />
     </div>
   );
 };
