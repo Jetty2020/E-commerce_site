@@ -9,10 +9,10 @@ function LandingPage() {
   //new & hot products
   const { TabPane } = Tabs;
 
-  const RECOMMEND = products.slice(0, 8);
-  const NEW = products.slice(9, 17);
-  const HOT = products.slice(4, 12);
-  const DISCOUNT = products.slice(12, 20);
+  const RECOMMEND = products.filter((product) => product.recommend === true);
+  const NEW = products.filter((product) => product.new === true);
+  const HOT = products.filter((product) => product.hot === true);
+  const DISCOUNT = products.filter((product) => product.discount === true);
 
   return (
     <div>

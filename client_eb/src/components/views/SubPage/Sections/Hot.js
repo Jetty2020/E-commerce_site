@@ -3,14 +3,14 @@ import { products } from '../../../../_datas/productsData.json';
 import { Select } from 'antd';
 import ProductsList from '../../../utils/ProductsList';
 
-const Discount = () => {
+const Hot = () => {
   const { Option } = Select;
 
-  const DISCOUNT = products.filter((product) => product.discount === true);
+  const HOT = products.filter((product) => product.hot === true);
 
   return (
     <div>
-      <h2 style={{ margin: '70px 5px 30px' }}>Discount</h2>
+      <h2 style={{ margin: '70px 5px 30px' }}>Hot</h2>
 
       <div
         style={{
@@ -30,9 +30,9 @@ const Discount = () => {
       </div>
 
       {/* products */}
-      <ProductsList products={DISCOUNT} />
+      <ProductsList products={HOT} />
     </div>
   );
 };
 
-export default Discount;
+export default Hot;

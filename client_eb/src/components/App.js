@@ -19,7 +19,6 @@ import HistoryPage from './views/HistoryPage/HistoryPage';
 import UserInfoPage from './views/UserInfoPage/UserInfoPage';
 
 function App() {
-  
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <NavBar />
@@ -41,6 +40,7 @@ function App() {
           />
           <Route exact path="/sub/best" component={Auth(SubPage, null)} />
           <Route exact path="/sub/new" component={Auth(SubPage, null)} />
+          <Route exact path="/sub/hot" component={Auth(SubPage, null)} />
           <Route exact path="/sub/discount" component={Auth(SubPage, null)} />
           <Route
             exact

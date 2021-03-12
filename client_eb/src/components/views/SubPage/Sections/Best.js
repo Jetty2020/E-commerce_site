@@ -6,6 +6,8 @@ import ProductsList from '../../../utils/ProductsList';
 const Best = () => {
   const { Option } = Select;
 
+  const BEST = products.filter((product) => product.best === true);
+
   return (
     <div>
       <h2 style={{ margin: '70px 5px 30px' }}>Best</h2>
@@ -28,7 +30,7 @@ const Best = () => {
       </div>
 
       {/* products */}
-      <ProductsList products={products} />
+      <ProductsList products={BEST} />
     </div>
   );
 };

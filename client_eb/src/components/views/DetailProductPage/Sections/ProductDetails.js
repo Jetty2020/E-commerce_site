@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { products } from '../../../../_datas/productsData.json';
 import './ProductDetails.css';
 import ProductsList from '../../../utils/ProductsList';
 import ProductReviews from './ProductReviews';
@@ -76,7 +77,11 @@ function ProductDetails() {
 
   //tabs
   const content1 = () => {
-    return <div>Images</div>;
+    return (
+      <div>
+        <img style={{ width: '100%' }} src={products[0].detail} />
+      </div>
+    );
   };
   const content2 = () => {
     return <ProductReviews reviews={reviews} onClickReview={onClickReview} />;
