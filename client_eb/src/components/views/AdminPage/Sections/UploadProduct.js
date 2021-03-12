@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Button, Form, Input, Select } from 'antd';
-// import FileUpload from '../../../utils/FileUpload';
-// import Axios from "axios";
+import { Typography, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { withRouter } from 'react-router-dom';
@@ -13,7 +11,6 @@ import ImageUploader from 'react-images-upload';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-const { Option } = Select;
 
 function UploadProduct(props) {
   const dispatch = useDispatch(); //dispatch for redux
@@ -23,13 +20,13 @@ function UploadProduct(props) {
   const onFileHandler = (event) => {
     setFileData(event[0]);
   };
+  const plainOptions = ['Best', 'New', 'Discount'];
   return (
     <Formik
       initialValues={{
         name: '',
         description: '',
         price: '',
-        rate: '',
         stock: '',
       }}
       validationSchema={Yup.object().shape({
@@ -40,9 +37,6 @@ function UploadProduct(props) {
           .positive('Price is positive number.')
           .integer('Price is integer')
           .required('Price is required'),
-        rate: Yup.number('Rate is number.')
-          .positive('Rate is positive number.')
-          .integer('Rate is integer'),
         stock: Yup.number('Stock is number.')
           .positive('Stock is positive number.')
           .integer('Stock is integer')
@@ -50,12 +44,12 @@ function UploadProduct(props) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
+          console.log(values.checkbox);
           var dataForm = new FormData();
           dataForm.append('file', fileData, fileData.name);
           dataForm.append('productName', values.name);
           dataForm.append('productDes', values.description);
           dataForm.append('price', values.price);
-          dataForm.append('rate', values.rate);
           dataForm.append('stock', values.stock);
           dispatch(uploadProduct(dataForm))
             .then((response) => {
@@ -109,20 +103,6 @@ function UploadProduct(props) {
                   maxFileSize={5242880}
                 />
               </Form.Item>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  width: '150px',
-                }}
-              >
-                <Select defaultValue={'all'}>
-                  <Option value="all">All</Option>
-                  <Option value="best">Best</Option>
-                  <Option value="new">New</Option>
-                  <Option value="discount">Discount</Option>
-                </Select>
-              </div>
               <Form.Item label={'상품명'} required>
                 <Input
                   id="name"
@@ -171,19 +151,6 @@ function UploadProduct(props) {
                   }
                 />
               </Form.Item>
-              <Form.Item label={'할인율(%)'}>
-                <Input
-                  id="rate"
-                  value={values.rate}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.rate && touched.rate
-                      ? 'text-input error'
-                      : 'text-input'
-                  }
-                />
-              </Form.Item>
               <Form.Item label={'재고수량(개)'} required>
                 <Input
                   id="stock"
@@ -226,4 +193,4 @@ function UploadProduct(props) {
   );
 }
 
-export default UploadProduct;
+export default withRouter(UploadProduct);
