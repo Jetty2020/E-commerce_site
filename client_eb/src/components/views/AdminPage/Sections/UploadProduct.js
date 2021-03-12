@@ -150,6 +150,9 @@ function UploadProduct(props) {
                       : 'text-input'
                   }
                 />
+                {errors.price && touched.price && (
+                  <div className="input-feedback">{errors.price}</div>
+                )}
               </Form.Item>
               <Form.Item label={'재고수량(개)'} required>
                 <Input
@@ -163,6 +166,9 @@ function UploadProduct(props) {
                       : 'text-input'
                   }
                 />
+                {errors.stock && touched.stock && (
+                  <div className="input-feedback">{errors.stock}</div>
+                )}
               </Form.Item>
               <div
                 style={{
