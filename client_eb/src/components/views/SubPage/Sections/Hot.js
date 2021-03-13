@@ -7,6 +7,7 @@ const Hot = () => {
   const { Option } = Select;
 
   const HOT = products.filter((product) => product.hot === true);
+  console.log(HOT);
 
   return (
     <div>

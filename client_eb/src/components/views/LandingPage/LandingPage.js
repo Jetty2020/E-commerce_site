@@ -13,6 +13,7 @@ function LandingPage() {
   const NEW = products.filter((product) => product.new === true);
   const HOT = products.filter((product) => product.hot === true);
   const DISCOUNT = products.filter((product) => product.discount === true);
+  console.log(RECOMMEND);
 
   return (
     <div>
