@@ -7,6 +7,8 @@ import {
   register,
   login,
   editPassword,
+  editUserSendMail,
+  editUserEmail,
   logout,
   checkEmail,
   findID,
@@ -34,6 +36,8 @@ userRouter.post(routes.checkEmail, auth, checkEmail);
 userRouter.post(routes.findID, findID);
 userRouter.post(routes.findPassword, findPassword);
 userRouter.post(routes.editPassword, editPassword);
+userRouter.post(routes.editUserSendMail, editUserSendMail);
+userRouter.post(routes.editUserEmail, editUserEmail);
 userRouter.get(routes.logout, auth, logout);
 
 userRouter.get(routes.kakao, kakaoLogin);

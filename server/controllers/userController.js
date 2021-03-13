@@ -147,11 +147,7 @@ export const editPassword = async (req, res) => {
     body: { userID, userPassword },
   } = req;
   try {
-    console.log(userID, userPassword);
-    User.update(
-      { userPassword },
-      { where: { userID } }
-    );
+    User.update({ userPassword }, { where: { userID } });
     return res.status(200).json({
       success: true,
     });
@@ -161,6 +157,70 @@ export const editPassword = async (req, res) => {
     return res.status(400).send(err).json({
       success: false,
       message: "Error occurred at editPassword",
+    });
+  }
+};
+
+export const editUserSendMail = async (req, res) => {
+  const {
+    body: { userEmail, userID },
+  } = req;
+  try {
+    const hash = await generateRandom(111111, 999999);
+    const subject = "이메일 변경을 위한 인증번호입니다";
+    const text = "오른쪽 숫자 6자리를 입력해주세요 : " + hash;
+    mailSender.sendGmail(userEmail, subject, text, hash);
+    User.update({ emailHash: hash }, { where: { userID } });
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("editUserSendMail");
+    console.log(err);
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at editUserSendMail",
+    });
+  }
+};
+
+export const editUserEmail = async (req, res) => {
+  const {
+    body: { userID, userEmail, emailHash },
+  } = req;
+  try {
+    const { dataValues: user } = await User.findOne({
+      attributes: ["emailHash"],
+      where: {
+        userID,
+      },
+    });
+    if (emailHash == user.emailHash) {
+      User.update(
+        {
+          userEmail,
+          emailChecked: true,
+          emailHash: null,
+        },
+        {
+          where: { userID },
+        }
+      );
+      return res.status(200).json({
+        success: true,
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "Wrong emailHash!",
+      });
+    }
+  } catch (err) {
+    console.log("editUserEmail");
+    console.log(err);
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at editUserEmail",
     });
   }
 };

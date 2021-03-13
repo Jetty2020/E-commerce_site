@@ -41,7 +41,8 @@ function RegisterPage(props) {
         password: '',
         confirmPassword: '',
       }}
-      validationSchema={Yup.object().shape({
+      validationSchema={
+        Yup.object().shape({
         name: Yup.string().required('성명을 입력해 주세요'),
         email: Yup.string()
           .email('이메일을 올바르게 입력해 주세요')

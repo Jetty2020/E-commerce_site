@@ -20,7 +20,6 @@ function UploadProduct(props) {
   const onFileHandler = (event) => {
     setFileData(event[0]);
   };
-  const plainOptions = ['Best', 'New', 'Discount'];
   return (
     <Formik
       initialValues={{

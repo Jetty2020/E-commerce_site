@@ -5,6 +5,8 @@ import {
   AUTH_USER,
   LOGOUT_USER,
   EDIT_PASSWORD,
+  EDIT_USER_SAND_MAIL,
+  EDIT_USER_EMAIL,
   FIND_ID,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
@@ -75,6 +77,28 @@ export function editPassword(dataToSubmit) {
 
   return {
     type: EDIT_PASSWORD,
+    payload: request,
+  };
+}
+
+export function editUserSendMail(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/editUserSendMail`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: EDIT_USER_SAND_MAIL,
+    payload: request,
+  };
+}
+
+export function editUserEmail(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/editUserEmail`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: EDIT_USER_EMAIL,
     payload: request,
   };
 }

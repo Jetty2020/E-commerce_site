@@ -4,6 +4,8 @@ import {
   AUTH_USER,
   LOGOUT_USER,
   EDIT_PASSWORD,
+  EDIT_USER_SAND_MAIL,
+  EDIT_USER_EMAIL,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
@@ -23,9 +25,13 @@ export default function userReducer(state = init, action) {
     case AUTH_USER:
       return { ...state, userData: action.payload };
     case LOGOUT_USER:
-      return { ...state ,logout: action.payload };
+      return { ...state, logout: action.payload };
     case EDIT_PASSWORD:
       return { ...state, editPassword: action.payload };
+    case EDIT_USER_SAND_MAIL:
+      return { ...state, editUserSendMail: action.payload };
+    case EDIT_USER_EMAIL:
+      return { ...state, editUserEmail: action.payload };
     case ADD_TO_CART_USER:
       return {
         ...state,

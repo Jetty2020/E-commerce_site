@@ -14,6 +14,8 @@ const CHECK_EMAIL = "/checkEmail";
 const FIND_ID = "/findID";
 const FIND_PASSWORD = "/findPassword";
 const EDIT_PASSWORD = "/editPassword";
+const EDIT_USER_SEND_MAIL = "/editUserSendMail";
+const EDIT_USER_EMAIL = "/editUserEmail";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 const ADD_CART = "/addCart";
@@ -63,6 +65,8 @@ const routes = {
   login: LOGIN,
   checkEmail: CHECK_EMAIL,
   editPassword: EDIT_PASSWORD,
+  editUserSendMail: EDIT_USER_SEND_MAIL,
+  editUserEmail: EDIT_USER_EMAIL,
   findID: FIND_ID,
   findPassword: FIND_PASSWORD,
   logout: LOGOUT,

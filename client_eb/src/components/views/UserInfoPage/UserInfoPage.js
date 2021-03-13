@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editPassword } from "../../../_actions/user_actions";
+import {
+  editPassword,
+  editUserSendMail,
+  editUserEmail,
+} from "../../../_actions/user_actions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./UserInfoPage.css";
 import "../../utils/sns.css";
 import { Form, Button, Input, Modal } from "antd";
 
-function UserInfoPage() {
-  //example user
+function UserInfoPage(props) {
   const { userData } = useSelector((state) => state.user);
   const dispatch = useDispatch(); //dispatch for redux
 
@@ -20,6 +23,8 @@ function UserInfoPage() {
     password: "",
     modify: false,
   });
+  const [mailSend, setMailSend] = useState(false);
+  const [email, setEmail] = useState("");
   useEffect(() => {
     if (userData) {
       setUser({
@@ -31,7 +36,6 @@ function UserInfoPage() {
         password: userData.password,
         modify: false,
       });
-      // console.log(user);
     }
   }, [userData]);
 
@@ -42,27 +46,11 @@ function UserInfoPage() {
     { corp: "facebook", title: "페이스북 로그인", connect: false },
   ]);
 
-  const onChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setUser({
-        ...user,
-        [name]: value,
-      });
-    },
-    [user]
-  );
-
   const onModify = useCallback(() => {
     setUser({ ...user, modify: !user.modify });
   }, [user]);
 
   const onCancel = useCallback(() => {
-    setUser({ ...user, modify: !user.modify });
-  }, [user]);
-
-  const onSend = useCallback(() => {
-    alert("이메일을 확인해 주세요.");
     setUser({ ...user, modify: !user.modify });
   }, [user]);
 
@@ -116,16 +104,171 @@ function UserInfoPage() {
               <div className="info_detail">
                 <span>아이디</span> {user.userID}
               </div>
-              <div className="info_detail">
-                <span>이메일</span>{" "}
-                <Input
-                  type="text"
-                  name="email"
-                  value={user.email}
-                  style={{ width: "200px" }}
-                  onChange={onChange}
-                />
-              </div>
+              <Formik
+                initialValues={{
+                  email: user.email,
+                }}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string()
+                    .email("이메일을 올바르게 입력해 주세요")
+                    .required("이메일을 입력해 주세요"),
+                })}
+                onSubmit={(values, { setSubmitting }) => {
+                  setTimeout(() => {
+                    let dataToSubmit = {
+                      userID: userData.userID,
+                      userEmail: values.email,
+                    };
+                    dispatch(editUserSendMail(dataToSubmit)).then(
+                      (response) => {
+                        if (response.payload.success) {
+                          alert("인증번호가 전송되었습니다.");
+                        } else {
+                          // console.log(response.payload.err);
+                          alert(response.payload.message);
+                        }
+                      }
+                    );
+                    setEmail(values.email);
+                    setSubmitting(true);
+                    setMailSend(true);
+                  }, 0);
+                }}
+              >
+                {(props) => {
+                  const {
+                    values,
+                    touched,
+                    errors,
+                    dirty,
+                    isSubmitting,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    handleReset,
+                  } = props;
+                  return (
+                    <div>
+                      <div className="info_detail">
+                        <span className="info_detail_span">이메일</span>{" "}
+                        <Input
+                          type="text"
+                          name="email"
+                          disabled={isSubmitting}
+                          value={values.email}
+                          style={{ width: "150px" }}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.email && touched.email
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        <Button
+                          type="primary"
+                          style={{ margin: "0 10px", fontSize: "0.85rem" }}
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
+                        >
+                          인증번호 보내기
+                        </Button>
+                      </div>
+                      {errors.email && touched.email && (
+                        <div
+                          className="input-feedback"
+                          style={{ marginTop: "5px", marginLeft: "105px" }}
+                        >
+                          {errors.email}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }}
+              </Formik>
+              {mailSend && (
+                <Formik
+                  initialValues={{
+                    hash: "",
+                  }}
+                  validationSchema={Yup.object().shape({
+                    hash: Yup.number("Hash is number.")
+                      .positive("Hash is positive number.")
+                      .integer("Hash is integer")
+                      .required("Hash is required"),
+                  })}
+                  onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                      let dataToSubmit = {
+                        userID: userData.userID,
+                        userEmail: email,
+                        emailHash: values.hash,
+                      };
+                      dispatch(editUserEmail(dataToSubmit)).then((response) => {
+                        if (response.payload.success) {
+                          alert("이메일이 변경되었습니다.");
+                          setUser({ ...user, email, modify: !user.modify });
+                        } else {
+                          alert(response.payload.message);
+                        }
+                      });
+                      setSubmitting(true);
+                    }, 0);
+                  }}
+                >
+                  {(props) => {
+                    const {
+                      values,
+                      touched,
+                      errors,
+                      dirty,
+                      isSubmitting,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      handleReset,
+                    } = props;
+                    return (
+                      <div className="info_detail">
+                        <span className="info_detail_span">인증번호</span>{" "}
+                        <Input
+                          type="text"
+                          name="hash"
+                          value={values.hash}
+                          style={{ width: "150px" }}
+                          onChange={handleChange}
+                          disabled={isSubmitting}
+                          onBlur={handleBlur}
+                          className={
+                            errors.hash && touched.hash
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        <Button
+                          type="primary"
+                          style={{ margin: "0 10px", fontSize: "0.85rem" }}
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
+                        >
+                          인증번호 확인
+                        </Button>
+                        {errors.hash && touched.hash && (
+                          <div
+                            className="input-feedback"
+                            style={{
+                              margin: "-10px 0 10px",
+                              marginLeft: "105px",
+                            }}
+                          >
+                            {errors.hash}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }}
+                </Formik>
+              )}
             </div>
           ) : (
             <div className="info">
@@ -148,16 +291,8 @@ function UserInfoPage() {
       {user.modify ? (
         <>
           <Button
-            type="primary"
-            style={{ marginTop: "5px", fontSize: "0.85rem" }}
-            onClick={onSend}
-          >
-            인증메일 발송
-          </Button>
-          <Button
             style={{
               marginTop: "5px",
-              marginLeft: "4px",
               fontSize: "0.85rem",
             }}
             onClick={onCancel}
@@ -249,16 +384,16 @@ function UserInfoPage() {
           } = props;
           return (
             <Form onSubmit={handleSubmit}>
-            <Modal
-              title="비밀번호를 변경하시겠습니까?"
-              visible={isModalVisible}
-              onOk={handleSubmit}
-              onCancel={handleCancel}
-              okText="확인"
-              cancelText="취소"
-            >
+              <Modal
+                title="비밀번호를 변경하시겠습니까?"
+                visible={isModalVisible}
+                onOk={handleSubmit}
+                onCancel={handleCancel}
+                okText="확인"
+                cancelText="취소"
+              >
                 <Form.Item
-                  style={{marginTop: '-20px'}}
+                  style={{ marginTop: "-20px" }}
                   required
                   label="비밀번호"
                   hasFeedback
@@ -283,7 +418,12 @@ function UserInfoPage() {
                     <div className="input-feedback">{errors.password}</div>
                   )}
                 </Form.Item>
-                <Form.Item style={{margin: '-20px 0 -5px'}} required label="비밀번호 확인" hasFeedback>
+                <Form.Item
+                  style={{ margin: "-20px 0 -5px" }}
+                  required
+                  label="비밀번호 확인"
+                  hasFeedback
+                >
                   <Input
                     id="confirmPassword"
                     type="password"
@@ -303,8 +443,8 @@ function UserInfoPage() {
                     </div>
                   )}
                 </Form.Item>
-            </Modal>
-              </Form>
+              </Modal>
+            </Form>
           );
         }}
       </Formik>
