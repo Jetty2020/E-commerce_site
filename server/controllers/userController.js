@@ -266,6 +266,27 @@ export const checkEmail = async (req, res) => {
   }
 };
 
+export const deleteUser = async (req, res) => {
+  const {
+    body: { userID },
+  } = req;
+  try {
+    User.destroy({
+      where: { userID },
+    });
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.log("deleteUser");
+    console.log(err);
+    return res.status(400).send(err).json({
+      success: false,
+      message: "Error occurred at deleteUser",
+    });
+  }
+};
+
 export const findID = async (req, res) => {
   const {
     body: { email },
