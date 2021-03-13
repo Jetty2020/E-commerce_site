@@ -7,6 +7,7 @@ import {
   EDIT_PASSWORD,
   EDIT_USER_SAND_MAIL,
   EDIT_USER_EMAIL,
+  DELETE_USER,
   FIND_ID,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
@@ -99,6 +100,17 @@ export function editUserEmail(dataToSubmit) {
 
   return {
     type: EDIT_USER_EMAIL,
+    payload: request,
+  };
+}
+
+export function deleteUser(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/deleteUser`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: DELETE_USER,
     payload: request,
   };
 }

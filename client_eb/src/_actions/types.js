@@ -5,6 +5,7 @@ export const LOGOUT_USER = "logout_user";
 export const EDIT_PASSWORD = "edit_password";
 export const EDIT_USER_SAND_MAIL = "edit_user_sand_mail";
 export const EDIT_USER_EMAIL = "edit_user_email";
+export const DELETE_USER = "delete_user";
 export const FIND_ID = "find_id";
 export const ADD_TO_CART_USER = "add_to_cart_user";
 export const GET_CART_ITEMS_USER = "get_cart_items_user";

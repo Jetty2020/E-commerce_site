@@ -4,6 +4,7 @@ import {
   editPassword,
   editUserSendMail,
   editUserEmail,
+  deleteUser,
 } from "../../../_actions/user_actions";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -53,9 +54,27 @@ function UserInfoPage(props) {
   const onCancel = useCallback(() => {
     setUser({ ...user, modify: !user.modify });
   }, [user]);
-
+  const [deleteUserModal, setDeleteUserModal] = useState(false);
+  const deleteOk = () => {
+    let dataToSubmit = {
+      userID: userData.userID,
+    };
+    console.log(dataToSubmit);
+    dispatch(deleteUser(dataToSubmit)).then((response) => {
+      if (response.payload.success) {
+        props.history.push("/login");
+        alert("회원정보가 삭제되었습니다.");
+      } else {
+        alert(response.payload.message);
+      }
+    });
+    setDeleteUserModal(false);
+  };
+  const deleteCancel = () => {
+    setDeleteUserModal(false);
+  };
   const onWithdraw = () => {
-    alert("정말로 탈퇴하시겠습니까?");
+    setDeleteUserModal(true);
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -333,6 +352,15 @@ function UserInfoPage(props) {
           회원탈퇴하기
         </Button>
       </div>
+      <Modal
+        title="유저 삭제"
+        visible={deleteUserModal}
+        onOk={deleteOk}
+        onCancel={deleteCancel}
+      >
+        <p>회원탈퇴시 모든 정보가 사라집니다.</p>
+        <p>정말로 회원탈퇴 하시겠습니까?</p>
+      </Modal>
       <Formik
         initialValues={{
           password: "",
