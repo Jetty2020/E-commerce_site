@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
-import { products } from '../../_datas/productsData.json';
 
-console.log(products.filter(product => product.wishlist === true));
-function ProductsList() {
-  const wishItem = products.filter(product => product.wishlist === true);
-  const [wishlists, setwishlists] = useState(wishItem);
-  const onRemove = (id) => {
-    console.log(id);
-    setwishlists(wishlists.filter((item) => item.id !== id));
-  };
+function ProductsList({ products }) {
   const Ul = styled.ul`
     display: flex;
     flex-wrap: wrap;
@@ -23,9 +15,9 @@ function ProductsList() {
     margin: 0 5px 60px;
     cursor: pointer;
 
-    &:hover .wishlist {
+    /* &:hover .wishlist {
       display: block;
-    }
+    } */
   `;
   const Name = styled.p`
     margin-top: 0.75rem;
@@ -65,21 +57,21 @@ function ProductsList() {
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.65);
   `;
-  const Wishlist = styled.div`
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    font-size: 40px;
-    color: #fff;
-    z-index: 10;
-  `;
+  // const Wishlist = styled.div`
+  //   display: none;
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   padding: 0 10px;
+  //   background-color: rgba(0, 0, 0, 0.5);
+  //   font-size: 40px;
+  //   color: #fff;
+  //   z-index: 10;
+  // `;
 
   return (
     <Ul>
-      {wishlists.map((product) => (
+      {products.map((product) => (
         <Li key={product.id}>
           <Link to="/product/:productId">
             {product.image && (
@@ -115,11 +107,11 @@ function ProductsList() {
             )}
           </Link>
 
-          {product.wishlist && (
+          {/* {product.wishlist && (
             <Wishlist className="wishlist" onClick={() => onRemove(product.id)}>
               <Icon type="close" />
             </Wishlist>
-          )}
+          )} */}
         </Li>
       ))}
     </Ul>

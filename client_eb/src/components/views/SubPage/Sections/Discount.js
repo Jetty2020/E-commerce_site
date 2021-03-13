@@ -6,7 +6,7 @@ import ProductsList from '../../../utils/ProductsList';
 const Discount = () => {
   const { Option } = Select;
 
-  const DISCOUNT = products.filter((product) => product.discount === true);
+  const DISCOUNT = products.filter((product) => product.discountRate > 0);
 
   return (
     <div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { products } from '../../../../_datas/productsData.json';
 import './ProductDetails.css';
-import ProductsList from '../../../utils/ProductsList';
 import ProductReviews from './ProductReviews';
 import ProductQnA from './ProductQnA';
 
