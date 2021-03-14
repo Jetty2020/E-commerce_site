@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Select } from 'antd';
+import { Button, Icon } from 'antd';
 
 function ProductInfo(props) {
   const [product, setProduct] = useState([]);
@@ -11,6 +11,26 @@ function ProductInfo(props) {
   const addToCarthandler = () => {
     props.addToCart(props.detail._id);
   };
+
+  //상품 수량
+  // const onIncrease = (id) => {
+  //   setOptions(
+  //     options.map((option) =>
+  //       option.id === id
+  //         ? { ...option, quantity: option.quantity + 1 }
+  //         : option,
+  //     ),
+  //   );
+  // };
+  // const onDecrease = (id) => {
+  //   setOptions(
+  //     options.map((option) =>
+  //       option.id === id
+  //         ? { ...option, quantity: option.quantity - 1 }
+  //         : option,
+  //     ),
+  //   );
+  // };
 
   return (
     <div>
@@ -32,11 +52,48 @@ function ProductInfo(props) {
             style={{
               border: 'hidden',
               fontSize: '0.75rem',
-              padding: '0 8px 30px',
+              padding: '0 8px 20px',
             }}
           >
             <p>적립금 000p</p>
             <p>배송비 0000원</p>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: 'hidden' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                width: '100px',
+                padding: '5px',
+                border: '1px solid rgba(0,0,0,0.45)',
+                fontSize: '0.75rem',
+              }}
+            >
+              <Icon
+                type="minus"
+                style={{ cursor: 'pointer' }}
+                // onClick={option.quantity > 1 ? () => onDecrease(option.id) : null}
+              />
+              <input
+                type="text"
+                value={1}
+                style={{
+                  width: '30px',
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  border: 'none',
+                  outline: 'none',
+                }}
+              />
+              <Icon
+                type="plus"
+                style={{ cursor: 'pointer' }}
+                // onClick={() => onIncrease(option.id)}
+              />
+            </div>
           </td>
         </tr>
         <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
+import Numeral from 'numeral';
 
 function ProductsList({ products }) {
   const Ul = styled.ul`
@@ -14,10 +15,6 @@ function ProductsList({ products }) {
     width: 300px;
     margin: 0 5px 60px;
     cursor: pointer;
-
-    /* &:hover .wishlist {
-      display: block;
-    } */
   `;
   const Name = styled.p`
     margin-top: 0.75rem;
@@ -57,23 +54,12 @@ function ProductsList({ products }) {
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.65);
   `;
-  // const Wishlist = styled.div`
-  //   display: none;
-  //   position: absolute;
-  //   top: 0;
-  //   right: 0;
-  //   padding: 0 10px;
-  //   background-color: rgba(0, 0, 0, 0.5);
-  //   font-size: 40px;
-  //   color: #fff;
-  //   z-index: 10;
-  // `;
 
   return (
     <Ul>
       {products.map((product) => (
         <Li key={product.id}>
-          <Link to="/product/:productId">
+          <Link to={`/product/:productId`}>
             {product.image && (
               <img
                 src={product.image}
@@ -83,16 +69,21 @@ function ProductsList({ products }) {
             )}
             {product.name && <Name>{product.name}</Name>}
             {product.price && !product.discountRate && (
-              <Price>{product.price}원</Price>
+              <Price>{Numeral(product.price).format(0, 0)}원</Price>
             )}
             {product.text && <Text>{product.text}</Text>}
             {product.discountRate && (
               <Discount>
                 <span className="rate">{product.discountRate}% </span>
                 <span className="discount">
-                  {product.price * (1 - product.discountRate * 0.01)}원
+                  {Numeral(
+                    product.price * (1 - product.discountRate * 0.01),
+                  ).format(0, 0)}
+                  원
                 </span>
-                <span className="price">{product.price}원</span>
+                <span className="price">
+                  {Numeral(product.price).format(0, 0)}원
+                </span>
               </Discount>
             )}
             {product.likes && (
@@ -106,12 +97,6 @@ function ProductsList({ products }) {
               </Likes>
             )}
           </Link>
-
-          {/* {product.wishlist && (
-            <Wishlist className="wishlist" onClick={() => onRemove(product.id)}>
-              <Icon type="close" />
-            </Wishlist>
-          )} */}
         </Li>
       ))}
     </Ul>

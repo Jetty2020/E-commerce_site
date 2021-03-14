@@ -1,26 +1,29 @@
 import React, { useRef, useCallback } from 'react';
 import Slick from 'react-slick';
 import styled, { css } from 'styled-components';
+import visual01 from '../../../images/visual01.png';
+import visual02 from '../../../images/visual02.png';
+import visual03 from '../../../images/visual03.png';
+import visual04 from '../../../images/visual04.png';
 import { Icon } from 'antd';
 
 function VisualSlider() {
   //sample
   const images = [
     {
-      src: 'https://anedit.com/anedit/main/main03.jpg',
+      src: visual01,
       title: '1',
     },
     {
-      src: 'http://ahwe.co.kr/morenvyimg/main01.jpg',
+      src: visual02,
       title: '2',
     },
     {
-      src:
-        'https://img.ssfshop.com/display/category/THM/A31/A01/contents/10782_133427_29_KOR_20210310113430.jpg',
+      src: visual03,
       title: '3',
     },
     {
-      src: 'http://ahwe.co.kr/morenvyimg/event_ban01.jpg',
+      src: visual04,
       title: '4',
     },
   ];

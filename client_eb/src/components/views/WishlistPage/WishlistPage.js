@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 import { products } from '../../../_datas/productsData.json';
+import Numeral from 'numeral';
 
 function WishlistPage() {
   const wishItem = products.filter((product) => product.wishlist === true);
@@ -97,16 +98,21 @@ function WishlistPage() {
               )}
               {product.name && <Name>{product.name}</Name>}
               {product.price && !product.discountRate && (
-                <Price>{product.price}원</Price>
+                <Price>{Numeral(product.price).format(0, 0)}원</Price>
               )}
               {product.text && <Text>{product.text}</Text>}
               {product.discountRate && (
                 <Discount>
                   <span className="rate">{product.discountRate}% </span>
                   <span className="discount">
-                    {product.price * (1 - product.discountRate * 0.01)}원
+                    {Numeral(
+                      product.price * (1 - product.discountRate * 0.01),
+                    ).format(0, 0)}
+                    원
                   </span>
-                  <span className="price">{product.price}원</span>
+                  <span className="price">
+                    {Numeral(product.price).format(0, 0)}원
+                  </span>
                 </Discount>
               )}
               {product.likes && (

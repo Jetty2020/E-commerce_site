@@ -6,14 +6,12 @@ import './LandingPage.css';
 import { products } from '../../../_datas/productsData.json';
 
 function LandingPage() {
-  //new & hot products
   const { TabPane } = Tabs;
 
   const RECOMMEND = products.filter((product) => product.recommend === true);
   const NEW = products.filter((product) => product.new === true);
   const HOT = products.filter((product) => product.hot === true);
   const DISCOUNT = products.filter((product) => product.discount === true);
-  console.log(RECOMMEND);
 
   return (
     <div>
