@@ -9,23 +9,13 @@ import {
   EDIT_USER_EMAIL,
   DELETE_USER,
   FIND_ID,
+  FIND_PASSWORD,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
 } from "./types";
 import { USER_SERVER } from "../components/Config.js";
-
-export function findID(dataToSubmit) {
-  const request = axios
-    .post(`${USER_SERVER}/findID`, dataToSubmit)
-    .then((response) => response.data);
-
-  return {
-    type: FIND_ID,
-    payload: request,
-  };
-}
 
 export function registerUser(dataToSubmit) {
   const request = axios
@@ -45,6 +35,28 @@ export function loginUser(dataToSubmit) {
 
   return {
     type: LOGIN_USER,
+    payload: request,
+  };
+}
+
+export function findID(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/findID`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: FIND_ID,
+    payload: request,
+  };
+}
+
+export function findPassword(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/findPassword`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: FIND_PASSWORD,
     payload: request,
   };
 }

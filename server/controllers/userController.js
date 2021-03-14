@@ -309,17 +309,28 @@ export const findID = async (req, res) => {
     console.log("findID");
     console.log(err);
     return res
-      .status(400)
-      .send(err)
+      // .status(400)
+      // .send(err)
       .json({ success: false, message: "Error occurred at findID" });
   }
 };
 
 export const findPassword = async (req, res) => {
   const {
-    body: { email },
+    body: { email, userID },
   } = req;
   try {
+    const user = await User.findOne({
+      attributes: ["userID"],
+      where: {
+        userEmail: email,
+      },
+    });
+    console.log(user);
+    if (user.dataValues.userID !== userID) {
+      return res
+      .json({ success: 2, message: "ID와 Email이 매칭되지 않았습니다." });
+    }
     const subject = "새 비밀번호입니다";
     const newPassword = await generateRandom(111111, 999999);
     const text = "새로운 비밀번호 : " + newPassword;
@@ -339,8 +350,8 @@ export const findPassword = async (req, res) => {
     console.log("findPassword");
     console.log(err);
     return res
-      .status(400)
-      .send(err)
+      // .status(400)
+      // .send(err)
       .json({ success: false, message: "Error occurred at findPassword" });
   }
 };

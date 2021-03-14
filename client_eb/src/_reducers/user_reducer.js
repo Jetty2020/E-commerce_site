@@ -2,6 +2,8 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
+  FIND_ID,
+  FIND_PASSWORD,
   LOGOUT_USER,
   EDIT_PASSWORD,
   EDIT_USER_SAND_MAIL,
@@ -25,6 +27,10 @@ export default function userReducer(state = init, action) {
       return { ...state, login: action.payload };
     case AUTH_USER:
       return { ...state, userData: action.payload };
+    case FIND_ID:
+      return { ...state, findId: action.payload };
+    case FIND_PASSWORD:
+      return { ...state, findPassword: action.payload };
     case LOGOUT_USER:
       return { ...state, logout: action.payload };
     case EDIT_PASSWORD:
