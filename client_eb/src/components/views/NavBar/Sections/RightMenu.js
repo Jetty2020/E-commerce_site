@@ -8,7 +8,29 @@ import { withRouter, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SearchFeature from '../../LandingPage/Sections/SearchFeature';
 const SubMenu = Menu.SubMenu;
+
 function RightMenu(props) {
+  //상품 검색
+  const SearchBar1 = styled.div`
+    margin: 20px;
+
+    @media only screen and (min-width: 769px) {
+      position: absolute;
+      top: 18px;
+      right: 190px;
+      width: 150px;
+      margin: 0;
+    }
+  `;
+  const SearchBar2 = styled.div`
+    @media only screen and (min-width: 769px) {
+      position: absolute;
+      top: -53px;
+      right: 30px;
+      width: 150px;
+    }
+  `;
+
   const user = useSelector((state) => state.user);
 
   const logoutHandler = () => {
@@ -21,20 +43,7 @@ function RightMenu(props) {
     });
   };
 
-  //상품 검색
-  const SearchBar = styled.div`
-    margin: 20px;
-
-    @media only screen and (min-width: 769px) {
-      position: absolute;
-      top: 18px;
-      right: 190px;
-      width: 150px;
-      margin: 0;
-    }
-  `;
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -107,42 +116,54 @@ function RightMenu(props) {
           </Menu.Item>
         </Menu>
 
-        <SearchBar style={{}}>
+        <SearchBar1>
           <SearchFeature refreshFunction={updateSearchTerms} />
-        </SearchBar>
+        </SearchBar1>
       </div>
     );
   } else {
     return (
-      <Menu mode={props.mode}>
-        <SubMenu title={<span>User</span>}>
-          <Menu.Item key="userInfo">
-            <Link to="/user/info">My Page</Link>
+      <div style={{ position: 'relative' }}>
+        <Menu mode={props.mode}>
+          <Menu.Item>
+            <SearchBar2>
+              <SearchFeature refreshFunction={updateSearchTerms} />
+            </SearchBar2>
           </Menu.Item>
-          <Menu.Item key="wishlist">
-            <Link to="/user/wishlist">Wishlist</Link>
+
+          <SubMenu title={<span>My Page</span>}>
+            <Menu.Item key="userInfo">
+              <Link to="/user/info">Profile</Link>
+            </Menu.Item>
+            <Menu.Item key="cart">
+              <Link to="/user/cart">
+                <Badge
+                  // count={user.userData && user.userData.cart.length}
+                  style={{ color: '#108ee9' }}
+                >
+                  Cart
+                </Badge>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="wishlist">
+              <Link to="/user/wishlist">Wishlist</Link>
+            </Menu.Item>
+          </SubMenu>
+
+          <SubMenu title={<span>Admin</span>}>
+            <Menu.Item key="admin">
+              <Link to="/admin">My products</Link>
+            </Menu.Item>
+            <Menu.Item key="upload">
+              <Link to="/admin/upload">Upload</Link>
+            </Menu.Item>
+          </SubMenu>
+
+          <Menu.Item key="logout">
+            <a onClick={logoutHandler}>Logout</a>
           </Menu.Item>
-        </SubMenu>
-        <Menu.Item key="setting:3">
-          <Link to="/admin/upload">Upload</Link>
-        </Menu.Item>
-        <Menu.Item key="cart">
-          <Link to="/user/cart">
-            <Badge
-              // count={user.userData && user.userData.cart.length}
-              style={{ color: '#108ee9' }}
-            >
-              Cart
-            </Badge>
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="admin">
-          <Link to="/admin">Admin</Link>
-        </Menu.Item>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-      </Menu>
+        </Menu>
+      </div>
     );
   }
 }
