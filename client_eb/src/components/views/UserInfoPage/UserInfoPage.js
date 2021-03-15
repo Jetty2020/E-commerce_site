@@ -59,7 +59,6 @@ function UserInfoPage(props) {
     let dataToSubmit = {
       userID: userData.userID,
     };
-    console.log(dataToSubmit);
     dispatch(deleteUser(dataToSubmit)).then((response) => {
       if (response.payload.success) {
         props.history.push('/login');

@@ -11,7 +11,7 @@ import {
   FIND_ID,
   FIND_PASSWORD,
   ADD_WISHLIST,
-  ADD_TO_CART_USER,
+  ADD_CART,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
@@ -139,13 +139,13 @@ export function addWishlist(dataToSubmit) {
   };
 }
 
-export function addToCart(_id) {
+export function addCart(_id) {
   const request = axios
-    .get(`${USER_SERVER}/addToCart?productId=${_id}`)
+    .get(`${USER_SERVER}/addCart`)
     .then((response) => response.data);
 
   return {
-    type: ADD_TO_CART_USER,
+    type: ADD_CART,
     payload: request,
   };
 }

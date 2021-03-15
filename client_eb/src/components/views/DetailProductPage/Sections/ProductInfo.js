@@ -1,41 +1,33 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addWishlist } from "../../../../_actions/user_actions";
+import { useDispatch } from "react-redux";
+import { addWishlist, addCart } from "../../../../_actions/user_actions";
 import { Button, Icon } from "antd";
 import Numeral from "numeral";
 
 function ProductInfo(props) {
   const dispatch = useDispatch();
-  // const addToCarthandler = () => {
-  //   props.addToCart(props.detail._id);
-  // };
-
-  //상품 수량
-  // const onIncrease = (id) => {
-  //   setOptions(
-  //     options.map((option) =>
-  //       option.id === id
-  //         ? { ...option, quantity: option.quantity + 1 }
-  //         : option,
-  //     ),
-  //   );
-  // };
-  // const onDecrease = (id) => {
-  //   setOptions(
-  //     options.map((option) =>
-  //       option.id === id
-  //         ? { ...option, quantity: option.quantity - 1 }
-  //         : option,
-  //     ),
-  //   );
-  // };
-  // const { userData } = useSelector((state) => state.user);
-  // console.log(props);
   const onAddWishlist = () => {
     let dataToSubmit = {
       productId: props.detail.id,
     };
     dispatch(addWishlist(dataToSubmit))
+      .then((response) => {
+        if (response.payload.success) {
+          // props.history.push("/");
+        } else {
+          alert("에러가 발생했습니다.");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
+  const onAddCart = () => {
+    let dataToSubmit = {
+      productId: props.detail.id,
+    };
+    dispatch(addCart(dataToSubmit))
       .then((response) => {
         if (response.payload.success) {
           // props.history.push("/");
@@ -141,7 +133,7 @@ function ProductInfo(props) {
               <Button
                 size="large"
                 style={{ width: "50%", marginRight: "5px", fontSize: "0.9rem" }}
-                // onClick={addToCarthandler}
+                onClick={onAddCart}
               >
                 장바구니 담기
               </Button>
