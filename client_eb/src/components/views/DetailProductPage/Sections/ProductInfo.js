@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button, Icon } from 'antd';
+import Numeral from 'numeral';
 
 function ProductInfo(props) {
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    setProduct(props.detail);
-  }, [props.detail]);
-
-  const addToCarthandler = () => {
-    props.addToCart(props.detail._id);
-  };
+  console.log(props);
+  // const addToCarthandler = () => {
+  //   props.addToCart(props.detail._id);
+  // };
 
   //상품 수량
   // const onIncrease = (id) => {
@@ -37,13 +33,13 @@ function ProductInfo(props) {
       <h3
         style={{ fontSize: '1.5rem', fontWeight: 'bold', padding: '15px 8px' }}
       >
-        상품명 {product.title}
+        {props.detail.name}
       </h3>
 
       <table style={{ border: 'hidden', marginTop: '30px' }}>
         <tr>
           <td colSpan="2" style={{ fontSize: '1rem', padding: '0 8px 80px' }}>
-            00000원
+            {Numeral(props.detail.price).format(0, 0)}원
           </td>
         </tr>
         <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
@@ -55,8 +51,7 @@ function ProductInfo(props) {
               padding: '0 8px 20px',
             }}
           >
-            <p>적립금 000p</p>
-            <p>배송비 0000원</p>
+            <p>적립금 {props.detail.price * 0.01}p</p>
           </td>
         </tr>
         <tr>
@@ -126,7 +121,7 @@ function ProductInfo(props) {
               <Button
                 size="large"
                 style={{ width: '50%', marginRight: '5px', fontSize: '0.9rem' }}
-                onClick={addToCarthandler}
+                // onClick={addToCarthandler}
               >
                 장바구니 담기
               </Button>

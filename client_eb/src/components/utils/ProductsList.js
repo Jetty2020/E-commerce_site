@@ -59,7 +59,7 @@ function ProductsList({ products }) {
     <Ul>
       {products.map((product) => (
         <Li key={product.id}>
-          <Link to={`/product/:productId`}>
+          <Link to={`/product/${product.id}`}>
             {product.image && (
               <img
                 src={product.image}
