@@ -437,7 +437,7 @@ export const addWishList = async (req, res) => {
   } = req;
 
   try {
-    console.log(productId, producter);
+    // console.log("addWishList", productId, producter);
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });

@@ -9,6 +9,7 @@ import {
   EDIT_USER_SAND_MAIL,
   EDIT_USER_EMAIL,
   DELETE_USER,
+  ADD_WISHLIST,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
@@ -41,6 +42,9 @@ export default function userReducer(state = init, action) {
       return { ...state, editUserEmail: action.payload };
     case DELETE_USER:
       return { ...state, deleteUser: action.payload };
+    case ADD_WISHLIST:
+      return { ...state, addWishlist: action.payload };
+
     case ADD_TO_CART_USER:
       return {
         ...state,

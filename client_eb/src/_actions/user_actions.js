@@ -10,6 +10,7 @@ import {
   DELETE_USER,
   FIND_ID,
   FIND_PASSWORD,
+  ADD_WISHLIST,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
@@ -123,6 +124,17 @@ export function deleteUser(dataToSubmit) {
 
   return {
     type: DELETE_USER,
+    payload: request,
+  };
+}
+
+export function addWishlist(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/addWishList`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: ADD_WISHLIST,
     payload: request,
   };
 }
