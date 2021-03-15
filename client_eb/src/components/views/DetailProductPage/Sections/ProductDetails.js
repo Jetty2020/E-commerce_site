@@ -3,7 +3,7 @@ import './ProductDetails.css';
 import ProductReviews from './ProductReviews';
 import ProductQnA from './ProductQnA';
 
-function ProductDetails({ products }) {
+function ProductDetails(props) {
   //reviews
   const [reviews, setReviews] = useState([
     {
@@ -77,7 +77,7 @@ function ProductDetails({ products }) {
   const content1 = () => {
     return (
       <div>
-        <img style={{ width: '100%' }} src={products[0].detail} />
+        <img style={{ width: '100%' }} src={props.detail.detail} />
       </div>
     );
   };

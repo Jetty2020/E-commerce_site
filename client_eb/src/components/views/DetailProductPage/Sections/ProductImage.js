@@ -1,7 +1,6 @@
 import React from 'react';
-import { products } from '../../../../_datas/productsData.json';
 
-function ProductImage() {
+function ProductImage(props) {
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <img
@@ -10,7 +9,7 @@ function ProductImage() {
           height: '500px',
           objectFit: 'cover',
         }}
-        src={products[0].image}
+        src={props.detail.image}
       />
     </div>
   );

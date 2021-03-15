@@ -10,22 +10,10 @@ import { Icon } from 'antd';
 function VisualSlider() {
   //sample
   const images = [
-    {
-      src: visual01,
-      title: '1',
-    },
-    {
-      src: visual02,
-      title: '2',
-    },
-    {
-      src: visual03,
-      title: '3',
-    },
-    {
-      src: visual04,
-      title: '4',
-    },
+    { src: visual01, title: '1' },
+    { src: visual02, title: '2' },
+    { src: visual03, title: '3' },
+    { src: visual04, title: '4' },
   ];
 
   const Wrap = styled.div`
