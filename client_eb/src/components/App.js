@@ -15,7 +15,6 @@ import SubPage from './views/SubPage/SubPage';
 import SearchResultPage from './views/SearchResultPage/SearchResultPage';
 import MyCartPage from './views/CartPage/MyCartPage';
 import WishlistPage from './views/WishlistPage/WishlistPage';
-import HistoryPage from './views/HistoryPage/HistoryPage';
 import UserInfoPage from './views/UserInfoPage/UserInfoPage';
 
 function App() {
@@ -59,7 +58,6 @@ function App() {
             path="/user/wishlist"
             component={Auth(WishlistPage, true)}
           />
-          <Route exact path="/history" component={Auth(HistoryPage, true)} />
         </Switch>
       </div>
       <Footer />
