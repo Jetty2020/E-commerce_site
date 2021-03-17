@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { products } from '../../../../_datas/productsData.json';
 import { Typography, Button, Form, Input, Select } from 'antd';
 import FileUpload from '../../../utils/FileUpload';
 import Axios from 'axios';

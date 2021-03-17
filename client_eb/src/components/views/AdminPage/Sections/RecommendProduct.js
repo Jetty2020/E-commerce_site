@@ -5,7 +5,7 @@ function RecommendProduct({ products }) {
   return (
     <ul>
       {products.map((product) => (
-        <li style={{ margin: '8px 0' }}>
+        <li style={{ padding: '10px 0' }}>
           <Checkbox checked={product.recommend ? true : false} />{' '}
           <img
             src={product.image}

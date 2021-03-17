@@ -1,24 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { products } from '../../../_datas/productsData.json';
 import { Input } from 'antd';
 import ProductsList from '../../utils/ProductsList';
 
-function SearchResultPage() {
-  //example products
-  const products = [];
-  const createProducts = () => {
-    for (let i = 1; i <= 10; i++) {
-      products.push({
-        id: i,
-        image: `https://www.kingplastic.com/wp-content/uploads/2014/12/Charcoal-Gray-300x300.jpg`,
-        name: `Product ${i}`,
-        price: 30000,
-        likes: 234,
-        reviews: 10,
-      });
-    }
-    return products;
-  };
-  createProducts();
+function SearchResultPage(props) {
+  const [SEARCH, setSEARCH] = useState([]);
+  let searchResult = props.match;
+  console.log(searchResult);
 
   return (
     <div
@@ -33,7 +21,7 @@ function SearchResultPage() {
       </p>
 
       {/* products */}
-      <ProductsList products={products} />
+      {/* <ProductsList products={SEARCH} /> */}
     </div>
   );
 }

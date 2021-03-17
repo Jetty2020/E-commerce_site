@@ -10,12 +10,17 @@
             "discountRate": "",
             "likes": "556",
             "reviews": "3",
+            "quantity": 1,
+            "cart": false,
             "wishlist": true,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 2000
         },
         {
             "id": 2,
@@ -27,12 +32,17 @@
             "discountRate": "",
             "likes": "1897",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 0,
+            "recommend": false,
+            "selling": false,
+            "stock": 3000
         },
         {
             "id": 3,
@@ -44,12 +54,17 @@
             "discountRate": "",
             "likes": "3658",
             "reviews": "272",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": true,
+            "stock": 2500
         },
         {
             "id": 4,
@@ -61,12 +76,17 @@
             "discountRate": "",
             "likes": "748",
             "reviews": "68",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 4000
         },
         {
             "id": 5,
@@ -78,12 +98,17 @@
             "discountRate": "",
             "likes": "31",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 0,
+            "recommend": false,
+            "selling": false,
+            "stock": 1600
         },
         {
             "id": 6,
@@ -95,12 +120,17 @@
             "discountRate": "",
             "likes": "7015",
             "reviews": "1167",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": false,
+            "stock": 5400
         },
         {
             "id": 7,
@@ -112,12 +142,17 @@
             "discountRate": "",
             "likes": "110",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 3000
         },
         {
             "id": 8,
@@ -129,12 +164,17 @@
             "discountRate": "",
             "likes": "810",
             "reviews": "24",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": true,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 2200
         },
         {
             "id": 9,
@@ -146,12 +186,17 @@
             "discountRate": "",
             "likes": "4684",
             "reviews": "373",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": true,
+            "stock": 5200
         },
         {
             "id": 10,
@@ -163,12 +208,17 @@
             "discountRate": "",
             "likes": "1268",
             "reviews": "8",
+            "quantity": 1,
+            "cart": true,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 0,
+            "recommend": true,
+            "selling": false,
+            "stock": 6000
         },
         {
             "id": 11,
@@ -180,12 +230,17 @@
             "discountRate": 10,
             "likes": "115",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": true,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": false,
+            "stock": 8000
         },
         {
             "id": 12,
@@ -197,12 +252,17 @@
             "discountRate": 15,
             "likes": "427",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 6500
         },
         {
             "id": 13,
@@ -214,12 +274,17 @@
             "discountRate": "",
             "likes": "1023",
             "reviews": "160",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": false,
+            "stock": 7600
         },
         {
             "id": 14,
@@ -231,12 +296,17 @@
             "discountRate": "",
             "likes": "198",
             "reviews": "1",
+            "quantity": 1,
+            "cart": false,
             "wishlist": true,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 0,
+            "recommend": false,
+            "selling": false,
+            "stock": 5600
         },
         {
             "id": 15,
@@ -248,12 +318,17 @@
             "discountRate": "",
             "likes": "1434",
             "reviews": "14",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": true,
+            "stock": 4300
         },
         {
             "id": 16,
@@ -265,12 +340,17 @@
             "discountRate": "",
             "likes": "77",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": true,
             "best": false,
             "new": true,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": false,
+            "stock": 2800
         },
         {
             "id": 17,
@@ -282,12 +362,17 @@
             "discountRate": "",
             "likes": "1785",
             "reviews": "44",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 6900
         },
         {
             "id": 18,
@@ -299,12 +384,17 @@
             "discountRate": 10,
             "likes": "2675",
             "reviews": "207",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": true,
-            "recommend": false
+            "delivery": 0,
+            "recommend": false,
+            "selling": false,
+            "stock": 1000
         },
         {
             "id": 19,
@@ -316,12 +406,17 @@
             "discountRate": 20,
             "likes": "2948",
             "reviews": "178",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 4800
         },
         {
             "id": 20,
@@ -333,12 +428,17 @@
             "discountRate": "",
             "likes": "43",
             "reviews": "0",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 2500,
+            "recommend": true,
+            "selling": false,
+            "stock": 5700
         },
         {
             "id": 21,
@@ -350,12 +450,17 @@
             "discountRate": 15,
             "likes": "870",
             "reviews": "32",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 2600
         },
         {
             "id": 22,
@@ -367,12 +472,17 @@
             "discountRate": "",
             "likes": "234",
             "reviews": "6",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 7200
         },
         {
             "id": 23,
@@ -384,12 +494,17 @@
             "discountRate": 10,
             "likes": "1026",
             "reviews": "91",
+            "quantity": 1,
+            "cart": false,
             "wishlist": true,
             "best": false,
             "new": false,
             "hot": false,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 3400
         },
         {
             "id": 24,
@@ -401,12 +516,17 @@
             "discountRate": "",
             "likes": "806",
             "reviews": "40",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": false,
             "discount": false,
-            "recommend": true
+            "delivery": 0,
+            "recommend": true,
+            "selling": false,
+            "stock": 5100
         },
         {
             "id": 25,
@@ -418,12 +538,17 @@
             "discountRate": 20,
             "likes": "253",
             "reviews": "45",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 3000
         },
         {
             "id": 26,
@@ -435,12 +560,17 @@
             "discountRate": "",
             "likes": "468",
             "reviews": "23",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 4000
         },
         {
             "id": 27,
@@ -452,12 +582,17 @@
             "discountRate": "",
             "likes": "668",
             "reviews": "103",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 4500
         },
         {
             "id": 28,
@@ -469,12 +604,17 @@
             "discountRate": "",
             "likes": "812",
             "reviews": "33",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 3400
         },
         {
             "id": 29,
@@ -486,12 +626,17 @@
             "discountRate": "",
             "likes": "473",
             "reviews": "56",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 7600
         },
         {
             "id": 30,
@@ -503,12 +648,17 @@
             "discountRate": "",
             "likes": "385",
             "reviews": "60",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 0,
+            "recommend": false,
+            "selling": false,
+            "stock": 3500
         },
         {
             "id": 31,
@@ -520,12 +670,17 @@
             "discountRate": 15,
             "likes": "845",
             "reviews": "57",
+            "quantity": 1,
+            "cart": true,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": true,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 2500
         },
         {
             "id": 32,
@@ -537,12 +692,17 @@
             "discountRate": "",
             "likes": "",
             "reviews": "",
+            "quantity": 1,
+            "cart": false,
             "wishlist": false,
             "best": false,
             "new": false,
             "hot": true,
             "discount": false,
-            "recommend": false
+            "delivery": 2500,
+            "recommend": false,
+            "selling": false,
+            "stock": 4000
         }
         
     ]
