@@ -61,7 +61,6 @@ const MyCartPage = () => {
 
   //선택상품 삭제
   const onRemoveSelect = () => {
-    // console.log(checkedID);
     setMyCart(myCart.filter((product) => !checkedID.includes(product.id)));
   };
 

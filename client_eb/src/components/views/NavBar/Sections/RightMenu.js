@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { Menu, Badge, Input } from 'antd';
@@ -7,9 +7,9 @@ import { USER_SERVER } from '../../../Config';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const SubMenu = Menu.SubMenu;
-const { Search } = Input;
 
 function RightMenu(props) {
+  const { Search } = Input;
   const user = useSelector((state) => state.user);
 
   const logoutHandler = () => {
@@ -43,9 +43,14 @@ function RightMenu(props) {
     }
   `;
   const [searchTerms, setSearchTerms] = useState('');
-  const onChangeSearch = (e) => {
-    setSearchTerms(e.currentTarget.value);
-  };
+  const onChangeSearch = useCallback(
+    (e) => {
+      const { value } = e.target;
+      console.log(value);
+      setSearchTerms(value);
+    },
+    [searchTerms],
+  );
   const onSubmit = (e) => {
     e.preventDefault();
     props.history.push('/search');
@@ -66,6 +71,7 @@ function RightMenu(props) {
 
         <SearchBar1>
           <Search
+            type="text"
             value={searchTerms}
             onChange={onChangeSearch}
             placeholder="search"

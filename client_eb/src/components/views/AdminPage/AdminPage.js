@@ -10,7 +10,6 @@ const { Option } = Select;
 const AdminPage = () => {
   const SELLING = products.filter((product) => product.selling === true);
   const [selling, setSelling] = useState(SELLING);
-  console.log(SELLING);
 
   //styled-components
   const Table = styled.div`
@@ -35,13 +34,6 @@ const AdminPage = () => {
     }
   `;
 
-  //카테고리
-  const [CategoryValue, setCategoryValue] = useState('all');
-
-  const onChangeCategory = (e) => {
-    setCategoryValue(e.currentTarget.value);
-  };
-
   //상품 선택
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
@@ -63,7 +55,6 @@ const AdminPage = () => {
     let index = selling.findIndex((product) => product.id === id);
     if (!selling[index].checked) {
       setCheckedID((checkedID) => checkedID.concat(id));
-      // console.log(index);
     } else {
       checkedID.splice(checkedID.indexOf(id), 1);
     }
@@ -71,17 +62,14 @@ const AdminPage = () => {
 
   //상품 삭제
   const onRemove = (id) => {
-    // console.log(id);
     setSelling(selling.filter((product) => product.id !== id));
   };
   const onRemoveSelect = () => {
-    // console.log(checkedID);
     setSelling(selling.filter((product) => !checkedID.includes(product.id)));
   };
 
   //추천 상품 모달
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -91,6 +79,12 @@ const AdminPage = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  //추천 상품 선택
+  const recommendDefault = selling.filter(
+    (product) => product.recommend === true,
+  );
+  const [recommended, setRecommended] = useState(recommendDefault);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
@@ -107,6 +101,7 @@ const AdminPage = () => {
           <Option value="all">All</Option>
           <Option value="best">Best</Option>
           <Option value="new">New</Option>
+          <Option value="hot">Hot</Option>
           <Option value="discount">Discount</Option>
         </Select>
       </div>
@@ -131,7 +126,7 @@ const AdminPage = () => {
           <div style={{ width: '12%' }}>선택</div>
         </Table>
         {selling.map((product) => (
-          <>
+          <div key={product.id}>
             <TableRow>
               {/* 체크박스 */}
               <Checkbox
@@ -141,25 +136,27 @@ const AdminPage = () => {
               />
 
               {/* 상품 정보 */}
-              <div
-                style={{ width: '35%', display: 'flex', alignItems: 'center' }}
-              >
-                <img
-                  src={product.image}
-                  width="100px"
-                  height="100px"
-                  alt="img"
-                />
-                <div style={{ marginLeft: '15px' }}>
-                  {product.recommend ? (
-                    <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
-                      <Icon type="like" />
-                      <span> 추천 상품</span>
+              <Link to={`/product/${product.id}`} style={{ width: '35%' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={product.image}
+                    width="100px"
+                    height="100px"
+                    alt="img"
+                  />
+                  <div style={{ marginLeft: '15px' }}>
+                    {product.recommend ? (
+                      <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
+                        <Icon type="like" />
+                        <span> 추천 상품</span>
+                      </p>
+                    ) : null}
+                    <p style={{ fontWeight: 'bold', color: '#555' }}>
+                      {product.name}
                     </p>
-                  ) : null}
-                  <p style={{ fontWeight: 'bold' }}>{product.name}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
 
               {/* 카테고리 */}
               <div
@@ -171,13 +168,20 @@ const AdminPage = () => {
               >
                 <Select
                   style={{ minWidth: '100px' }}
-                  defaultValue={product.category}
-                  value={product.category}
+                  defaultValue={
+                    product.best
+                      ? 'best'
+                      : product.new
+                      ? 'new'
+                      : product.hot
+                      ? 'hot'
+                      : null
+                  }
                 >
                   <Option value="all">All</Option>
                   <Option value="best">Best</Option>
                   <Option value="new">New</Option>
-                  <Option value="discount">Discount</Option>
+                  <Option value="hot">Hot</Option>
                 </Select>
               </div>
 
@@ -241,7 +245,7 @@ const AdminPage = () => {
                 </p>
               </div>
             </TableRow>
-          </>
+          </div>
         ))}
       </div>
 
