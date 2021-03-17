@@ -85,6 +85,7 @@ const AdminPage = () => {
     (product) => product.recommend === true,
   );
   const [recommended, setRecommended] = useState(recommendDefault);
+  console.log(recommended);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
