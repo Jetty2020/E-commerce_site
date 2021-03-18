@@ -176,7 +176,7 @@ const AdminPage = () => {
                       ? 'new'
                       : product.hot
                       ? 'hot'
-                      : null
+                      : 'all'
                   }
                 >
                   <Option value="all">All</Option>
@@ -232,7 +232,7 @@ const AdminPage = () => {
               <div style={{ width: '12%', textAlign: 'center' }}>
                 <p style={{ margin: '2.5px 0' }}>
                   <Button style={{ fontSize: '0.75rem' }}>
-                    <Link to="/admin/update">수정</Link>
+                    <Link to={`/admin/update/${product.id}`}>수정</Link>
                   </Button>
                 </p>
                 <p style={{ margin: '2.5px 0' }}>

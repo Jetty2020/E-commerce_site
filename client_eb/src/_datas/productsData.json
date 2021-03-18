@@ -195,7 +195,7 @@
             "discount": false,
             "delivery": 2500,
             "recommend": false,
-            "selling": true,
+            "selling": false,
             "stock": 5200
         },
         {
@@ -239,7 +239,7 @@
             "discount": true,
             "delivery": 2500,
             "recommend": true,
-            "selling": false,
+            "selling": true,
             "stock": 8000
         },
         {

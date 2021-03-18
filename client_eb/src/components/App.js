@@ -34,7 +34,7 @@ function App() {
           />
           <Route
             exact
-            path="/admin/update"
+            path="/admin/update/:productId"
             component={Auth(UpdateProduct, true)}
           />
           <Route exact path="/sub/best" component={Auth(SubPage, null)} />
