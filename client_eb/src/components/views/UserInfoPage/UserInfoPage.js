@@ -230,6 +230,7 @@ function UserInfoPage(props) {
                           alert(response.payload.message);
                         }
                       });
+                      setMailSend(false);
                       setSubmitting(true);
                     }, 0);
                   }}
