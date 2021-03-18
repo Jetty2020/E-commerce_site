@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
-import '../../utils/sns.css';
 
 const formItemLayout = {
   labelCol: {
@@ -41,8 +40,7 @@ function RegisterPage(props) {
         password: '',
         confirmPassword: '',
       }}
-      validationSchema={
-        Yup.object().shape({
+      validationSchema={Yup.object().shape({
         name: Yup.string().required('성명을 입력해 주세요'),
         email: Yup.string()
           .email('이메일을 올바르게 입력해 주세요')
@@ -222,23 +220,12 @@ function RegisterPage(props) {
                   onClick={handleSubmit}
                   type="primary"
                   disabled={isSubmitting}
-                  style={{ margin: '10px 0' }}
+                  style={{ margin: '30px 0' }}
                 >
                   회원가입 완료
                 </Button>
               </Form.Item>
             </Form>
-
-            <div className="sns_register">
-              <div style={{ marginTop: '1.5rem' }}>
-                <button className="kakao">카카오 간편가입</button>
-                <button className="naver">네이버 간편가입</button>
-              </div>
-              <div>
-                <button className="google">구글 간편가입</button>
-                <button className="facebook">페이스북 간편가입</button>
-              </div>
-            </div>
           </div>
         );
       }}

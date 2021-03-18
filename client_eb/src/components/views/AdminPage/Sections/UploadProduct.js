@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Typography, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
-
 import { withRouter } from 'react-router-dom';
-import { uploadProduct } from '../../../../_actions/product_actions';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Typography, Button, Form, Input, Select } from 'antd';
+import { uploadProduct } from '../../../../_actions/product_actions';
+
 const { Title } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 function UploadProduct(props) {
   const dispatch = useDispatch(); //dispatch for redux
@@ -30,16 +31,16 @@ function UploadProduct(props) {
       }}
       validationSchema={Yup.object().shape({
         //검증 규칙 설정
-        name: Yup.string().required('Product name is required'),
-        description: Yup.string().required('Description is required'),
-        price: Yup.number('Price is number.')
-          .positive('Price is positive number.')
-          .integer('Price is integer')
-          .required('Price is required'),
-        stock: Yup.number('Stock is number.')
-          .positive('Stock is positive number.')
-          .integer('Stock is integer')
-          .required('Stock is required'),
+        name: Yup.string().required('상품명 입력은 필수입니다'),
+        description: Yup.string().required('상품 설명 입력은 필수입니다'),
+        price: Yup.number('가격을 숫자로 입력해 주세요')
+          .positive('가격을 양수로 입력해 주세요')
+          .integer('가격을 정확히 입력해 주세요')
+          .required('가격 입력은 필수입니다'),
+        stock: Yup.number('재고 수량을 숫자로 입력해 주세요')
+          .positive('재고 수량을 양수로 입력해 주세요')
+          .integer('재고 수량을 정확히 입력해 주세요')
+          .required('재고 수량 입력은 필수입니다'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -75,21 +76,21 @@ function UploadProduct(props) {
           values,
           touched,
           errors,
-          // dirty,
+          //dirty,
           isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          // handleReset,
+          //handleReset
         } = props;
         return (
-          <div style={{ maxWidth: '450px', margin: '3rem auto' }}>
+          <div style={{ maxWidth: '500px', margin: '3rem auto' }}>
             <div style={{ marginBottom: '2rem' }}>
               <Title level={3}>상품 등록</Title>
             </div>
             <form
               onSubmit={handleSubmit}
-              style={{ width: '450px' }}
+              style={{ width: '500px' }}
               encType="multipart/form-data"
             >
               <Form.Item required>
@@ -105,7 +106,7 @@ function UploadProduct(props) {
               <Form.Item label={'상품명'} required>
                 <Input
                   id="name"
-                  placeholder="Product name"
+                  placeholder="상품명을 입력해 주세요"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -122,7 +123,7 @@ function UploadProduct(props) {
               <Form.Item label={'상품 설명'} required>
                 <TextArea
                   id="description"
-                  placeholder="Description"
+                  placeholder="상품 설명을 입력해 주세요"
                   rows={6}
                   value={values.description}
                   onChange={handleChange}
@@ -189,7 +190,6 @@ function UploadProduct(props) {
                   <Link to="/admin">취소</Link>
                 </Button>
               </div>
-              {/* </Form> */}
             </form>
           </div>
         );

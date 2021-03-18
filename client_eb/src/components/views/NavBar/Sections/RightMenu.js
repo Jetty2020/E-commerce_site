@@ -43,14 +43,11 @@ function RightMenu(props) {
     }
   `;
   const [searchTerms, setSearchTerms] = useState('');
-  const onChangeSearch = useCallback(
-    (e) => {
-      const { value } = e.target;
-      console.log(value);
-      setSearchTerms(value);
-    },
-    [searchTerms],
-  );
+  const onChangeSearch = (e) => {
+    const { value } = e.target;
+    console.log(value);
+    setSearchTerms(value);
+  };
   const onSubmit = (e) => {
     e.preventDefault();
     props.history.push('/search');
@@ -74,7 +71,7 @@ function RightMenu(props) {
             type="text"
             value={searchTerms}
             onChange={onChangeSearch}
-            placeholder="search"
+            placeholder="3월 추천상품"
           />
         </SearchBar1>
       </div>
@@ -87,7 +84,7 @@ function RightMenu(props) {
             <Search
               value={searchTerms}
               onChange={onChangeSearch}
-              placeholder="search"
+              placeholder="3월 추천상품"
             />
           </form>
         </SearchBar2>

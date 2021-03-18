@@ -1,30 +1,3 @@
-.sns_register {
-}
-.sns_register button {
-  width: 165px;
-  height: 40px;
-  background: url('../images/bg_sns.png') no-repeat;
-  margin: 0.15rem;
-  padding-left: 45px;
-  border: none;
-  text-align: left;
-  letter-spacing: -0.7px;
-  font-size: 0.78rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-.sns_register .kakao {
-}
-.sns_register .naver {
-  background-position-y: -80px;
-}
-.sns_register .google {
-  background-position-y: -120px;
-}
-.sns_register .facebook {
-  background-position-y: -40px;
-}
-
 .sns_login {
   width: 200px;
   margin: 0 auto;
@@ -50,4 +23,3 @@
 .sns_login .facebook {
   background-position-y: -40px;
 }
-
