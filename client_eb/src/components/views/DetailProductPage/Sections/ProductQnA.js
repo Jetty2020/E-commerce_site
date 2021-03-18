@@ -26,7 +26,7 @@ const ProductQnA = ({ qna }) => {
             }}
             onClick={() => qna.secret && alert('비밀글입니다.')}
           >
-            <p style={{ marginBottom: '0', color: '#adb5bd' }}>[{qna.sort}]</p>
+            <span>{qna.userID}</span>
             <div
               style={{
                 display: 'flex',
@@ -43,7 +43,6 @@ const ProductQnA = ({ qna }) => {
                 <div>{qna.text}</div>
               )}
               <div>
-                <span>{qna.userID}</span>
                 <span style={{ margin: '0 15px' }}>{qna.date}</span>
                 <span>
                   {qna.answer ? (
