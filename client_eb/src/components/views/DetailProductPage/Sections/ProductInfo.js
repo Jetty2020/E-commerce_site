@@ -118,7 +118,10 @@ function ProductInfo(props) {
         </tr>
         <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
           <td colSpan="2" style={{ paddingTop: '50px', textAlign: 'right' }}>
-            총 구매금액
+            총 구매금액{'  '}
+            <b style={{ fontSize: '1.1rem' }}>
+              {Numeral(props.detail.price * quantity).format(0, 0)}원
+            </b>
           </td>
         </tr>
         <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>

@@ -102,7 +102,6 @@ const AdminPage = () => {
           <Option value="all">All</Option>
           <Option value="best">Best</Option>
           <Option value="new">New</Option>
-          <Option value="hot">Hot</Option>
           <Option value="discount">Discount</Option>
         </Select>
       </div>
@@ -115,29 +114,29 @@ const AdminPage = () => {
       >
         <Table>
           <Checkbox
-            style={{ width: '5%' }}
+            style={{ width: '6%' }}
             onClick={onCheckAll}
             checked={checked}
           />
-          <div style={{ width: '35%' }}>상품 정보</div>
-          <div style={{ width: '12%' }}>카테고리</div>
-          <div style={{ width: '12%' }}>재고수량</div>
-          <div style={{ width: '12%' }}>판매금액</div>
-          <div style={{ width: '12%' }}>배송비</div>
-          <div style={{ width: '12%' }}>선택</div>
+          <div style={{ width: '31.5%' }}>상품 정보</div>
+          <div style={{ width: '12.5%' }}>카테고리</div>
+          <div style={{ width: '12.5%' }}>재고수량</div>
+          <div style={{ width: '12.5%' }}>판매금액</div>
+          <div style={{ width: '12.5%' }}>배송구분</div>
+          <div style={{ width: '12.5%' }}>선택</div>
         </Table>
         {selling.map((product) => (
           <div key={product.id}>
             <TableRow>
               {/* 체크박스 */}
               <Checkbox
-                style={{ width: '5%', textAlign: 'center' }}
+                style={{ width: '6%', textAlign: 'center' }}
                 checked={product.checked}
                 onClick={() => onCheckProduct(product.id)}
               />
 
               {/* 상품 정보 */}
-              <Link to={`/product/${product.id}`} style={{ width: '35%' }}>
+              <Link to={`/product/${product.id}`} style={{ width: '31.5%' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <img
                     src={product.image}
@@ -162,37 +161,21 @@ const AdminPage = () => {
               {/* 카테고리 */}
               <div
                 style={{
-                  width: '12%',
+                  width: '12.5%',
                   display: 'flex',
                   justifyContent: 'center',
                 }}
               >
-                <Select
-                  style={{ minWidth: '100px' }}
-                  defaultValue={
-                    product.best
-                      ? 'best'
-                      : product.new
-                      ? 'new'
-                      : product.hot
-                      ? 'hot'
-                      : 'all'
-                  }
-                >
-                  <Option value="all">All</Option>
-                  <Option value="best">Best</Option>
-                  <Option value="new">New</Option>
-                  <Option value="hot">Hot</Option>
-                </Select>
+                <p>{product.best ? 'Best' : product.new ? 'New' : 'All'}</p>
               </div>
 
               {/* 재고 수량 */}
-              <div style={{ width: '12%', textAlign: 'center' }}>
+              <div style={{ width: '12.5%', textAlign: 'center' }}>
                 <p>{Numeral(product.stock).format(0, 0)}개</p>
               </div>
 
               {/* 판매금액 */}
-              <div style={{ width: '12%', textAlign: 'center' }}>
+              <div style={{ width: '12.5%', textAlign: 'center' }}>
                 {product.discountRate > 0 ? (
                   <>
                     <p>
@@ -219,17 +202,13 @@ const AdminPage = () => {
                 )}
               </div>
 
-              {/* 배송비 */}
-              <div style={{ width: '12%', textAlign: 'center' }}>
-                {product.delivery > 0 ? (
-                  <p>{Numeral(product.delivery).format(0, 0)}원</p>
-                ) : (
-                  <p>무료배송</p>
-                )}
+              {/* 배송구분 */}
+              <div style={{ width: '12.5%', textAlign: 'center' }}>
+                <p>기본배송</p>
               </div>
 
               {/* 선택 */}
-              <div style={{ width: '12%', textAlign: 'center' }}>
+              <div style={{ width: '12.5%', textAlign: 'center' }}>
                 <p style={{ margin: '2.5px 0' }}>
                   <Button style={{ fontSize: '0.75rem' }}>
                     <Link to={`/admin/update/${product.id}`}>수정</Link>
