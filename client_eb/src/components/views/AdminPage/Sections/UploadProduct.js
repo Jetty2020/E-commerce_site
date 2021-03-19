@@ -6,12 +6,11 @@ import ImageUploader from 'react-images-upload';
 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Typography, Button, Form, Input, Select } from 'antd';
+import { Typography, Button, Form, Input } from 'antd';
 import { uploadProduct } from '../../../../_actions/product_actions';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-const { Option } = Select;
 
 function UploadProduct(props) {
   const dispatch = useDispatch(); //dispatch for redux
@@ -96,6 +95,8 @@ function UploadProduct(props) {
               <Form.Item required>
                 <ImageUploader
                   withIcon={true}
+                  withLabel={true}
+                  label="Max file size: 5mb, accepted: jpg, gif, png, jpeg"
                   withPreview={true}
                   buttonText="Choose images"
                   onChange={onFileHandler}
