@@ -26,7 +26,7 @@ function ProductDetails(props) {
       no: 3,
       rate: 5,
       userID: 'abc12**',
-      date: '2021-03-01',
+      date: '2021-03-02',
       text: '퀄리티가 진짜 좋네요 좋은 제품 감사합니다 :)',
       clicked: false,
     },
