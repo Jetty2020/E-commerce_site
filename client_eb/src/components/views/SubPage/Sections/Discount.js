@@ -1,11 +1,8 @@
 import React from 'react';
 import { products } from '../../../../_datas/productsData.json';
-import { Select } from 'antd';
 import ProductsList from '../../../utils/ProductsList';
 
 const Discount = () => {
-  const { Option } = Select;
-
   const DISCOUNT = products.filter((product) => product.discountRate > 0);
 
   return (

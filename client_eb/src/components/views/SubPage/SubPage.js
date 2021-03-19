@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import Best from './Sections/Best';
 import New from './Sections/New';
 import Discount from './Sections/Discount';
-import Hot from './Sections/Hot';
+import All from './Sections/All';
 
 function SubPage() {
   //pagination
@@ -27,9 +27,9 @@ function SubPage() {
       }}
     >
       <Switch>
+        <Route exact path="/sub/all" component={All} />
         <Route exact path="/sub/best" component={Best} />
         <Route exact path="/sub/new" component={New} />
-        <Route exact path="/sub/hot" component={Hot} />
         <Route exact path="/sub/discount" component={Discount} />
       </Switch>
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import { products } from '../../../../_datas/productsData.json';
-import { Select } from 'antd';
 import ProductsList from '../../../utils/ProductsList';
 
 const Best = () => {
-  const { Option } = Select;
 
   const BEST = products.filter((product) => product.best === true);
 
