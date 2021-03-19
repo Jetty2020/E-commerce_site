@@ -137,19 +137,24 @@ function UserInfoPage(props) {
                       userID: userData.userID,
                       userEmail: values.email,
                     };
-                    dispatch(editUserSendMail(dataToSubmit)).then(
-                      (response) => {
-                        if (response.payload.success) {
-                          alert('인증번호가 전송되었습니다.');
-                        } else {
-                          // console.log(response.payload.err);
-                          alert(response.payload.message);
-                        }
-                      },
-                    );
-                    setEmail(values.email);
-                    setSubmitting(true);
-                    setMailSend(true);
+                    if (values.email === user.email) {
+                      alert("이메일이 이전과 동일합니다. \n새로운 이메일을 입력해주세요.");
+                      setSubmitting(false);
+                    } else {
+                      dispatch(editUserSendMail(dataToSubmit)).then(
+                        (response) => {
+                          if (response.payload.success) {
+                            alert('인증번호가 전송되었습니다.');
+                          } else {
+                            // console.log(response.payload.err);
+                            alert(response.payload.message);
+                          }
+                        },
+                      );
+                      setEmail(values.email);
+                      setSubmitting(true);
+                      setMailSend(true);
+                    }
                   }, 0);
                 }}
               >
@@ -174,7 +179,7 @@ function UserInfoPage(props) {
                           name="email"
                           disabled={isSubmitting}
                           value={values.email}
-                          style={{ width: '150px' }}
+                          style={{ width: '220px' }}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           className={
