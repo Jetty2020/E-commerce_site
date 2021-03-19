@@ -8,7 +8,7 @@ function ProductsList({ products }) {
   const Ul = styled.ul`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
   `;
   const Li = styled.li`
     position: relative;

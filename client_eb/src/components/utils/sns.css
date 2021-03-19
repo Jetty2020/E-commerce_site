@@ -12,8 +12,8 @@
   border-radius: 20px;
   cursor: pointer;
 }
-.sns_login .kakao {
-}
+/* .sns_login .kakao {
+} */
 .sns_login .naver {
   background-position-y: -80px;
 }

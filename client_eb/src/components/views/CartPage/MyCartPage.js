@@ -109,7 +109,7 @@ const MyCartPage = () => {
           <div style={{ width: '48%' }}>상품 정보</div>
           <div style={{ width: '15%' }}>수량</div>
           <div style={{ width: '15%' }}>주문금액</div>
-          <div style={{ width: '15%' }}>배송비</div>
+          <div style={{ width: '15%' }}>배송구분</div>
         </Table>
         {myCart.map((product) => (
           <>
@@ -221,13 +221,9 @@ const MyCartPage = () => {
                 )}
               </div>
 
-              {/* 배송비 */}
+              {/* 배송구분 */}
               <div style={{ width: '15%', textAlign: 'center' }}>
-                {product.delivery > 0 ? (
-                  <p>{Numeral(product.delivery).format(0, 0)}원</p>
-                ) : (
-                  <p>무료배송</p>
-                )}
+                <p>기본배송</p>
               </div>
             </TableRow>
           </>
@@ -266,6 +262,7 @@ const MyCartPage = () => {
             letterSpacing: '-0.5px',
           }}
         >
+          {/* 총 주문금액 */}
           <div style={{ width: '32.6%' }}>
             <p>
               {Numeral(
@@ -293,23 +290,22 @@ const MyCartPage = () => {
             </p>
           </div>
           <Icon type="plus" style={{ width: '1%' }} />
+          {/* 총 배송비 */}
           <div style={{ width: '32.6%' }}>
-            {Numeral(
-              myCart.reduce((acc, cur) => acc.delivery + cur.delivery),
-            ).format(0, 0)}
-            원
+            {myCart.length > 0 ? '2,500원' : '0원'}
           </div>
           <Icon
             type="pause"
             style={{ width: '1%', transform: 'rotate(90deg)' }}
           />
+          {/* 총 결제금액 */}
           <div style={{ width: '32.6%' }}>
             {Numeral(
               myCart.reduce(
                 (acc, cur) =>
                   acc.price * acc.quantity +
                   cur.price * (1 - cur.discountRate * 0.01) * cur.quantity +
-                  (acc.delivery + cur.delivery),
+                  2500,
               ),
             ).format(0, 0)}
             원
