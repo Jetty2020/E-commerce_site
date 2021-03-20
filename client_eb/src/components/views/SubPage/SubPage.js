@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Icon } from 'antd';
-import Best from './Sections/Best';
-import New from './Sections/New';
-import Discount from './Sections/Discount';
-import All from './Sections/All';
+import BestPage from './Sections/BestPage';
+import NewPage from './Sections/NewPage';
+import DiscountPage from './Sections/DiscountPage';
+import AllPage from './Sections/AllPage';
 
 function SubPage() {
   //pagination
@@ -27,60 +27,11 @@ function SubPage() {
       }}
     >
       <Switch>
-        <Route exact path="/sub/all" component={All} />
-        <Route exact path="/sub/best" component={Best} />
-        <Route exact path="/sub/new" component={New} />
-        <Route exact path="/sub/discount" component={Discount} />
+        <Route exact path="/sub/all" component={AllPage} />
+        <Route exact path="/sub/best" component={BestPage} />
+        <Route exact path="/sub/new" component={NewPage} />
+        <Route exact path="/sub/discount" component={DiscountPage} />
       </Switch>
-
-      {/* pagination */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: '70px 0',
-        }}
-      >
-        {/*  <a
-          href="/"
-          style={{
-            color: '#495057',
-            fontSize: '1rem',
-            marginBottom: '12px',
-            marginLeft: '8px',
-          }}
-        >
-          <Icon type="left" />
-        </a> */}
-        <ul style={{ display: 'flex' }}>
-          {pages.map((page) => (
-            <li style={{ margin: '0 10px' }}>
-              <a
-                href="/"
-                style={{
-                  color: '#495057',
-                  fontSize: '1.05rem',
-                  padding: '3px',
-                }}
-              >
-                {page.id}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <a
-          href="/"
-          style={{
-            color: '#495057',
-            fontSize: '1rem',
-            marginBottom: '12px',
-            marginLeft: '8px',
-          }}
-        >
-          <Icon type="right" />
-        </a>
-      </div>
     </div>
   );
 }

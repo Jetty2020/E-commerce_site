@@ -5,6 +5,7 @@ function ProductImage(props) {
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <img
         style={{
+          width: '100%',
           maxWidth: '500px',
           height: '500px',
           objectFit: 'cover',

@@ -72,7 +72,7 @@ function ProductsList({ products }) {
               <Price>{Numeral(product.price).format(0, 0)}원</Price>
             )}
             {product.text && <Text>{product.text}</Text>}
-            {product.discountRate && (
+            {product.discountRate > 0 && (
               <Discount>
                 <span className="rate">{product.discountRate}% </span>
                 <span className="discount">
