@@ -2,13 +2,14 @@
 
 .menu {
   padding: 0 20px;
-  overflow: auto;
+  overflow: hidden;
   background-color: white;
   border-bottom: solid 1px #e8e8e8;
 }
 
 .menu__logo {
-  width: 150px;
+  width: 200px;
+  margin-top: -4px;
   float: left;
 }
 
@@ -61,7 +62,7 @@
   padding: 14px 24px !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   .menu__mobile-button {
     display: inline-block !important;
   }

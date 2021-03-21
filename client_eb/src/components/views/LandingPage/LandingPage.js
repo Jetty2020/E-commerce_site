@@ -8,10 +8,14 @@ import { products } from '../../../_datas/productsData.json';
 function LandingPage() {
   const { TabPane } = Tabs;
 
-  const RECOMMEND = products.filter((product) => product.recommend === true);
-  const NEW = products.filter((product) => product.new === true);
-  const HOT = products.filter((product) => product.hot === true);
-  const DISCOUNT = products.filter((product) => product.discount === true);
+  const RECOMMEND = products
+    .filter((product) => product.recommend === true)
+    .slice(0, 8);
+  const NEW = products.filter((product) => product.new === true).slice(0, 8);
+  const BEST = products.filter((product) => product.best === true).slice(0, 8);
+  const DISCOUNT = products
+    .filter((product) => product.discountRate > 0)
+    .slice(0, 8);
 
   return (
     <div>
@@ -27,7 +31,7 @@ function LandingPage() {
           <ProductsList products={RECOMMEND} />
         </div>
 
-        {/* New & Hot Products */}
+        {/* New & Best Products */}
         <Tabs defaultActiveKey="1">
           <TabPane
             tab={
@@ -55,12 +59,12 @@ function LandingPage() {
                   fontWeight: 'bold',
                 }}
               >
-                인기 상품
+                베스트 상품
               </h2>
             }
             key="2"
           >
-            <ProductsList products={HOT} />
+            <ProductsList products={BEST} />
           </TabPane>
         </Tabs>
 

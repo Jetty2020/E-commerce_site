@@ -24,22 +24,28 @@ function RightMenu(props) {
 
   //상품 검색
   const SearchBar1 = styled.div`
-    margin: 20px;
+    margin-top: 15px;
+    padding: 0 20px;
 
-    @media only screen and (min-width: 769px) {
+    @media only screen and (min-width: 1000px) {
       position: absolute;
       top: 18px;
       right: 190px;
       width: 150px;
       margin: 0;
+      padding: 0;
     }
   `;
   const SearchBar2 = styled.div`
-    @media only screen and (min-width: 769px) {
-      position: absolute;
+    position: absolute;
+    bottom: -45px;
+    padding: 0 20px;
+
+    @media only screen and (min-width: 1000px) {
       top: 18px;
       right: 280px;
       width: 170px;
+      padding: 0;
     }
   `;
   const [searchTerms, setSearchTerms] = useState('');

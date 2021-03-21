@@ -29,10 +29,8 @@ function DetailProductPage(props) {
         <Col lg={12} xs={24} style={{ width: '60%' }}>
           <ProductImage detail={product()} />
         </Col>
-        <Col lg={12} xs={24} style={{ width: '40%' }}>
-          <ProductInfo
-            detail={product()}
-          />
+        <Col lg={12} xs={24} style={{ maxWidth: '40%' }}>
+          <ProductInfo detail={product()} />
         </Col>
       </Row>
 
