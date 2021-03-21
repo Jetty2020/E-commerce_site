@@ -1,23 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useCallback, useState } from 'react';
-import Axios from 'axios';
-import styled from 'styled-components';
-import { Menu, Badge, Input } from 'antd';
-import { USER_SERVER } from '../../../Config';
-import { withRouter, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React from "react";
+import Axios from "axios";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { searchProduct } from '../../../../_actions/product_actions';
+import { Menu, Badge, Input } from "antd";
+import { USER_SERVER } from "../../../Config";
+import { withRouter, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const SubMenu = Menu.SubMenu;
 
 function RightMenu(props) {
+  const dispatch = useDispatch();
   const { Search } = Input;
   const user = useSelector((state) => state.user);
 
   const logoutHandler = () => {
     Axios.get(`${USER_SERVER}/logout`).then((response) => {
       if (response.status === 200) {
-        props.history.push('/login');
+        props.history.push("/login");
       } else {
-        alert('Log Out Failed');
+        alert("Log Out Failed");
       }
     });
   };
@@ -48,20 +51,27 @@ function RightMenu(props) {
       padding: 0;
     }
   `;
-  const [searchTerms, setSearchTerms] = useState('');
-  const onChangeSearch = (e) => {
-    const { value } = e.target;
-    console.log(value);
-    setSearchTerms(value);
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    props.history.push('/search');
+  const onSearch = (value) => {
+    // console.log(value);
+    let dataToSubmit = {
+      searchKey: value,
+    };
+    dispatch(searchProduct(dataToSubmit))
+      .then((response) => {
+        if (response.payload.success) {
+          console.log(response.payload.product)
+        } else {
+          console.log(response.payload);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <Menu mode={props.mode}>
           <Menu.Item key="mail">
             <Link to="/login">Signin</Link>
@@ -73,26 +83,15 @@ function RightMenu(props) {
         </Menu>
 
         <SearchBar1>
-          <Search
-            type="text"
-            value={searchTerms}
-            onChange={onChangeSearch}
-            placeholder="3월 추천상품"
-          />
+          <Search onSearch={onSearch} placeholder="3월 추천상품" />
         </SearchBar1>
       </div>
     );
   } else {
     return (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <SearchBar2>
-          <form onSubmit={onSubmit}>
-            <Search
-              value={searchTerms}
-              onChange={onChangeSearch}
-              placeholder="3월 추천상품"
-            />
-          </form>
+          <Search onSearch={onSearch} placeholder="3월 추천상품" />
         </SearchBar2>
 
         <Menu mode={props.mode}>
@@ -104,7 +103,7 @@ function RightMenu(props) {
               <Link to="/user/cart">
                 <Badge
                   // count={user.userData && user.userData.cart.length}
-                  style={{ color: '#108ee9' }}
+                  style={{ color: "#108ee9" }}
                 >
                   Cart
                 </Badge>

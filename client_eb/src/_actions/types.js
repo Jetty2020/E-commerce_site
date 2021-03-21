@@ -12,8 +12,11 @@ export const ADD_WISHLIST = "add_wishlist";
 export const ADD_CART = "add_cart";
 
 
+export const UPLOAD_PRODUCT = "upload_product";
+export const SEARCH_PRODUCT = "search_product";
+
+
+
 export const GET_CART_ITEMS_USER = "get_cart_items_user";
 export const REMOVE_CART_ITEM_USER = "remove_cart_item_user";
 export const ON_SUCCESS_BUY_USER = "on_success_buy_user";
-
-export const UPLOAD_PRODUCT = "upload_product";
