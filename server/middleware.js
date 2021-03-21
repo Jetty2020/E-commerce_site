@@ -47,7 +47,7 @@ const s3 = new aws.S3({
   region: "ap-northeast-2"
 });
  
-var multerItem = multer({
+let multerItem = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'handyhd',
@@ -56,21 +56,19 @@ var multerItem = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
-      cb(null, req.s3Key)
+      cb(null, uuid())
     }
   })
 })
 
-const uploadItemMiddle = multerItem.single("file");
+const imgMulter = multerItem.array("file",2);
 
 function uploadToS3(req, res) {
   // console.log(req);
-  req.s3Key = uuid()
-  let downloadUrl = `https://handyhd.s3.ap-northeast-2.amazonaws.com/${req.s3Key}`
   return new Promise((resolve, reject) => {
-    return uploadItemMiddle(req, res, err => {
+    return imgMulter(req, res, err => {
       if (err) return reject(err);
-      return resolve(downloadUrl)
+      return resolve()
     })
   })
 }
@@ -79,8 +77,6 @@ export const uploadFile = {
   uploadImageToS3: (req, res, next) => {
     uploadToS3(req, res)
       .then(downloadUrl => {
-        // return res.status(200).send({downloadUrl})
-        req.location = downloadUrl;
         next();
       })
       .catch(e => {

@@ -5,8 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    productDes: {
-      type: DataTypes.STRING(1024),
+    mainImg: {
+      type: DataTypes.STRING(150),
+    },
+    descImg: {
+      type: DataTypes.STRING(150),
     },
     price: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -26,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     recoProduct: {
       type: DataTypes.BOOLEAN,
-    },
-    fileURL: {
-      type: DataTypes.STRING(150),
     },
     // created_at: {
     //   type: DataTypes.DATE,

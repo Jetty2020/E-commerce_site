@@ -3,15 +3,17 @@ import { Product, User, Comment, Sequelize } from "../models";
 
 export const uploadProduct = async (req, res) => {
   const {
-    body: { productName, productDes, price, stock },
-    // user: { id: producter },
+    body: { productName, price, stock },
   } = req;
-  const { location: fileURL } = req;
+  const { files } = req;
   try {
+    // console.log("req",req);
+    console.log("req.file1",req.files[0].location);
+    console.log("req.file2",req.files[1].location);
     const { dataValues: product } = await Product.create({
       productName,
-      productDes,
-      fileURL,
+      mainImg: files[0].location,
+      descImg: files[1].location,
       price,
       stock,
     });
