@@ -9,7 +9,7 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import './UserInfoPage.css';
-import '../../utils/sns.css';
+import '../LoginPage/LoginPage.css';
 import { Form, Button, Input, Modal } from 'antd';
 
 function UserInfoPage(props) {
@@ -44,7 +44,6 @@ function UserInfoPage(props) {
     { corp: 'kakao', title: '카카오 로그인', connect: false },
     { corp: 'naver', title: '네이버 로그인', connect: true },
     { corp: 'google', title: '구글 로그인', connect: false },
-    { corp: 'facebook', title: '페이스북 로그인', connect: false },
   ]);
 
   const onModify = useCallback(() => {
@@ -95,7 +94,7 @@ function UserInfoPage(props) {
           <p style={{ marginTop: '20px' }}>
             연결된 SNS 계정으로 로그인할 수 있습니다.
           </p>
-          <div className="sns_login" style={{ margin: 'unset' }}>
+          <div className="sns" style={{ margin: 'unset' }}>
             {sns.map((sns) =>
               sns.connect ? (
                 <button className={sns.corp}>{sns.title}</button>
@@ -138,7 +137,9 @@ function UserInfoPage(props) {
                       userEmail: values.email,
                     };
                     if (values.email === user.email) {
-                      alert("이메일이 이전과 동일합니다. \n새로운 이메일을 입력해주세요.");
+                      alert(
+                        '이메일이 이전과 동일합니다. \n새로운 이메일을 입력해주세요.',
+                      );
                       setSubmitting(false);
                     } else {
                       dispatch(editUserSendMail(dataToSubmit)).then(

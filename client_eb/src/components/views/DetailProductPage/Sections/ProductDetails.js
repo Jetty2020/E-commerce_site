@@ -73,7 +73,7 @@ function ProductDetails(props) {
   //tabs
   const content1 = () => {
     return (
-      <div>
+      <div style={{ width: '80%', margin: '30px auto' }}>
         <img style={{ width: '100%' }} src={props.product.descImg} alt='descImg' />
       </div>
     );
