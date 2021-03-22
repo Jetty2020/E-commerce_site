@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     newProduct: {
       type: DataTypes.BOOLEAN,
     },
-    saleProduct: {
+    bestProduct: {
       type: DataTypes.BOOLEAN,
     },
     recoProduct: {

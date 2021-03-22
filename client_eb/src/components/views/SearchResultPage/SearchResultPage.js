@@ -7,16 +7,18 @@ import ProductsList from "../../utils/ProductsList";
 
 function SearchResultPage(props) {
   const dispatch = useDispatch();
-  const [SEARCH, setSEARCH] = useState();
-  let searchResult = props.match.params.searchKey;
+  const [search, setSearch] = useState();
+  let searchKey = props.match.params.searchKey;
+  const [keyword, setKeyword] = useState('');
   let dataToSubmit = {
-    searchKey: searchResult,
+    searchKey,
   };
-  if (!SEARCH) {
+  if (!search || keyword !== searchKey) {
     dispatch(searchProduct(dataToSubmit))
       .then((response) => {
         if (response.payload.success) {
-          setSEARCH(response.payload.product);
+          setKeyword(searchKey);
+          setSearch(response.payload.product);
         } else {
           console.log(response.payload);
         }
@@ -39,7 +41,7 @@ function SearchResultPage(props) {
       </p>
 
       {/* products */}
-      {SEARCH && <ProductsList products={SEARCH} />}
+      {search && <ProductsList products={search} />}
     </div>
   );
 }

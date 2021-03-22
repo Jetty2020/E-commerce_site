@@ -52,7 +52,11 @@ function RightMenu(props) {
     }
   `;
   const onSearch = (value) => {
-    props.history.push(`/search/${value}`);
+    if (value.length < 2) {
+      alert("두 글자 이상 입력해주세요.");
+    } else {
+      props.history.push(`/search/${value}`);
+    }
   };
 
   if (user.userData && !user.userData.isAuth) {

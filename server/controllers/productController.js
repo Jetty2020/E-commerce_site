@@ -86,11 +86,11 @@ export const makeEventProduct = async (req, res) => {
           { where: { id }, }
         )
       );
-    } else if ( sector === "saleProduct" ) {
+    } else if ( sector === "bestProduct" ) {
       id.map(
         id =>
         Product.update(
-          { saleProduct: true },
+          { bestProduct: true },
           { where: { id }, }
         )
       );
@@ -129,11 +129,11 @@ export const removeEventProduct = async (req, res) => {
           { where: { id }, }
         )
       );
-    } else if ( sector === "saleProduct" ) {
+    } else if ( sector === "bestProduct" ) {
       id.map(
         id =>
         Product.update(
-          { saleProduct: false },
+          { bestProduct: false },
           { where: { id }, }
         )
       );
