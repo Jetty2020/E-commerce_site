@@ -9,12 +9,12 @@ function LandingPage() {
   const { TabPane } = Tabs;
 
   const RECOMMEND = products
-    .filter((product) => product.recommend === true)
+    .filter((product) => product.recoProduct === true)
     .slice(0, 8);
-  const NEW = products.filter((product) => product.new === true).slice(0, 8);
-  const BEST = products.filter((product) => product.best === true).slice(0, 8);
+  const NEW = products.filter((product) => product.newProduct === true).slice(0, 8);
+  const BEST = products.filter((product) => product.bestProduct === true).slice(0, 8);
   const DISCOUNT = products
-    .filter((product) => product.discountRate > 0)
+    .filter((product) => product.rate > 0)
     .slice(0, 8);
 
   return (

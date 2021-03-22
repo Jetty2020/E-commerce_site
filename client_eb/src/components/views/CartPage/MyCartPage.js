@@ -129,10 +129,10 @@ const MyCartPage = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <img src={product.image} width="100px" height="100px" />
+                  <img src={product.mainImg} width="100px" height="100px" alt='mainImg' />
                   <div style={{ marginLeft: '15px' }}>
                     <p style={{ fontWeight: 'bold', color: '#555' }}>
-                      {product.name}
+                      {product.productName}
                     </p>
                   </div>
                 </div>
@@ -174,14 +174,14 @@ const MyCartPage = () => {
 
               {/* 주문금액 */}
               <div style={{ width: '15%', textAlign: 'center' }}>
-                {product.discountRate > 0 ? (
+                {product.rate > 0 ? (
                   <>
                     <p>
                       <span style={{ color: '#fa5252', fontWeight: 'bold' }}>
-                        {product.discountRate}%{' '}
+                        {product.rate}%{' '}
                       </span>
                       {Numeral(
-                        product.price * (1 - product.discountRate * 0.01),
+                        product.price * (1 - product.rate * 0.01),
                       ).format(0, 0)}
                       원
                     </p>
@@ -202,7 +202,7 @@ const MyCartPage = () => {
                       }}
                     >
                       적립금{' '}
-                      {product.price * (1 - product.discountRate * 0.01) * 0.01}
+                      {product.price * (1 - product.rate * 0.01) * 0.01}
                     </p>
                   </>
                 ) : (
@@ -269,7 +269,7 @@ const MyCartPage = () => {
                 myCart.reduce(
                   (acc, cur) =>
                     acc.price * acc.quantity +
-                    cur.price * (1 - cur.discountRate * 0.01) * cur.quantity,
+                    cur.price * (1 - cur.rate * 0.01) * cur.quantity,
                 ),
               ).format(0, 0)}
               원

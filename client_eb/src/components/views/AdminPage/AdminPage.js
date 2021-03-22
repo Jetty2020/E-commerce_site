@@ -8,8 +8,8 @@ import RecommendProduct from './Sections/RecommendProduct';
 const { Option } = Select;
 
 const AdminPage = () => {
-  const SELLING = products.filter((product) => product.selling === true);
-  const [selling, setSelling] = useState(SELLING);
+  const SELLING = products.filter((product) => product.saleProduct === true);
+  const [selling, setSelling] = useState(products);
 
   //styled-components
   const Table = styled.div`
@@ -81,11 +81,10 @@ const AdminPage = () => {
   };
 
   //추천 상품 선택
-  const recommendDefault = selling.filter(
-    (product) => product.recommend === true,
-  );
-  const [recommended, setRecommended] = useState(recommendDefault);
-  console.log(recommended);
+  // const recommendDefault = selling.filter(
+  //   (product) => product.recoProduct === true,
+  // );
+  // const [recommended, setRecommended] = useState(recommendDefault);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
@@ -139,20 +138,20 @@ const AdminPage = () => {
               <Link to={`/product/${product.id}`} style={{ width: '31.5%' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <img
-                    src={product.image}
+                    src={product.mainImg}
                     width="100px"
                     height="100px"
                     alt="img"
                   />
                   <div style={{ marginLeft: '15px' }}>
-                    {product.recommend ? (
+                    {product.recoProduct ? (
                       <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
                         <Icon type="like" />
                         <span> 추천 상품</span>
                       </p>
                     ) : null}
                     <p style={{ fontWeight: 'bold', color: '#555' }}>
-                      {product.name}
+                      {product.productName}
                     </p>
                   </div>
                 </div>
@@ -166,7 +165,7 @@ const AdminPage = () => {
                   justifyContent: 'center',
                 }}
               >
-                <p>{product.best ? 'Best' : product.new ? 'New' : 'All'}</p>
+                <p>{product.bestProduct ? 'Best' : product.new ? 'New' : 'All'}</p>
               </div>
 
               {/* 재고 수량 */}
@@ -176,11 +175,11 @@ const AdminPage = () => {
 
               {/* 판매금액 */}
               <div style={{ width: '12.5%', textAlign: 'center' }}>
-                {product.discountRate > 0 ? (
+                {product.rate > 0 ? (
                   <>
                     <p>
                       <span style={{ color: '#fa5252', fontWeight: 'bold' }}>
-                        {product.discountRate}%{' '}
+                        {product.rate}%{' '}
                       </span>
                       {Numeral(
                         product.price * (1 - product.discountRate * 0.01),
