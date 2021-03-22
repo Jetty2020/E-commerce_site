@@ -1,31 +1,35 @@
-import React, { useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { loginUser, findID, findPassword } from "../../../_actions/user_actions";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { Form, Icon, Input, Button, Checkbox, Typography, Modal } from "antd";
-import { useDispatch } from "react-redux";
-import "../../utils/sns.css";
+import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import {
+  loginUser,
+  findID,
+  findPassword,
+} from '../../../_actions/user_actions';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Form, Icon, Input, Button, Checkbox, Typography, Modal } from 'antd';
+import { useDispatch } from 'react-redux';
+import './LoginPage.css';
 
 const { Title } = Typography;
 function LoginPage(props) {
   const dispatch = useDispatch();
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+  const rememberMeChecked = localStorage.getItem('rememberMe') ? true : false;
 
-  const [formErrorMessage, setFormErrorMessage] = useState("");
+  const [formErrorMessage, setFormErrorMessage] = useState('');
   const [rememberMe, setRememberMe] = useState(rememberMeChecked);
 
   const handleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
 
-  const initialID = localStorage.getItem("rememberMe")
-    ? localStorage.getItem("rememberMe")
-    : "";
+  const initialID = localStorage.getItem('rememberMe')
+    ? localStorage.getItem('rememberMe')
+    : '';
 
-  const initialPW = localStorage.getItem("rememberPW")
-    ? localStorage.getItem("rememberPW")
-    : "";
+  const initialPW = localStorage.getItem('rememberPW')
+    ? localStorage.getItem('rememberPW')
+    : '';
 
   //modal
   const [isEmailModal, setIsEmailModal] = useState(false);
@@ -58,10 +62,10 @@ function LoginPage(props) {
         validationSchema={Yup.object().shape({
           userID: Yup.string()
             // .email("ID is invalid")
-            .required("ID is required"),
+            .required('ID is required'),
           password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -75,26 +79,26 @@ function LoginPage(props) {
                 if (response.payload.success) {
                   console.log(initialID[0]);
                   window.localStorage.setItem(
-                    "userId",
-                    response.payload.userId
+                    'userId',
+                    response.payload.userId,
                   );
                   if (rememberMe === true) {
-                    window.localStorage.setItem("rememberMe", values.userID);
-                    window.localStorage.setItem("rememberPW", values.password);
+                    window.localStorage.setItem('rememberMe', values.userID);
+                    window.localStorage.setItem('rememberPW', values.password);
                   } else {
-                    localStorage.removeItem("rememberMe");
+                    localStorage.removeItem('rememberMe');
                   }
-                  props.history.push("/");
+                  props.history.push('/');
                 } else {
                   setFormErrorMessage(
-                    "Check out your Account or Password again"
+                    'Check out your Account or Password again',
                   );
                 }
               })
               .catch((err) => {
-                setFormErrorMessage("Check out your Account or Password again");
+                setFormErrorMessage('Check out your Account or Password again');
                 setTimeout(() => {
-                  setFormErrorMessage("");
+                  setFormErrorMessage('');
                 }, 3000);
               });
             setSubmitting(false);
@@ -115,15 +119,15 @@ function LoginPage(props) {
           } = props;
           return (
             <div className="app">
-              <Title level={2} style={{ marginBottom: "1.5rem" }}>
+              <Title level={2} style={{ marginBottom: '1.5rem' }}>
                 Shop
               </Title>
-              <form onSubmit={handleSubmit} style={{ width: "350px" }}>
+              <form onSubmit={handleSubmit} style={{ width: '350px' }}>
                 <Form.Item required>
                   <Input
                     id="userID"
                     prefix={
-                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                     }
                     placeholder="아이디"
                     type="text"
@@ -132,8 +136,8 @@ function LoginPage(props) {
                     onBlur={handleBlur}
                     className={
                       errors.userID && touched.userID
-                        ? "text-input error"
-                        : "text-input"
+                        ? 'text-input error'
+                        : 'text-input'
                     }
                   />
                   {errors.userID && touched.userID && (
@@ -145,7 +149,7 @@ function LoginPage(props) {
                   <Input
                     id="password"
                     prefix={
-                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                      <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
                     }
                     placeholder="비밀번호"
                     type="password"
@@ -154,8 +158,8 @@ function LoginPage(props) {
                     onBlur={handleBlur}
                     className={
                       errors.password && touched.password
-                        ? "text-input error"
-                        : "text-input"
+                        ? 'text-input error'
+                        : 'text-input'
                     }
                   />
                   {errors.password && touched.password && (
@@ -167,11 +171,11 @@ function LoginPage(props) {
                   <label>
                     <p
                       style={{
-                        color: "#ff0000bf",
-                        fontSize: "0.7rem",
-                        border: "1px solid",
-                        padding: "1rem",
-                        borderRadius: "10px",
+                        color: '#ff0000bf',
+                        fontSize: '0.7rem',
+                        border: '1px solid',
+                        padding: '1rem',
+                        borderRadius: '10px',
                       }}
                     >
                       {formErrorMessage}
@@ -193,7 +197,7 @@ function LoginPage(props) {
                       type="primary"
                       htmlType="submit"
                       className="login-form-button"
-                      style={{ minWidth: "100%" }}
+                      style={{ minWidth: '100%' }}
                       disabled={isSubmitting}
                       onSubmit={handleSubmit}
                     >
@@ -201,26 +205,25 @@ function LoginPage(props) {
                     </Button>
                   </div>
 
-                  <Button style={{ minWidth: "100%" }}>
+                  <Button style={{ minWidth: '100%' }}>
                     <Link to="/register">회원가입</Link>
                   </Button>
                 </Form.Item>
 
-                <div className="sns_login">
+                <div className="sns">
                   <button className="kakao">카카오 로그인</button>
                   <button className="naver">네이버 로그인</button>
                   <button className="google">구글 로그인</button>
-                  <button className="facebook">페이스북 로그인</button>
                 </div>
-                <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
+                <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
                   <span
                     onClick={showEmailModal}
                     style={{
-                      cursor: "pointer",
-                      margin: "0 10px",
-                      textDecoration: "underline",
-                      fontSize: "0.8rem",
-                      color: "rgba(0,0,0,0.65)",
+                      cursor: 'pointer',
+                      margin: '0 10px',
+                      textDecoration: 'underline',
+                      fontSize: '0.8rem',
+                      color: 'rgba(0,0,0,0.65)',
                     }}
                   >
                     계정 찾기
@@ -228,11 +231,11 @@ function LoginPage(props) {
                   <span
                     onClick={showPasswordModal}
                     style={{
-                      cursor: "pointer",
-                      margin: "0 10px",
-                      textDecoration: "underline",
-                      fontSize: "0.8rem",
-                      color: "rgba(0,0,0,0.65)",
+                      cursor: 'pointer',
+                      margin: '0 10px',
+                      textDecoration: 'underline',
+                      fontSize: '0.8rem',
+                      color: 'rgba(0,0,0,0.65)',
                     }}
                   >
                     비밀번호 찾기
@@ -245,12 +248,12 @@ function LoginPage(props) {
       </Formik>
       <Formik
         initialValues={{
-          email: "",
+          email: '',
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email("이메일 형식을 맞춰주세요.")
-            .required("이메일 값이 비었습니다."),
+            .email('이메일 형식을 맞춰주세요.')
+            .required('이메일 값이 비었습니다.'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           let dataToSubmit = {
@@ -259,9 +262,9 @@ function LoginPage(props) {
           setIsEmailModal(false);
           dispatch(findID(dataToSubmit)).then((response) => {
             if (response.payload.success) {
-              alert("메일을 전송하였습니다.");
+              alert('메일을 전송하였습니다.');
             } else {
-              alert("등록되지 않은 이메일입니다.");
+              alert('등록되지 않은 이메일입니다.');
             }
           });
         }}
@@ -297,12 +300,12 @@ function LoginPage(props) {
                 onChange={handleChange}
                 className={
                   errors.email && touched.email
-                    ? "text-input error"
-                    : "text-input"
+                    ? 'text-input error'
+                    : 'text-input'
                 }
               />
               {errors.email && touched.email && (
-                <div style={{ margin: "5px 0" }} className="input-feedback">
+                <div style={{ margin: '5px 0' }} className="input-feedback">
                   {errors.email}
                 </div>
               )}
@@ -312,15 +315,15 @@ function LoginPage(props) {
       </Formik>
       <Formik
         initialValues={{
-          email: "",
+          email: '',
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email("이메일 형식을 맞춰주세요.")
-            .required("이메일 값이 비었습니다."),
-            userID: Yup.string()
-            .min(6, "ID는 6글자 이상입니다.")
-            .required("ID 값이 비었습니다."),
+            .email('이메일 형식을 맞춰주세요.')
+            .required('이메일 값이 비었습니다.'),
+          userID: Yup.string()
+            .min(6, 'ID는 6글자 이상입니다.')
+            .required('ID 값이 비었습니다.'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           let dataToSubmit = {
@@ -330,11 +333,11 @@ function LoginPage(props) {
           setIsPasswordModal(false);
           dispatch(findPassword(dataToSubmit)).then((response) => {
             if (response.payload.success === 2) {
-              alert("ID와 Email을 다시 확인해주세요.");
+              alert('ID와 Email을 다시 확인해주세요.');
             } else if (response.payload.success) {
-              alert("메일을 전송하였습니다.");
+              alert('메일을 전송하였습니다.');
             } else {
-              alert("에러가 발생했습니다.");
+              alert('에러가 발생했습니다.');
             }
           });
         }}
@@ -360,7 +363,7 @@ function LoginPage(props) {
               okText="확인"
               cancelText="취소"
             >
-              <p style={{ margin: "0 0 5px" }}>
+              <p style={{ margin: '0 0 5px' }}>
                 가입하셨던 이메일을 입력해 주세요.
               </p>
               <Input
@@ -372,16 +375,16 @@ function LoginPage(props) {
                 onChange={handleChange}
                 className={
                   errors.email && touched.email
-                    ? "text-input error"
-                    : "text-input"
+                    ? 'text-input error'
+                    : 'text-input'
                 }
               />
               {errors.email && touched.email && (
-                <div style={{ margin: "5px 0" }} className="input-feedback">
+                <div style={{ margin: '5px 0' }} className="input-feedback">
                   {errors.email}
                 </div>
               )}
-              <p style={{ margin: "15px 0 5px" }}>
+              <p style={{ margin: '15px 0 5px' }}>
                 가입하셨던 ID를 입력해 주세요.
               </p>
               <Input
@@ -392,11 +395,13 @@ function LoginPage(props) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  errors.userID && touched.userID ? "text-input error" : "text-input"
+                  errors.userID && touched.userID
+                    ? 'text-input error'
+                    : 'text-input'
                 }
               />
               {errors.userID && touched.userID && (
-                <div style={{ margin: "5px 0" }} className="input-feedback">
+                <div style={{ margin: '5px 0' }} className="input-feedback">
                   {errors.userID}
                 </div>
               )}

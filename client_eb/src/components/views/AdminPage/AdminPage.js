@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { products } from '../../../_datas/productsData.json';
 import { Link } from 'react-router-dom';
 import Numeral from 'numeral';
@@ -11,7 +11,6 @@ const AdminPage = () => {
   const SELLING = products.filter((product) => product.selling === true);
   const [selling, setSelling] = useState(SELLING);
 
-  //styled-components
   const Table = styled.div`
     display: flex;
     align-items: center;
@@ -33,6 +32,29 @@ const AdminPage = () => {
       padding: 0;
     }
   `;
+
+  //상품 카테고리
+  const [category, setCategory] = useState('all');
+  const onChangeCategory = useCallback(
+    (e) => {
+      setCategory(e);
+      if (e === 'all') {
+        return setSelling(SELLING);
+      }
+      if (e === 'best') {
+        return setSelling(SELLING.filter((product) => product.best === true));
+      }
+      if (e === 'new') {
+        return setSelling(SELLING.filter((product) => product.new === true));
+      }
+      if (e === 'discount') {
+        return setSelling(
+          SELLING.filter((product) => product.discountRate > 0),
+        );
+      }
+    },
+    [category, selling],
+  );
 
   //상품 선택
   const [checked, setChecked] = useState(false);
@@ -80,13 +102,6 @@ const AdminPage = () => {
     setIsModalVisible(false);
   };
 
-  //추천 상품 선택
-  const recommendDefault = selling.filter(
-    (product) => product.recommend === true,
-  );
-  const [recommended, setRecommended] = useState(recommendDefault);
-  console.log(recommended);
-
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
       <h2 style={{ fontWeight: 'bold' }}>판매자 상품 관리</h2>
@@ -98,7 +113,12 @@ const AdminPage = () => {
           margin: '1rem 0',
         }}
       >
-        <Select defaultValue={'all'} style={{ width: '150px' }}>
+        <Select
+          style={{ width: '150px' }}
+          defaultValue="all"
+          value={category}
+          onChange={onChangeCategory}
+        >
           <Option value="all">All</Option>
           <Option value="best">Best</Option>
           <Option value="new">New</Option>
