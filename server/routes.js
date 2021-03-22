@@ -36,6 +36,7 @@ const REMOVE_EVENT_PRODUCT = "/removeEvent";
 const UPLOAD_PRODUCT = "/upload";
 const EDIT_PRODUCT = "/edit";
 const SEARCH_PRODUCT = "/search";
+const PRODUCT_DETAIL = "/productDetail";
 const DETAIL_PRODUCT = "/detail";
 const DELETE_PRODUCT = "/delete";
 
@@ -87,6 +88,7 @@ const routes = {
   makeEventProduct: MAKE_EVENT_PRODUCT,
   removeEventProduct: REMOVE_EVENT_PRODUCT,
   searchProduct: SEARCH_PRODUCT,
+  productDetail: PRODUCT_DETAIL,
   uploadProduct: UPLOAD_PRODUCT,
   editProduct: EDIT_PRODUCT,
   detailProduct: DETAIL_PRODUCT,

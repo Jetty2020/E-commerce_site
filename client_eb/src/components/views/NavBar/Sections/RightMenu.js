@@ -52,21 +52,7 @@ function RightMenu(props) {
     }
   `;
   const onSearch = (value) => {
-    // console.log(value);
-    let dataToSubmit = {
-      searchKey: value,
-    };
-    dispatch(searchProduct(dataToSubmit))
-      .then((response) => {
-        if (response.payload.success) {
-          console.log(response.payload.product)
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    props.history.push(`/search/${value}`);
   };
 
   if (user.userData && !user.userData.isAuth) {

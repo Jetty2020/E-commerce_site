@@ -159,6 +159,37 @@ export const removeEventProduct = async (req, res) => {
   }
 };
 
+export const productDetail = async (req, res) => {
+  try {
+    const {
+      body: { productId },
+    } = req;
+    const productState = await Product.findOne({
+      where: parseInt(productId, 10),
+    });
+
+    if (productState.length != 0) {
+      return res.status(200).json({
+        success: true,
+        product: productState,
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Cant find Product",
+        product: null,
+      });
+    }
+  } catch (err) {
+    console.log("productDetail");
+    console.log(err);
+    return res.json({
+      success: false,
+      message: "Error occurred at productDetail",
+    });
+  }
+};
+
 export const searchProduct = async (req, res) => {
   try {
     const Op = Sequelize.Op;
@@ -166,23 +197,7 @@ export const searchProduct = async (req, res) => {
       body: { searchKey },
     } = req;
     const productState = await Product.findAll({
-      // include: [
-      //   {
-      //     model: User,
-      //     // attributes: ['name', 'u']
-      //   },
-      // ],
-      // attributes: ['id', 'userEmail', 'userPassword'],
-      // where: { productName },
       where: { 
-        // [Op.or]: {
-        //   productName:{
-        //     [Op.like]: "%" + searchKey + "%"
-        //   },
-        //   productDes:{
-        //     [Op.like]: "%" + searchKey + "%"
-        //   }
-        // }
         productName:{
           [Op.like]: "%" + searchKey + "%"
         }

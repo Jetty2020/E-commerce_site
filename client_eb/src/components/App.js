@@ -43,7 +43,7 @@ function App() {
           <Route exact path="/sub/discount" component={Auth(SubPage, null)} />
           <Route
             exact
-            path="/search"
+            path="/search/:searchKey"
             component={Auth(SearchResultPage, null)}
           />
           <Route

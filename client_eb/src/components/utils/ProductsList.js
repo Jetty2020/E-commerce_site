@@ -5,6 +5,7 @@ import { Icon } from 'antd';
 import Numeral from 'numeral';
 
 function ProductsList({ products }) {
+  // console.log(products);
   const Ul = styled.ul`
     display: flex;
     flex-wrap: wrap;
@@ -60,24 +61,24 @@ function ProductsList({ products }) {
       {products.map((product) => (
         <Li key={product.id}>
           <Link to={`/product/${product.id}`}>
-            {product.image && (
+            {product.mainImg && (
               <img
-                src={product.image}
+                src={product.mainImg}
                 style={{ width: '300px', height: '370px', objectFit: 'cover' }}
                 alt="img"
               />
             )}
-            {product.name && <Name>{product.name}</Name>}
-            {product.price && !product.discountRate && (
+            {product.productName && <Name>{product.productName}</Name>}
+            {product.price && !product.rate && (
               <Price>{Numeral(product.price).format(0, 0)}원</Price>
             )}
-            {product.text && <Text>{product.text}</Text>}
-            {product.discountRate > 0 && (
+            {/* {product.text && <Text>{product.text}</Text>} */}
+            {product.rate > 0 && (
               <Discount>
-                <span className="rate">{product.discountRate}% </span>
+                <span className="rate">{product.rate}% </span>
                 <span className="discount">
                   {Numeral(
-                    product.price * (1 - product.discountRate * 0.01),
+                    product.price * (1 - product.rate * 0.01),
                   ).format(0, 0)}
                   원
                 </span>

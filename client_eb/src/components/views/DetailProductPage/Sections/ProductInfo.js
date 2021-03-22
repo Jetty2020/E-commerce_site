@@ -20,7 +20,7 @@ function ProductInfo(props) {
   //위시리스트 추가
   const onAddWishlist = () => {
     let dataToSubmit = {
-      productId: props.detail.id,
+      productId: props.product.id,
     };
     dispatch(addWishlist(dataToSubmit))
       .then((response) => {
@@ -38,7 +38,7 @@ function ProductInfo(props) {
   //장바구니 추가
   const onAddCart = () => {
     let dataToSubmit = {
-      productId: props.detail.id,
+      productId: props.product.id,
     };
     dispatch(addCart(dataToSubmit))
       .then((response) => {
@@ -58,13 +58,13 @@ function ProductInfo(props) {
       <h3
         style={{ fontSize: '1.5rem', fontWeight: 'bold', padding: '15px 8px' }}
       >
-        {props.detail.name}
+        {props.product.productName}
       </h3>
 
       <table style={{ border: 'hidden', marginTop: '30px' }}>
         <tr>
           <td colSpan="2" style={{ fontSize: '1rem', padding: '0 8px 80px' }}>
-            {Numeral(props.detail.price).format(0, 0)}원
+            {Numeral(props.product.price).format(0, 0)}원
           </td>
         </tr>
         <tr style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
@@ -76,7 +76,7 @@ function ProductInfo(props) {
               padding: '0 8px 20px',
             }}
           >
-            <p>적립금 {props.detail.price * 0.01}p</p>
+            <p>적립금 {props.product.price * 0.01}p</p>
           </td>
         </tr>
         <tr>
@@ -120,7 +120,7 @@ function ProductInfo(props) {
           <td colSpan="2" style={{ paddingTop: '50px', textAlign: 'right' }}>
             총 구매금액{'  '}
             <b style={{ fontSize: '1.1rem' }}>
-              {Numeral(props.detail.price * quantity).format(0, 0)}원
+              {Numeral(props.product.price * quantity).format(0, 0)}원
             </b>
           </td>
         </tr>

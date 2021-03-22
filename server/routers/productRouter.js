@@ -6,6 +6,7 @@ import {
   makeEventProduct,
   removeEventProduct,
   searchProduct,
+  productDetail,
   uploadProduct,
   editProduct,
   deleteProduct,
@@ -20,6 +21,7 @@ productRouter.get(routes.loadProduct, loadProduct);
 productRouter.get(routes.makeEventProduct, auth, makeEventProduct);
 productRouter.get(routes.removeEventProduct, auth, removeEventProduct);
 productRouter.post(routes.searchProduct, searchProduct);
+productRouter.post(routes.productDetail, productDetail);
 productRouter.post(
   routes.uploadProduct,
   auth,

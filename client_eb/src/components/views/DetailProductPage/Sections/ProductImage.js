@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ProductImage(props) {
+  console.log(props.product)
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <img
@@ -10,7 +11,8 @@ function ProductImage(props) {
           height: '500px',
           objectFit: 'cover',
         }}
-        src={props.detail.image}
+        src={props.product.mainImg}
+        alt='mainImg'
       />
     </div>
   );

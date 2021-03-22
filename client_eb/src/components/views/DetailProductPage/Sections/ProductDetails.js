@@ -74,7 +74,7 @@ function ProductDetails(props) {
   const content1 = () => {
     return (
       <div>
-        <img style={{ width: '100%' }} src={props.detail.detail} />
+        <img style={{ width: '100%' }} src={props.product.descImg} alt='descImg' />
       </div>
     );
   };
