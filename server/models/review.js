@@ -1,17 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "comment",
+    "review",
     {
       text: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(250),
         allowNull: false,
       },
-
-      // created_at: {
-      //   type: DataTypes.DATE,
-      //   allowNull: true,
-      //   defaultValue: sequelize.literal('now()'),
-      // },
+      rate: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
+      created_at: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
     },
     {
       timestamps: false,

@@ -23,9 +23,13 @@ const ADD_CART = "/addCart";
 const ADD_WISHLIST = "/addWishList";
 const REMOVE_CART = "/removeCart";
 const REMOVE_WISHLIST = "/removeWishList";
-const ADD_COMMENT = "/addComment/:id";
-const EDIT_COMMENT = "/editComment/:id";
-const REMOVE_COMMENT = "/removeComment/:id";
+
+
+
+const LOAD_REVIEW = "/loadReview/:productId";
+const ADD_REVIEW = "/addReview/:id";
+const EDIT_REVIEW = "/editReview/:id";
+const REMOVE_REVIEW = "/removeReview/:id";
 
 // PRODUCTS with HOME
 
@@ -93,9 +97,11 @@ const routes = {
   editProduct: EDIT_PRODUCT,
   detailProduct: DETAIL_PRODUCT,
   deleteProduct: DELETE_PRODUCT,
-  addComment: ADD_COMMENT,
-  editComment: EDIT_COMMENT,
-  removeComment: REMOVE_COMMENT,
+
+  loadReview: LOAD_REVIEW,
+  addReview: ADD_REVIEW,
+  editReview: EDIT_REVIEW,
+  removeReview: REMOVE_REVIEW,
 
   api: API,
 

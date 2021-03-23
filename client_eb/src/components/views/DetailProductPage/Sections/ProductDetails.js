@@ -79,7 +79,7 @@ function ProductDetails(props) {
     );
   };
   const content2 = () => {
-    return <ProductReviews reviews={reviews} onClickReview={onClickReview} />;
+    return <ProductReviews id={props.product.id} onClickReview={onClickReview} />;
   };
   const content3 = () => {
     return <ProductQnA qna={qna} />;

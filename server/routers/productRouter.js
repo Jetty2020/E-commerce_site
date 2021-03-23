@@ -10,9 +10,6 @@ import {
   uploadProduct,
   editProduct,
   deleteProduct,
-  addComment,
-  editComment,
-  removeComment,
 } from "../controllers/productController";
 
 const productRouter = express.Router();
@@ -30,7 +27,4 @@ productRouter.post(
 );
 productRouter.post(routes.editProduct, auth, editProduct);
 productRouter.get(routes.deleteProduct, auth, deleteProduct);
-productRouter.post(routes.addComment, auth, addComment);
-productRouter.post(routes.editComment, auth, editComment);
-productRouter.delete(routes.removeComment, auth, removeComment);
 export default productRouter;

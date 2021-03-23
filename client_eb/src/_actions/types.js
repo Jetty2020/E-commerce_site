@@ -20,6 +20,8 @@ export const PRODUCT_DETAIL = "product_detail";
 export const DELETE_PRODUCT = "delete_product";
 
 
+export const LOAD_REVIEW = "load_review";
+export const ADD_REVIEW = "add_review";
 
 export const GET_CART_ITEMS_USER = "get_cart_items_user";
 export const REMOVE_CART_ITEM_USER = "remove_cart_item_user";

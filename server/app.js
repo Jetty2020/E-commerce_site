@@ -8,6 +8,7 @@ import { sequelize } from './models';
 import './passport';
 import userRouter from './routers/userRouter';
 import productRouter from './routers/productRouter';
+import reviewRouter from './routers/reviewRouter';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(passport.session());
 
 app.use(routes.users, userRouter);
 app.use(routes.products, productRouter);
+app.use(routes.products, reviewRouter);
 
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기 중');

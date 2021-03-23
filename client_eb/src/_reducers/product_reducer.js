@@ -5,7 +5,7 @@ import {
   SEARCH_PRODUCT,
   PRODUCT_DETAIL,
   DELETE_PRODUCT,
-} from "../_actions/_types";
+} from "../_actions/types";
 
 export default function productReducer(state = {}, action) {
   switch (action.type) {
