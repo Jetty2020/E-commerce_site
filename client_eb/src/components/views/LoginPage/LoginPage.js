@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { Form, Icon, Input, Button, Checkbox, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import './LoginPage.css';
+import logo from '../../images/logo.png';
 
 const { Title } = Typography;
 function LoginPage(props) {
@@ -90,9 +91,7 @@ function LoginPage(props) {
                   }
                   props.history.push('/');
                 } else {
-                  setFormErrorMessage(
-                    'Check out your Account or Password again',
-                  );
+                  setFormErrorMessage('이메일과 비밀번호를 확인해 주세요.');
                 }
               })
               .catch((err) => {
@@ -119,8 +118,8 @@ function LoginPage(props) {
           } = props;
           return (
             <div className="app">
-              <Title level={2} style={{ marginBottom: '1.5rem' }}>
-                Shop
+              <Title level={2} style={{ marginBottom: '3rem' }}>
+                <img src={logo} alt="logo" />
               </Title>
               <form onSubmit={handleSubmit} style={{ width: '350px' }}>
                 <Form.Item required>

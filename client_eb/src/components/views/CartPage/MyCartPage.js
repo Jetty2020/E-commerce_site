@@ -1,42 +1,40 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { products } from '../../../_datas/productsData.json';
 import styled from 'styled-components';
 import { Button, Checkbox, Icon } from 'antd';
 import Numeral from 'numeral';
 
+const Table = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: -1px;
+`;
+const TableRow = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  font-size: 0.9rem;
+  letter-spacing: -1px;
+  border-top: 1px solid #adb5bd;
+  p {
+    margin: 0;
+    padding: 0;
+  }
+`;
+
 const MyCartPage = () => {
   const CART = products.filter((product) => product.cart === true);
   const [myCart, setMyCart] = useState(CART);
-
-  //styled-components
-  const Table = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 20px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: -1px;
-  `;
-  const TableRow = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 15px 0;
-    font-size: 0.9rem;
-    letter-spacing: -1px;
-    border-top: 1px solid #adb5bd;
-    p {
-      margin: 0;
-      padding: 0;
-    }
-  `;
-
-  //상품 선택
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
 
-  const onCheckAll = () => {
+  //상품 선택
+  const onCheckAll = useCallback(() => {
     setChecked(!checked);
     setMyCart(myCart.map((product) => ({ ...product, checked: !checked })));
     if (!checked) {
@@ -44,27 +42,50 @@ const MyCartPage = () => {
     } else {
       setCheckedID([]);
     }
-  };
-  const onCheckProduct = (id) => {
-    setMyCart(
-      myCart.map((product) =>
-        product.id === id ? { ...product, checked: !product.checked } : product,
-      ),
-    );
-    let index = myCart.findIndex((product) => product.id === id);
-    if (!myCart[index].checked) {
-      setCheckedID((checkedID) => checkedID.concat(id));
-    } else {
-      checkedID.splice(checkedID.indexOf(id), 1);
-    }
-  };
+  }, [myCart]);
+  const onCheckProduct = useCallback(
+    (id) => {
+      setMyCart(
+        myCart.map((product) =>
+          product.id === id
+            ? { ...product, checked: !product.checked }
+            : product,
+        ),
+      );
+      let index = myCart.findIndex((product) => product.id === id);
+      if (!myCart[index].checked) {
+        setCheckedID((checkedID) => checkedID.concat(id));
+      } else {
+        checkedID.splice(checkedID.indexOf(id), 1);
+      }
+    },
+    [myCart],
+  );
+
+  console.log(myCart.reduce((acc, cur) => acc.quantity + cur.quantity));
+  console.log(myCart.map((product) => product.quantity));
 
   //선택상품 삭제
-  const onRemoveSelect = () => {
+  const onRemoveSelect = useCallback(() => {
     setMyCart(myCart.filter((product) => !checkedID.includes(product.id)));
-  };
+  }, [myCart]);
 
   //상품 수량
+  const onChangeQuantity = useCallback(
+    (e, id) => {
+      setMyCart(
+        myCart.map((product) =>
+          product.id === id
+            ? {
+                ...product,
+                quantity: e.currentTarget.value,
+              }
+            : product,
+        ),
+      );
+    },
+    [myCart],
+  );
   const onIncrease = useCallback(
     (id) => {
       setMyCart(
@@ -111,9 +132,9 @@ const MyCartPage = () => {
           <div style={{ width: '15%' }}>주문금액</div>
           <div style={{ width: '15%' }}>배송구분</div>
         </Table>
-        {myCart.map((product) => (
-          <>
-            <TableRow>
+        {myCart.length > 0 ? (
+          myCart.map((product) => (
+            <TableRow key={product.id}>
               {/* 체크박스 */}
               <Checkbox
                 style={{ width: '7%', textAlign: 'center' }}
@@ -129,7 +150,12 @@ const MyCartPage = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <img src={product.mainImg} width="100px" height="100px" alt='mainImg' />
+                  <img
+                    src={product.mainImg}
+                    width="100px"
+                    height="100px"
+                    alt="mainImg"
+                  />
                   <div style={{ marginLeft: '15px' }}>
                     <p style={{ fontWeight: 'bold', color: '#555' }}>
                       {product.productName}
@@ -158,6 +184,7 @@ const MyCartPage = () => {
                 <input
                   type="text"
                   value={product.quantity}
+                  onChange={() => onChangeQuantity(product.id)}
                   style={{
                     width: '30px',
                     textAlign: 'center',
@@ -201,8 +228,7 @@ const MyCartPage = () => {
                         color: '#adb5bd',
                       }}
                     >
-                      적립금{' '}
-                      {product.price * (1 - product.rate * 0.01) * 0.01}
+                      적립금 {product.price * (1 - product.rate * 0.01) * 0.01}
                     </p>
                   </>
                 ) : (
@@ -226,8 +252,12 @@ const MyCartPage = () => {
                 <p>기본배송</p>
               </div>
             </TableRow>
-          </>
-        ))}
+          ))
+        ) : (
+          <TableRow style={{ justifyContent: 'center', padding: '30px 0' }}>
+            장바구니에 등록된 상품이 없습니다.
+          </TableRow>
+        )}
       </div>
 
       {/* 결제금액 */}
@@ -241,6 +271,7 @@ const MyCartPage = () => {
         <Button onClick={() => onRemoveSelect()}>선택상품 삭제</Button>
       </div>
 
+      {/* 금액 정보 */}
       <div
         style={{
           marginTop: '100px',
@@ -265,14 +296,15 @@ const MyCartPage = () => {
           {/* 총 주문금액 */}
           <div style={{ width: '32.6%' }}>
             <p>
-              {Numeral(
-                myCart.reduce(
-                  (acc, cur) =>
-                    acc.price * acc.quantity +
-                    cur.price * (1 - cur.rate * 0.01) * cur.quantity,
-                ),
-              ).format(0, 0)}
-              원
+              {myCart.length > 0
+                ? Numeral(
+                    myCart.reduce(
+                      (acc, cur) =>
+                        acc.price * acc.quantity +
+                        cur.price * (1 - cur.rate * 0.01) * cur.quantity,
+                    ),
+                  ).format(0, 0)
+                : '0'}
             </p>
             <p
               style={{
@@ -281,11 +313,11 @@ const MyCartPage = () => {
                 color: '#adb5bd',
               }}
             >
-              {Numeral(
-                myCart.length > 0
-                  ? myCart.reduce((acc, cur) => acc.quantity + cur.quantity)
-                  : '0',
-              ).format(0, 0)}
+              {myCart.length > 0
+                ? Numeral(
+                    myCart.reduce((acc, cur) => acc.quantity + cur.quantity),
+                  ).format(0, 0)
+                : '0'}
               개
             </p>
           </div>
@@ -300,14 +332,16 @@ const MyCartPage = () => {
           />
           {/* 총 결제금액 */}
           <div style={{ width: '32.6%' }}>
-            {Numeral(
-              myCart.reduce(
-                (acc, cur) =>
-                  acc.price * acc.quantity +
-                  cur.price * (1 - cur.discountRate * 0.01) * cur.quantity +
-                  2500,
-              ),
-            ).format(0, 0)}
+            {myCart.length > 0
+              ? Numeral(
+                  myCart.reduce(
+                    (acc, cur) =>
+                      acc.price * acc.quantity +
+                      cur.price * (1 - cur.rate * 0.01) * cur.quantity +
+                      2500,
+                  ),
+                ).format(0, 0)
+              : '0'}
             원
           </div>
         </TableRow>
@@ -326,7 +360,7 @@ const MyCartPage = () => {
             height: 'unset',
             margin: '0 2.5px',
             padding: '10px 25px',
-            fontSize: '1.1rem',
+            fontSize: '1.05rem',
           }}
         >
           전체상품 주문
@@ -336,7 +370,7 @@ const MyCartPage = () => {
             height: 'unset',
             margin: '0 2.5px',
             padding: '10px 25px',
-            fontSize: '1.1rem',
+            fontSize: '1.05rem',
           }}
         >
           선택상품 주문
