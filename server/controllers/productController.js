@@ -8,8 +8,8 @@ export const uploadProduct = async (req, res) => {
   const { files } = req;
   try {
     // console.log("req",req);
-    console.log("req.file1",req.files[0].location);
-    console.log("req.file2",req.files[1].location);
+    console.log("req.file1", req.files[0].location);
+    console.log("req.file2", req.files[1].location);
     const { dataValues: product } = await Product.create({
       productName,
       mainImg: files[0].location,
@@ -33,23 +33,28 @@ export const uploadProduct = async (req, res) => {
 
 export const loadProduct = async (req, res) => {
   try {
+    const Op = Sequelize.Op;
     const {
-      body: { sector },
+      params: { sector },
     } = req;
     let productState = [];
-    if ( sector === "newProduct" ) {
+    if (sector === "newProduct") {
       productState = await Product.findAll({
         where: { newProduct: true },
       });
-    } else if ( sector === "saleProduct" ) {
+    } else if (sector === "bestProduct") {
       productState = await Product.findAll({
-        where: { saleProduct: true },
+        where: { bestProduct: true },
       });
-    } else if ( sector === "recoProduct" ) {
+    } else if (sector === "recoProduct") {
       productState = await Product.findAll({
         where: { recoProduct: true },
       });
-    } else {
+    } else if (sector === "discountProduct") {
+      productState = await Product.findAll({
+        where: { rate: {[Op.gt]: 0} },
+      });
+    } else if (sector === "all") {
       productState = await Product.findAll({});
     }
     if (productState) {
@@ -78,30 +83,12 @@ export const makeEventProduct = async (req, res) => {
     const {
       body: { sector, id },
     } = req;
-    if ( sector === "newProduct" ) {
-      id.map(
-        id => 
-        Product.update(
-          { newProduct: true },
-          { where: { id }, }
-        )
-      );
-    } else if ( sector === "bestProduct" ) {
-      id.map(
-        id =>
-        Product.update(
-          { bestProduct: true },
-          { where: { id }, }
-        )
-      );
-    } else if ( sector === "recoProduct" ) {
-      id.map(
-        id =>
-        Product.update(
-          { recoProduct: true },
-          { where: { id }, }
-        )
-      );
+    if (sector === "newProduct") {
+      id.map((id) => Product.update({ newProduct: true }, { where: { id } }));
+    } else if (sector === "bestProduct") {
+      id.map((id) => Product.update({ bestProduct: true }, { where: { id } }));
+    } else if (sector === "recoProduct") {
+      id.map((id) => Product.update({ recoProduct: true }, { where: { id } }));
     }
     return res.status(200).json({
       success: true,
@@ -121,30 +108,12 @@ export const removeEventProduct = async (req, res) => {
     const {
       body: { sector, id },
     } = req;
-    if ( sector === "newProduct" ) {
-      id.map(
-        id => 
-        Product.update(
-          { newProduct: false },
-          { where: { id }, }
-        )
-      );
-    } else if ( sector === "bestProduct" ) {
-      id.map(
-        id =>
-        Product.update(
-          { bestProduct: false },
-          { where: { id }, }
-        )
-      );
-    } else if ( sector === "recoProduct" ) {
-      id.map(
-        id =>
-        Product.update(
-          { recoProduct: false },
-          { where: { id }, }
-        )
-      );
+    if (sector === "newProduct") {
+      id.map((id) => Product.update({ newProduct: false }, { where: { id } }));
+    } else if (sector === "bestProduct") {
+      id.map((id) => Product.update({ bestProduct: false }, { where: { id } }));
+    } else if (sector === "recoProduct") {
+      id.map((id) => Product.update({ recoProduct: false }, { where: { id } }));
     }
     return res.status(200).json({
       success: true,
@@ -197,10 +166,10 @@ export const searchProduct = async (req, res) => {
       body: { searchKey },
     } = req;
     const productState = await Product.findAll({
-      where: { 
-        productName:{
-          [Op.like]: "%" + searchKey + "%"
-        }
+      where: {
+        productName: {
+          [Op.like]: "%" + searchKey + "%",
+        },
       },
     });
 

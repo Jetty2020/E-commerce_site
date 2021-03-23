@@ -30,7 +30,7 @@ const REMOVE_COMMENT = "/removeComment/:id";
 // PRODUCTS with HOME
 
 const HOME = "/";
-const LOAD_PRODUCT = "/load";
+const LOAD_PRODUCT = "/load/:sector";
 const MAKE_EVENT_PRODUCT = "/makeEvent";
 const REMOVE_EVENT_PRODUCT = "/removeEvent";
 const UPLOAD_PRODUCT = "/upload";

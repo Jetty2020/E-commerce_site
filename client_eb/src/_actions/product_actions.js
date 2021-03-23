@@ -3,8 +3,18 @@ import {
 	UPLOAD_PRODUCT,
 	SEARCH_PRODUCT,
 	PRODUCT_DETAIL,
+	LOAD_PRODUCT,
 } from './types';
 import { PRODUCT_SERVER } from '../components/Config.js';
+
+export function productDetail(dataToSubmit){
+	const request = axios.post(`${PRODUCT_SERVER}/productDetail`,dataToSubmit)
+											.then(response => response.data);
+	return {
+		type: PRODUCT_DETAIL,
+		payload: request
+	};
+};
 
 export function uploadProduct(dataToSubmit){
 	const request = axios.post(`${PRODUCT_SERVER}/upload`,dataToSubmit)
@@ -24,11 +34,11 @@ export function searchProduct(dataToSubmit){
 	};
 };
 
-export function productDetail(dataToSubmit){
-	const request = axios.post(`${PRODUCT_SERVER}/productDetail`,dataToSubmit)
+export function loadProduct(sector){
+	const request = axios.get(`${PRODUCT_SERVER}/load/${sector}`)
 											.then(response => response.data);
 	return {
-		type: PRODUCT_DETAIL,
+		type: LOAD_PRODUCT,
 		payload: request
 	};
 };
