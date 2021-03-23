@@ -38,7 +38,7 @@ const EDIT_PRODUCT = "/edit";
 const SEARCH_PRODUCT = "/search";
 const PRODUCT_DETAIL = "/productDetail";
 const DETAIL_PRODUCT = "/detail";
-const DELETE_PRODUCT = "/delete";
+const DELETE_PRODUCT = "/delete/:productID";
 
 // API
 const API = "/api";

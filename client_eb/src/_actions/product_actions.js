@@ -4,6 +4,7 @@ import {
 	SEARCH_PRODUCT,
 	PRODUCT_DETAIL,
 	LOAD_PRODUCT,
+	DELETE_PRODUCT,
 } from './types';
 import { PRODUCT_SERVER } from '../components/Config.js';
 
@@ -39,6 +40,15 @@ export function loadProduct(sector){
 											.then(response => response.data);
 	return {
 		type: LOAD_PRODUCT,
+		payload: request
+	};
+};
+
+export function deleteProduct(productID){
+	const request = axios.get(`${PRODUCT_SERVER}/delete/${productID}`)
+											.then(response => response.data);
+	return {
+		type: DELETE_PRODUCT,
 		payload: request
 	};
 };

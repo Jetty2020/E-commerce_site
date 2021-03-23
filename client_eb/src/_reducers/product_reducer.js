@@ -3,6 +3,7 @@ import {
   SEARCH_PRODUCT,
   PRODUCT_DETAIL,
   LOAD_PRODUCT,
+  DELETE_PRODUCT,
 } from "../_actions/_types";
 
 export default function productReducer(state = {}, action) {
@@ -15,6 +16,8 @@ export default function productReducer(state = {}, action) {
       return { ...state, search: action.payload };
     case PRODUCT_DETAIL:
       return { ...state, detail: action.payload };
+    case DELETE_PRODUCT:
+      return { ...state, delete: action.payload };
     default:
       return state;
   }

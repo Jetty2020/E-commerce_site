@@ -226,12 +226,13 @@ export const editProduct = (req, res) => {
 
 export const deleteProduct = (req, res) => {
   const {
-    body: { productID: id },
+    params: { productID },
   } = req;
   try {
+    console.log(productID);
     Product.destroy({
       where: {
-        id,
+        id: productID,
       },
     });
     return res.status(200).send({

@@ -29,7 +29,7 @@ productRouter.post(
   uploadProduct
 );
 productRouter.post(routes.editProduct, auth, editProduct);
-productRouter.post(routes.deleteProduct, auth, deleteProduct);
+productRouter.get(routes.deleteProduct, auth, deleteProduct);
 productRouter.post(routes.addComment, auth, addComment);
 productRouter.post(routes.editComment, auth, editComment);
 productRouter.delete(routes.removeComment, auth, removeComment);

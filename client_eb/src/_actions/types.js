@@ -16,6 +16,7 @@ export const LOAD_PRODUCT = "load_product";
 export const UPLOAD_PRODUCT = "upload_product";
 export const SEARCH_PRODUCT = "search_product";
 export const PRODUCT_DETAIL = "product_detail";
+export const DELETE_PRODUCT = "delete_product";
 
 
 

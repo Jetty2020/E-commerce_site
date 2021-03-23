@@ -6,10 +6,10 @@ function RecommendProduct({ products }) {
     <ul>
       {products.map((product) => (
         <li style={{ padding: '10px 0' }}>
-          <Checkbox checked={product.recommend ? true : false} />{' '}
+          <Checkbox checked={product.recoProduct ? true : false} />{' '}
           <img
-            src={product.image}
-            alt="image"
+            src={product.mainImg}
+            alt="mainImg"
             style={{ width: '50px', height: '50px', margin: '0 10px' }}
           />{' '}
           <span style={{ fontWeight: 'bold' }}>{product.name}</span>
