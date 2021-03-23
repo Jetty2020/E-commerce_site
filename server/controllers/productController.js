@@ -196,13 +196,13 @@ export const searchProduct = async (req, res) => {
 
 export const editProduct = (req, res) => {
   const {
-    body: { productID: id, productName, productDes },
+    body: { id, rate, price },
   } = req;
   try {
     Product.update(
       {
-        productName,
-        productDes,
+        rate,
+        price,
       },
       {
         where: {
@@ -212,7 +212,7 @@ export const editProduct = (req, res) => {
     );
     return res.status(200).json({
       success: true,
-      productID: productID,
+      productID: id,
     });
   } catch (err) {
     console.log("editProduct");

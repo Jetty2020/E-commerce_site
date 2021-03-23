@@ -1,8 +1,9 @@
 import {
+  LOAD_PRODUCT,
   UPLOAD_PRODUCT,
+  EDIT_PRODUCT,
   SEARCH_PRODUCT,
   PRODUCT_DETAIL,
-  LOAD_PRODUCT,
   DELETE_PRODUCT,
 } from "../_actions/_types";
 
@@ -12,6 +13,8 @@ export default function productReducer(state = {}, action) {
       return { ...state, load: action.payload };
     case UPLOAD_PRODUCT:
       return { ...state, upload: action.payload };
+    case EDIT_PRODUCT:
+      return { ...state, edit: action.payload };
     case SEARCH_PRODUCT:
       return { ...state, search: action.payload };
     case PRODUCT_DETAIL:

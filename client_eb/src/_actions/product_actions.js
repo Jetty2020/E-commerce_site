@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
 	UPLOAD_PRODUCT,
+	EDIT_PRODUCT,
 	SEARCH_PRODUCT,
 	PRODUCT_DETAIL,
 	LOAD_PRODUCT,
@@ -22,6 +23,15 @@ export function uploadProduct(dataToSubmit){
 											.then(response => response.data);
 	return {
 		type: UPLOAD_PRODUCT,
+		payload: request
+	};
+};
+
+export function editProduct(dataToSubmit){
+	const request = axios.post(`${PRODUCT_SERVER}/edit`,dataToSubmit)
+											.then(response => response.data);
+	return {
+		type: EDIT_PRODUCT,
 		payload: request
 	};
 };
