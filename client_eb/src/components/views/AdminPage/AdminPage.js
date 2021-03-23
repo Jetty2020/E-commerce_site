@@ -110,23 +110,35 @@ const AdminPage = () => {
     if (products) {
       setProducts(products.filter((product) => product.id !== id));
       dispatch(deleteProduct(id))
-      .then((response) => {
-        if (response.payload.success) {
-          alert("해당 상품이 삭제되었습니다.");
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+        .then((response) => {
+          if (response.payload.success) {
+            alert("해당 상품이 삭제되었습니다.");
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
     }
   };
-  const onRemoveSelect = () => {
+  const onRemoveSelect = async () => {
     if (products) {
       setProducts(
         products.filter((product) => !checkedID.includes(product.id))
       );
+      checkedID.map((id) =>
+        dispatch(deleteProduct(id))
+          .then((response) => {
+            if (response.payload.success) {
+            } else {
+              console.log(response.payload);
+            }
+          })
+          .catch((err) => {
+            alert(err);
+          })
+      )
     }
   };
 
