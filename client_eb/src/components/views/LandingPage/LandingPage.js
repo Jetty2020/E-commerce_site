@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Tabs } from "antd";
-import ProductsList from "../../utils/ProductsList";
-import VisualSlider from "./Sections/VisualSlider";
-import "./LandingPage.css";
-import { useDispatch } from "react-redux";
-import { loadProduct } from "../../../_actions/product_actions";
+import React, { useState } from 'react';
+import { Tabs } from 'antd';
+import ProductsList from '../../utils/ProductsList';
+import VisualSlider from './Sections/VisualSlider';
+import './LandingPage.css';
+import { useDispatch } from 'react-redux';
+import { loadProduct } from '../../../_actions/product_actions';
 
 function LandingPage() {
   const dispatch = useDispatch();
@@ -14,10 +14,10 @@ function LandingPage() {
   const [DISCOUNT, setDISCOUNT] = useState();
 
   if (!RECOMMEND) {
-    dispatch(loadProduct("recoProduct"))
+    dispatch(loadProduct('recoProduct'))
       .then((response) => {
         if (response.payload.success) {
-          setRECOMMEND(response.payload.product);
+          setRECOMMEND(response.payload.product.slice(0, 8));
         } else {
           console.log(response.payload);
         }
@@ -27,10 +27,10 @@ function LandingPage() {
       });
   }
   if (!NEW) {
-    dispatch(loadProduct("newProduct"))
+    dispatch(loadProduct('newProduct'))
       .then((response) => {
         if (response.payload.success) {
-          setNEW(response.payload.product);
+          setNEW(response.payload.product.slice(0, 8));
         } else {
           console.log(response.payload);
         }
@@ -40,10 +40,10 @@ function LandingPage() {
       });
   }
   if (!BEST) {
-    dispatch(loadProduct("bestProduct"))
+    dispatch(loadProduct('bestProduct'))
       .then((response) => {
         if (response.payload.success) {
-          setBEST(response.payload.product);
+          setBEST(response.payload.product.slice(0, 8));
         } else {
           console.log(response.payload);
         }
@@ -53,10 +53,10 @@ function LandingPage() {
       });
   }
   if (!DISCOUNT) {
-    dispatch(loadProduct("discountProduct"))
+    dispatch(loadProduct('discountProduct'))
       .then((response) => {
         if (response.payload.success) {
-          setDISCOUNT(response.payload.product);
+          setDISCOUNT(response.payload.product.slice(0, 8));
         } else {
           console.log(response.payload);
         }
@@ -73,10 +73,10 @@ function LandingPage() {
       {/* Visual Image */}
       <VisualSlider />
       {}
-      <div style={{ width: "75%", margin: "0 auto" }}>
+      <div style={{ width: '75%', margin: '0 auto' }}>
         {/* Recommendation Products */}
-        <div style={{ margin: "8rem 0 4rem" }}>
-          <h2 style={{ marginBottom: "1.5rem", fontWeight: "bold" }}>
+        <div style={{ margin: '8rem 0 4rem' }}>
+          <h2 style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
             추천 상품
           </h2>
           {RECOMMEND && <ProductsList products={RECOMMEND} />}
@@ -88,10 +88,10 @@ function LandingPage() {
             tab={
               <h2
                 style={{
-                  margin: "0.5rem 0",
-                  padding: "0 2.5rem",
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
+                  margin: '0.5rem 0',
+                  padding: '0 2.5rem',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
                 }}
               >
                 새로 나온 상품
@@ -105,9 +105,9 @@ function LandingPage() {
             tab={
               <h2
                 style={{
-                  padding: "0 2.5rem",
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
+                  padding: '0 2.5rem',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
                 }}
               >
                 베스트 상품
@@ -120,8 +120,8 @@ function LandingPage() {
         </Tabs>
 
         {/* Discounted Products */}
-        <div style={{ margin: "4rem 0 8rem" }}>
-          <h2 style={{ marginBottom: "1.5rem", fontWeight: "bold" }}>
+        <div style={{ margin: '4rem 0 8rem' }}>
+          <h2 style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
             할인 상품
           </h2>
           {DISCOUNT && <ProductsList products={DISCOUNT} />}

@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { loadProduct } from "../../../../_actions/product_actions";
+import { useDispatch } from 'react-redux';
+import { loadProduct } from '../../../../_actions/product_actions';
 import ProductsList from '../../../utils/ProductsList';
 import ProductsPages from '../../../utils/ProductsPages';
 
 function BestPage() {
-  // const BEST = products.filter((product) => product.best === true);
-
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 8;
-  const lastPage = currentPage * productsPerPage;
-  const firstPage = lastPage - productsPerPage;
-
-  const currentProducts = (items) => {
-    return items.slice(firstPage, lastPage);
-  };
-
   const dispatch = useDispatch();
   const [bestProducts, setBestProducts] = useState();
   if (!bestProducts) {
-    dispatch(loadProduct("bestProduct"))
+    dispatch(loadProduct('bestProduct'))
       .then((response) => {
         if (response.payload.success) {
           setBestProducts(response.payload.product);
@@ -32,6 +20,16 @@ function BestPage() {
         alert(err);
       });
   }
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+  const lastPage = currentPage * productsPerPage;
+  const firstPage = lastPage - productsPerPage;
+
+  const currentProducts = (items) => {
+    return items.slice(firstPage, lastPage);
+  };
 
   return (
     <div>
