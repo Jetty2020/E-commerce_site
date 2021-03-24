@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { searchProduct } from "../../../_actions/product_actions";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { searchProduct } from '../../../_actions/product_actions';
 // import { products } from "../../../_datas/productsData.json";
 // import { Input } from "antd";
-import ProductsList from "../../utils/ProductsList";
+import ProductsList from '../../utils/ProductsList';
 
 function SearchResultPage(props) {
   const dispatch = useDispatch();
@@ -31,17 +31,30 @@ function SearchResultPage(props) {
   return (
     <div
       style={{
-        width: "75%",
-        margin: "5rem auto 0",
+        width: '75%',
+        margin: '5rem auto 0',
       }}
     >
-      <h2 style={{ marginBottom: "2rem", fontWeight: "bold" }}>검색어</h2>
-      <p style={{ marginRight: "5px", textAlign: "right", color: "#adb5bd" }}>
-        총 10 개의 상품이 검색되었습니다.
-      </p>
+      <h2 style={{ marginBottom: '2rem', fontWeight: 'bold' }}>
+        '{searchKey}'에 대한 검색 결과
+      </h2>
+      {search ? (
+        <>
+          <p
+            style={{ marginRight: '5px', textAlign: 'right', color: '#adb5bd' }}
+          >
+            총 10 개의 상품이 검색되었습니다.
+          </p>
 
-      {/* products */}
-      {search && <ProductsList products={search} />}
+          {/* products */}
+          {search && <ProductsList products={search} />}
+        </>
+      ) : (
+        <p style={{ marginTop: '100px', textAlign: 'center' }}>
+          검색 결과가 없습니다. <br />
+          검색어를 다시 확인해 주세요.
+        </p>
+      )}
     </div>
   );
 }

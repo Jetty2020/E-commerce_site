@@ -98,7 +98,7 @@ function UpdateProduct(props) {
                     encType="multipart/form-data"
                   >
                     {/* 기등록된 이미지 */}
-                    <div style={{ width: '420px', margin: '20px auto 30px' }}>
+                    <div style={{ width: '400px', margin: '25px 0 40px' }}>
                       <img src={values.mainImg} alt="mainImg" width="100%" />
                     </div>
                     <Form.Item label={'상품명'} required>

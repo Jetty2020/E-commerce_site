@@ -41,7 +41,7 @@ function ProductsPages({
   paginate,
   currentPage,
 }) {
-  // 페이지 수
+  // page number
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
     pageNumbers.push(i);

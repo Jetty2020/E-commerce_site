@@ -76,63 +76,68 @@ function WishlistPage() {
     <div style={{ width: '75%', margin: '3rem auto' }}>
       <h2 style={{ fontWeight: 'bold' }}>위시리스트</h2>
 
-      <Ul>
-        {wishlists.map((product) => (
-          <Li key={product.id}>
-            <Link to={`/product/${product.id}`}>
-              {product.mainImg && (
-                <img
-                  src={product.mainImg}
-                  style={{
-                    width: '300px',
-                    height: '370px',
-                    objectFit: 'cover',
-                  }}
-                  alt="img"
-                />
-              )}
-              {product.productName && <Name>{product.productName}</Name>}
-              {product.price && !product.rate && (
-                <Price>{Numeral(product.price).format(0, 0)}원</Price>
-              )}
-              {product.rate > 0 && (
-                <Discount>
-                  <span className="rate">{product.rate}% </span>
-                  <span className="discount">
-                    {Numeral(product.price * (1 - product.rate * 0.01)).format(
-                      0,
-                      0,
-                    )}
-                    원
-                  </span>
-                  <span className="price">
-                    {Numeral(product.price).format(0, 0)}원
-                  </span>
-                </Discount>
-              )}
-              {product.likes && (
-                <Likes>
-                  <span style={{ marginRight: '1rem' }}>
-                    <Icon type="heart" /> {product.likes}
-                  </span>
-                  <span>
-                    <Icon type="message" /> {product.reviews}
-                  </span>
-                </Likes>
-              )}
-            </Link>
+      {wishlists.length > 0 ? (
+        <Ul>
+          {wishlists.map((product) => (
+            <Li key={product.id}>
+              <Link to={`/product/${product.id}`}>
+                {product.mainImg && (
+                  <img
+                    src={product.mainImg}
+                    style={{
+                      width: '300px',
+                      height: '370px',
+                      objectFit: 'cover',
+                    }}
+                    alt="img"
+                  />
+                )}
+                {product.productName && <Name>{product.productName}</Name>}
+                {product.price && !product.rate && (
+                  <Price>{Numeral(product.price).format(0, 0)}원</Price>
+                )}
+                {product.rate > 0 && (
+                  <Discount>
+                    <span className="rate">{product.rate}% </span>
+                    <span className="discount">
+                      {Numeral(
+                        product.price * (1 - product.rate * 0.01),
+                      ).format(0, 0)}
+                      원
+                    </span>
+                    <span className="price">
+                      {Numeral(product.price).format(0, 0)}원
+                    </span>
+                  </Discount>
+                )}
+                {product.likes && (
+                  <Likes>
+                    <span style={{ marginRight: '1rem' }}>
+                      <Icon type="heart" /> {product.likes}
+                    </span>
+                    <span>
+                      <Icon type="message" /> {product.reviews}
+                    </span>
+                  </Likes>
+                )}
+              </Link>
 
-            {product.wishlist && (
-              <Wishlist
-                className="wishlist"
-                onClick={() => onRemove(product.id)}
-              >
-                <Icon type="close" />
-              </Wishlist>
-            )}
-          </Li>
-        ))}
-      </Ul>
+              {product.wishlist && (
+                <Wishlist
+                  className="wishlist"
+                  onClick={() => onRemove(product.id)}
+                >
+                  <Icon type="close" />
+                </Wishlist>
+              )}
+            </Li>
+          ))}
+        </Ul>
+      ) : (
+        <p style={{ marginTop: '150px', textAlign: 'center' }}>
+          위시리스트에 등록된 상품이 없습니다.
+        </p>
+      )}
     </div>
   );
 }
