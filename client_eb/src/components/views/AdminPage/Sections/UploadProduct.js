@@ -98,6 +98,7 @@ function UploadProduct(props) {
                 <ImageUploader
                   withIcon={true}
                   withPreview={true}
+                  label="Max file size: 5mb, accepted: jpg, gif, png, jpeg"
                   buttonText="파일 선택"
                   onChange={onFileHandler}
                   imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
