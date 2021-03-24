@@ -19,13 +19,10 @@ function ProductInfo(props) {
 
   //위시리스트 추가
   const onAddWishlist = () => {
-    let dataToSubmit = {
-      productId: props.product.id,
-    };
-    dispatch(addWishlist(dataToSubmit))
+    dispatch(addWishlist(props.product.id))
       .then((response) => {
         if (response.payload.success) {
-          // props.history.push("/user/wishlist");
+          alert('위시리스트에 추가되었습니다.');
         } else {
           alert('에러가 발생했습니다.');
         }
@@ -37,13 +34,10 @@ function ProductInfo(props) {
 
   //장바구니 추가
   const onAddCart = () => {
-    let dataToSubmit = {
-      productId: props.product.id,
-    };
-    dispatch(addCart(dataToSubmit))
+    dispatch(addCart(props.product.id))
       .then((response) => {
         if (response.payload.success) {
-          // props.history.push("/user/cart");
+          alert('장바구니에 추가되었습니다.');
         } else {
           alert('에러가 발생했습니다.');
         }

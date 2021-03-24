@@ -63,9 +63,9 @@ userRouter.get(
   postGoogleLogin
 );
 
-userRouter.post(routes.addCart, auth, addCart);
+userRouter.get(routes.addCart, auth, addCart);
 userRouter.delete(routes.removeCart, auth, removeCart);
-userRouter.post(routes.addWishList, auth, addWishList);
+userRouter.get(routes.addWishList, auth, addWishList);
 userRouter.delete(routes.removeWishList, auth, removeWishList);
 
 export default userRouter;

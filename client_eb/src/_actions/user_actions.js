@@ -128,9 +128,9 @@ export function deleteUser(dataToSubmit) {
   };
 }
 
-export function addWishlist(dataToSubmit) {
+export function addWishlist(id) {
   const request = axios
-    .post(`${USER_SERVER}/addWishList`, dataToSubmit)
+    .get(`${USER_SERVER}/addWishList/${id}`)
     .then((response) => response.data);
 
   return {
@@ -139,9 +139,9 @@ export function addWishlist(dataToSubmit) {
   };
 }
 
-export function addCart(_id) {
+export function addCart(id) {
   const request = axios
-    .get(`${USER_SERVER}/addCart`)
+    .get(`${USER_SERVER}/addCart/${id}`)
     .then((response) => response.data);
 
   return {
