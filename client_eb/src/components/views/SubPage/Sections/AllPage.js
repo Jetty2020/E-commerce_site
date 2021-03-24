@@ -1,24 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loadProduct } from "../../../../_actions/product_actions";
-import ProductsList from "../../../utils/ProductsList";
-import ProductsPages from "../../../utils/ProductsPages";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadProduct } from '../../../../_actions/product_actions';
+import ProductsList from '../../../utils/ProductsList';
+import ProductsPages from '../../../utils/ProductsPages';
 
 function AllPage() {
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 8;
-  const lastPage = currentPage * productsPerPage;
-  const firstPage = lastPage - productsPerPage;
-
-  const currentProducts = (items) => {
-    return items.slice(firstPage, lastPage);
-  };
-  
   const dispatch = useDispatch();
   const [allProducts, setAllProducts] = useState();
   if (!allProducts) {
-    dispatch(loadProduct("all"))
+    dispatch(loadProduct('all'))
       .then((response) => {
         if (response.payload.success) {
           setAllProducts(response.payload.product);
@@ -31,9 +21,19 @@ function AllPage() {
       });
   }
 
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+  const lastPage = currentPage * productsPerPage;
+  const firstPage = lastPage - productsPerPage;
+
+  const currentProducts = (items) => {
+    return items.slice(firstPage, lastPage);
+  };
+
   return (
     <div>
-      <h2 style={{ margin: "70px 20px 30px" }}>All</h2>
+      <h2 style={{ margin: '70px 20px 30px' }}>All</h2>
 
       {/* products */}
       {allProducts && (
