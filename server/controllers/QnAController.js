@@ -1,13 +1,13 @@
 // import db from "../db";
-import { Product, User, Review, Sequelize } from "../models";
+import { Product, User, QnA, Sequelize } from "../models";
 import moment from "moment";
 
-export const loadReview = async (req, res) => {
+export const loadQnA = async (req, res) => {
   try {
     const {
       params: { productId },
     } = req;
-    const reviews = await Review.findAll({
+    const QnAs = await QnA.findAll({
       include: [
         {
           model: User,
@@ -16,31 +16,31 @@ export const loadReview = async (req, res) => {
       ],
       where: { productId },
     });
-    if (reviews) {
+    if (QnAs) {
       return res.status(200).json({
         success: true,
-        review: reviews,
+        QnA: QnAs,
       });
     } else {
       return res.status(200).json({
         success: true,
-        review: null,
+        QnA: null,
       });
     }
   } catch (err) {
-    console.log("loadReview");
+    console.log("loadQnA");
     console.log(err);
     return res.json({
       success: false,
-      message: "Error occurred at loadReview",
+      message: "Error occurred at loadQnA",
     });
   }
 };
 
-export const addReview = async (req, res) => {
+export const addQnA = async (req, res) => {
   try {
     const {
-      body: { review, rate },
+      body: { QnAText, secret },
       params: { id: productId },
       user: { id: producter },
     } = req;
@@ -48,9 +48,9 @@ export const addReview = async (req, res) => {
       where: parseInt(productId, 10),
     });
     const now = moment().format('YYYY-MM-DD');
-    const createReview = await Review.create({
-      text: review,
-      rate,
+    const createQnA = await QnA.create({
+      text: QnAText,
+      secret,
       date: now,
       userId: producter,
       productId: findProduct.id,
@@ -65,23 +65,23 @@ export const addReview = async (req, res) => {
       .json({ success: false, message: "존재하지 않은 상품입니다." });
   }
 };
-export const editReview = async (req, res) => {
+export const editQnA = async (req, res) => {
   try {
     const {
-      body: { review, reviewId },
+      body: { QnA, QnAId },
       params: { id: productId },
       user: { id: producter },
     } = req;
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    await Review.update(
+    await QnA.update(
       {
-        text: review,
+        text: QnA,
       },
       {
         where: {
-          id: reviewId,
+          id: QnAId,
           userId: producter,
           productId: findProduct.id,
         },
@@ -97,10 +97,10 @@ export const editReview = async (req, res) => {
       .json({ success: false, message: "존재하지 않은 상품입니다." });
   }
 };
-export const removeReview = async (req, res) => {
+export const removeQnA = async (req, res) => {
   try {
     const {
-      body: { reviewId },
+      body: { QnAId },
       params: { id: productId },
       user: { id: producter },
     } = req;
@@ -108,11 +108,11 @@ export const removeReview = async (req, res) => {
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    console.log(findProduct.id, reviewId);
+    console.log(findProduct.id, QnAId);
 
-    await Review.destroy({
+    await QnA.destroy({
       where: {
-        id: reviewId,
+        id: QnAId,
         productId: findProduct.id,
       },
     });

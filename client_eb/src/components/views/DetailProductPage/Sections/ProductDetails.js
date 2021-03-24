@@ -4,72 +4,6 @@ import ProductReviews from './ProductReviews';
 import ProductQnA from './ProductQnA';
 
 function ProductDetails(props) {
-  //reviews
-  const [reviews, setReviews] = useState([
-    {
-      no: 1,
-      rate: 4.5,
-      userID: 'eunb**',
-      date: '2021-02-28',
-      text: '너무 마음에 들어요~~~',
-      clicked: false,
-    },
-    {
-      no: 2,
-      rate: 4,
-      userID: 'lee***',
-      date: '2021-03-01',
-      text: '재구매하러 올게요!!!',
-      clicked: false,
-    },
-    {
-      no: 3,
-      rate: 5,
-      userID: 'abc12**',
-      date: '2021-03-02',
-      text: '퀄리티가 진짜 좋네요 좋은 제품 감사합니다 :)',
-      clicked: false,
-    },
-  ]);
-
-  const onClickReview = (no) => {
-    setReviews(
-      reviews.map((review) =>
-        review.no === no
-          ? { ...review, clicked: true }
-          : { ...review, clicked: false },
-      ),
-    );
-  };
-
-  //Q & A
-  const [qna, setQnA] = useState([
-    {
-      no: 1,
-      userID: 'eunb**',
-      date: '2021-02-28',
-      text: '상품 문의합니다.',
-      secret: true,
-      answer: true,
-    },
-    {
-      no: 2,
-      userID: 'eunb**',
-      date: '2021-02-28',
-      text: '배송 문의합니다.',
-      secret: false,
-      answer: true,
-    },
-    {
-      no: 3,
-      userID: 'lee***',
-      date: '2021-02-28',
-      text: '재입고 문의합니다.',
-      secret: true,
-      answer: false,
-    },
-  ]);
-
   //tabs
   const content1 = () => {
     return (
@@ -79,10 +13,10 @@ function ProductDetails(props) {
     );
   };
   const content2 = () => {
-    return <ProductReviews id={props.product.id} onClickReview={onClickReview} />;
+    return <ProductReviews id={props.product.id} />;
   };
   const content3 = () => {
-    return <ProductQnA qna={qna} />;
+    return <ProductQnA id={props.product.id} />;
   };
 
   const [tabs, setTabs] = useState([

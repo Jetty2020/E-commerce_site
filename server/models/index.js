@@ -17,6 +17,7 @@ db.Sequelize = Sequelize;
 db.User = require("./user")(sequelize, Sequelize);
 db.Product = require("./product")(sequelize, Sequelize);
 db.Review = require("./review")(sequelize, Sequelize);
+db.QnA = require("./QnA")(sequelize, Sequelize);
 
 db.User.belongsToMany(db.Product, {
   as: "Cart",
@@ -45,5 +46,10 @@ db.Review.belongsTo(db.User);
 db.User.hasMany(db.Review);
 db.Review.belongsTo(db.Product);
 db.Product.hasMany(db.Review);
+
+db.QnA.belongsTo(db.User);
+db.User.hasMany(db.QnA);
+db.QnA.belongsTo(db.Product);
+db.Product.hasMany(db.QnA);
 
 module.exports = db;

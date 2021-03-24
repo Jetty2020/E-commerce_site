@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addReview, loadReview } from "../../../../_actions/review_actions";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { Button, Input, Rate } from "antd";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addReview, loadReview } from '../../../../_actions/review_actions';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Button, Input, Rate } from 'antd';
 
 function ProductReviews({ id, onClickReview }) {
   const dispatch = useDispatch();
@@ -31,10 +31,10 @@ function ProductReviews({ id, onClickReview }) {
     <>
       <div
         style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          margin: "5px",
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          margin: '5px',
         }}
       >
         {!reviewInput && <Button onClick={showReviewInput}>리뷰쓰기</Button>}
@@ -42,10 +42,10 @@ function ProductReviews({ id, onClickReview }) {
       {reviewInput && (
         <Formik
           initialValues={{
-            review: "",
+            review: '',
           }}
           validationSchema={Yup.object().shape({
-            review: Yup.string().required("리뷰를 입력해 주세요"),
+            review: Yup.string().required('리뷰를 입력해 주세요'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -63,9 +63,9 @@ function ProductReviews({ id, onClickReview }) {
                     console.log(response.payload);
                   }
                 })
-              .catch((err) => {
-                alert(err);
-              });
+                .catch((err) => {
+                  alert(err);
+                });
               showReviewInput();
               setSubmitting(true);
               setReviewInput(false);
@@ -87,9 +87,9 @@ function ProductReviews({ id, onClickReview }) {
             return (
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "0 0 30px",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: '0 0 30px',
                 }}
               >
                 <Input
@@ -97,18 +97,18 @@ function ProductReviews({ id, onClickReview }) {
                   name="review"
                   disabled={isSubmitting}
                   value={values.review}
-                  style={{ width: "60%" }}
+                  style={{ width: '60%' }}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
                     errors.review && touched.review
-                      ? "text-input error"
-                      : "text-input"
+                      ? 'text-input error'
+                      : 'text-input'
                   }
                 />
                 <Button
                   type="primary"
-                  style={{ margin: "0 10px", fontSize: "0.85rem" }}
+                  style={{ margin: '0 10px', fontSize: '0.85rem' }}
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
@@ -117,7 +117,7 @@ function ProductReviews({ id, onClickReview }) {
                 {errors.review && touched.review && (
                   <div
                     className="input-feedback"
-                    style={{ marginTop: "5px", marginLeft: "105px" }}
+                    style={{ marginTop: '5px', marginLeft: '105px' }}
                   >
                     {errors.review}
                   </div>
@@ -134,59 +134,40 @@ function ProductReviews({ id, onClickReview }) {
             <li
               key={review.id}
               style={{
-                padding: "20px 10px",
-                borderBottom: "1px solid #e9ecef",
-                cursor: "pointer",
+                padding: '20px 10px',
+                borderBottom: '1px solid #e9ecef',
+                cursor: 'pointer',
               }}
               onClick={() => onClickReview(review.id)}
             >
               <div
                 style={{
-                  overflow: "hidden",
-                  fontSize: "0.9rem",
+                  overflow: 'hidden',
+                  fontSize: '0.9rem',
                 }}
               >
-                <div style={{ float: "left" }}>
+                <div style={{ float: 'left' }}>
                   <Rate
                     disabled
                     defaultValue={review.rate}
-                    style={{ fontSize: "0.8rem" }}
+                    style={{ fontSize: '0.8rem' }}
                   />
                 </div>
-                <div style={{ float: "left", marginLeft: "10px" }}>
-                  {review.user.name}
+                <div style={{ float: 'left', marginLeft: '10px' }}>
+                  {review.user.userID}
                 </div>
-                <div style={{ float: "right" }}>{review.created_at}</div>
+                <div style={{ float: 'right' }}>{review.date}</div>
               </div>
-              <div style={{ position: "relative", marginTop: "5px" }}>
-                {review.clicked ? (
-                  <>
-                    <div
-                      style={{
-                        width: "85%",
-                        margin: "5px 0 15px",
-                        color: "#212529",
-                      }}
-                    >
-                      {review.text}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div
-                      style={{
-                        marginTop: "5px",
-                        paddingRight: "150px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        wordBreak: "break-all",
-                      }}
-                    >
-                      {review.text}
-                    </div>
-                  </>
-                )}
+              <div style={{ position: 'relative', marginTop: '5px' }}>
+                <div
+                  style={{
+                    width: '85%',
+                    margin: '5px 0 15px',
+                    color: '#212529',
+                  }}
+                >
+                  {review.text}
+                </div>
               </div>
             </li>
           ))}

@@ -31,6 +31,11 @@ const ADD_REVIEW = "/addReview/:id";
 const EDIT_REVIEW = "/editReview/:id";
 const REMOVE_REVIEW = "/removeReview/:id";
 
+const LOAD_QNA = "/loadQnA/:productId";
+const ADD_QNA = "/addQnA/:id";
+const EDIT_QNA = "/editQnA/:id";
+const REMOVE_QNA = "/removeQnA/:id";
+
 // PRODUCTS with HOME
 
 const HOME = "/";
@@ -102,6 +107,11 @@ const routes = {
   addReview: ADD_REVIEW,
   editReview: EDIT_REVIEW,
   removeReview: REMOVE_REVIEW,
+
+  loadQnA: LOAD_QNA,
+  addQnA: ADD_QNA,
+  editQnA: EDIT_QNA,
+  removeQnA: REMOVE_QNA,
 
   api: API,
 

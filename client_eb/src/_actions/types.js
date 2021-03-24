@@ -23,6 +23,9 @@ export const DELETE_PRODUCT = "delete_product";
 export const LOAD_REVIEW = "load_review";
 export const ADD_REVIEW = "add_review";
 
+export const LOAD_QNA = "load_QnA";
+export const ADD_QNA = "add_QnA";
+
 export const GET_CART_ITEMS_USER = "get_cart_items_user";
 export const REMOVE_CART_ITEM_USER = "remove_cart_item_user";
 export const ON_SUCCESS_BUY_USER = "on_success_buy_user";

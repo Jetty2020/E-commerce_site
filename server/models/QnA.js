@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "review",
+    "QnA",
     {
       text: {
         type: DataTypes.STRING(250),
         allowNull: false,
       },
-      rate: {
-        type: DataTypes.INTEGER.UNSIGNED,
+      secret: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
       date: {
