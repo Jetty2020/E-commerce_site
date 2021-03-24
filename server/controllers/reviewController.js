@@ -15,6 +15,7 @@ export const loadReview = async (req, res) => {
         }
       ],
       where: { productId },
+      order: [['id', 'DESC']],
     });
     if (reviews) {
       return res.status(200).json({
@@ -57,6 +58,7 @@ export const addReview = async (req, res) => {
     });
     return res.status(200).send({
       success: true,
+      review: createReview.dataValues,
     });
   } catch (error) {
     return res

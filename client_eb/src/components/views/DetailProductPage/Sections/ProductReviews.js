@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addReview, loadReview } from '../../../../_actions/review_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Input, Rate } from 'antd';
 
 function ProductReviews({ id, onClickReview }) {
+  const { userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [reviews, setReviews] = useState();
   const [rate, setRate] = useState(3);
@@ -56,11 +57,14 @@ function ProductReviews({ id, onClickReview }) {
               dispatch(addReview(id, dataToSubmit))
                 .then((response) => {
                   if (response.payload.success) {
-                    // setReviews(response.payload.product);
-                    // alert(response.payload.success);
-                    // setReviews([...reviews, {rate, text: values.review, created_at: }])
+                    setReviews([{
+                      id: response.payload.review.id,
+                      text: values.review,
+                      date: response.payload.review.date,
+                      rate,
+                      user: { userID: userData.userID },
+                    }].concat(reviews));
                   } else {
-                    console.log(response.payload);
                   }
                 })
                 .catch((err) => {
