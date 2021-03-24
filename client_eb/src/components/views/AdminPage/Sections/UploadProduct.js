@@ -103,6 +103,16 @@ function UploadProduct(props) {
                   imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
                   maxFileSize={5242880}
                 />
+                <p
+                  style={{
+                    marginTop: '-10px',
+                    textAlign: 'center',
+                    fontSize: '0.725rem',
+                  }}
+                >
+                  첫번째 파일은 썸네일 이미지, 두번째 파일은 상세 이미지로
+                  등록됩니다.
+                </p>
               </Form.Item>
               <Form.Item label={'상품명'} required>
                 <Input

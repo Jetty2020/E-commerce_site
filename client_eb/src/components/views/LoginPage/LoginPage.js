@@ -7,12 +7,37 @@ import {
 } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import styled from 'styled-components';
 import { Form, Icon, Input, Button, Checkbox, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import './LoginPage.css';
 import logo from '../../images/logo.png';
+import sns_img from '../../images/bg_sns.png';
 
 const { Title } = Typography;
+
+const Sns = styled.div`
+  width: 150px;
+  margin: 0 auto;
+
+  button {
+    width: 40px;
+    height: 40px;
+    text-indent: -9999px;
+    background: url(${sns_img}) no-repeat;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+  }
+  .naver {
+    background-position-y: -40px;
+  }
+  .google {
+    background-position-y: -80px;
+  }
+`;
+
 function LoginPage(props) {
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem('rememberMe') ? true : false;
@@ -61,9 +86,7 @@ function LoginPage(props) {
           password: initialPW,
         }}
         validationSchema={Yup.object().shape({
-          userID: Yup.string()
-            // .email("ID is invalid")
-            .required('ID is required'),
+          userID: Yup.string().required('ID is required'),
           password: Yup.string()
             .min(6, 'Password must be at least 6 characters')
             .required('Password is required'),
@@ -209,11 +232,11 @@ function LoginPage(props) {
                   </Button>
                 </Form.Item>
 
-                <div className="sns">
-                  <button className="kakao">카카오 로그인</button>
+                <Sns>
+                  <button>카카오 로그인</button>
                   <button className="naver">네이버 로그인</button>
                   <button className="google">구글 로그인</button>
-                </div>
+                </Sns>
                 <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
                   <span
                     onClick={showEmailModal}

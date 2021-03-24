@@ -8,9 +8,53 @@ import {
 } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import './UserInfoPage.css';
-import '../LoginPage/LoginPage.css';
+import styled from 'styled-components';
 import { Form, Button, Input, Modal } from 'antd';
+import sns_img from '../../images/bg_sns.png';
+
+const InfoContainer = styled.div`
+  margin-top: 30px;
+  border-top: 3px solid #343a40;
+`;
+const InfoTitle = styled.h3`
+  padding: 20px 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ced4da;
+`;
+const Info = styled.div`
+  padding: 20px 0;
+
+  .info_detail {
+    line-height: 40px;
+
+    span {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+    }
+  }
+`;
+const Sns = styled.div`
+  width: 150px;
+  margin: 0 auto;
+
+  button {
+    width: 40px;
+    height: 40px;
+    text-indent: -9999px;
+    background: url(${sns_img}) no-repeat;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+  }
+  .naver {
+    background-position-y: -40px;
+  }
+  .google {
+    background-position-y: -80px;
+  }
+`;
 
 function UserInfoPage(props) {
   const { userData } = useSelector((state) => state.user);
@@ -88,13 +132,13 @@ function UserInfoPage(props) {
     <div style={{ width: '75%', margin: '3rem auto' }}>
       <h2 style={{ fontWeight: 'bold' }}>회원 정보</h2>
 
-      <div className="info_container">
-        <h3 className="info_title">로그인 정보</h3>
-        <div className="info">
+      <InfoContainer>
+        <InfoTitle>로그인 정보</InfoTitle>
+        <Info>
           <p style={{ marginTop: '20px' }}>
             연결된 SNS 계정으로 로그인할 수 있습니다.
           </p>
-          <div className="sns" style={{ margin: 'unset' }}>
+          <Sns style={{ margin: 'unset' }}>
             {sns.map((sns) =>
               sns.connect ? (
                 <button className={sns.corp}>{sns.title}</button>
@@ -107,14 +151,14 @@ function UserInfoPage(props) {
                 </button>
               ),
             )}
-          </div>
-        </div>
-      </div>
+          </Sns>
+        </Info>
+      </InfoContainer>
       {userData ? (
-        <div className="info_container">
-          <h3 className="info_title">회원 정보</h3>
+        <InfoContainer className="info_container">
+          <InfoTitle>회원 정보</InfoTitle>
           {user.modify ? (
-            <div className="info">
+            <Info>
               <div className="info_detail">
                 <span>성명</span> {user.name}
               </div>
@@ -294,9 +338,9 @@ function UserInfoPage(props) {
                   }}
                 </Formik>
               )}
-            </div>
+            </Info>
           ) : (
-            <div className="info">
+            <Info>
               <div className="info_detail">
                 <span>성명</span> {user.name}
               </div>
@@ -306,9 +350,9 @@ function UserInfoPage(props) {
               <div className="info_detail">
                 <span>이메일</span> {user.email}
               </div>
-            </div>
+            </Info>
           )}
-        </div>
+        </InfoContainer>
       ) : (
         <></>
       )}
