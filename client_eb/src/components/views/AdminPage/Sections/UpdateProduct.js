@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Typography, Button, Form, Input, Select } from 'antd';
 import { editProduct } from '../../../../_actions/product_actions';
+import { combineReducers } from 'redux';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -13,6 +14,7 @@ const { Option } = Select;
 function UpdateProduct(props) {
   const dispatch = useDispatch(); //dispatch for redux
   let productId = props.match.params.productId;
+  const [category, setCategory] = useState('');
   const [productDe, setProductDe] = useState();
   let dataToSubmit = {
     productId,
@@ -22,6 +24,22 @@ function UpdateProduct(props) {
       .then((response) => {
         if (response.payload.success) {
           setProductDe(response.payload.product);
+          if (
+            response.payload.product.bestProduct &&
+            response.payload.product.newProduct
+          ) {
+            setCategory('BnN');
+            console.log(1);
+          } else if (response.payload.product.bestProduct) {
+            setCategory('Best');
+            console.log(2);
+          } else if (response.payload.product.newProduct) {
+            setCategory('New');
+            console.log(3);
+          } else {
+            setCategory('All');
+            console.log(4);
+          }
         } else {
           console.log(response.payload);
         }
@@ -30,8 +48,9 @@ function UpdateProduct(props) {
         alert(err);
       });
   }
-  const [formErrorMessage, setFormErrorMessage] = useState('');
-
+  const onChange = (value) => {
+    setCategory(value);
+  };
   return (
     <>
       {productDe && (
@@ -45,7 +64,7 @@ function UpdateProduct(props) {
             }}
             validationSchema={Yup.object().shape({
               rate: Yup.number('할인율을 숫자로 입력해 주세요').integer(
-                '할인율을 정확히 입력해 주세요',
+                '할인율을 정확히 입력해 주세요'
               ),
               price: Yup.number('가격을 숫자로 입력해 주세요')
                 .positive('가격을 양수로 입력해 주세요')
@@ -57,20 +76,21 @@ function UpdateProduct(props) {
                   id: productId,
                   rate: values.rate,
                   price: values.price,
+                  category,
                 };
                 dispatch(editProduct(dataToSubmit))
                   .then((response) => {
                     if (response.payload.success) {
                       props.history.push(`/product/${productId}`);
                     } else {
-                      setFormErrorMessage('Error occurred'); //에러 메세지 세팅
+                      // setFormErrorMessage('Error occurred'); //에러 메세지 세팅
                     }
                   })
                   .catch((err) => {
-                    setFormErrorMessage('Error occurred');
+                    // setFormErrorMessage('Error occurred');
                     setTimeout(() => {
                       //일정 시간이 지난 후 함수 실행 setTimeout(실행시킬 함수, 시간)
-                      setFormErrorMessage('');
+                      // setFormErrorMessage('');
                     }, 3000);
                   });
                 setSubmitting(false);
@@ -118,15 +138,16 @@ function UpdateProduct(props) {
                         <div className="input-feedback">{errors.name}</div>
                       )}
                     </Form.Item>
-                    <Form.Item label={'카테고리'}>
-                      <Select>
-                        <Option value="all">All</Option>
-                        <Option value="best">Best</Option>
-                        <Option value="new">New</Option>
-                        <Option value="discount">Discount</Option>
-                        <Option value="recommend">Recommend</Option>
-                      </Select>
-                    </Form.Item>
+                    {category && (
+                      <Form.Item label={'카테고리'}>
+                        <Select onChange={onChange} defaultValue={category}>
+                          <Option value="All">All</Option>
+                          <Option value="Best">Best</Option>
+                          <Option value="New">New</Option>
+                          <Option value="BnN">Best & New</Option>
+                        </Select>
+                      </Form.Item>
+                    )}
                     <Form.Item label={'판매금액(원)'} required>
                       <Input
                         id="price"
@@ -170,7 +191,7 @@ function UpdateProduct(props) {
                         type="primary"
                         htmlType="submit"
                         style={{ margin: '0 2px' }}
-                        disabled={isSubmitting}
+                        // disabled={isSubmitting}
                         onSubmit={handleSubmit}
                       >
                         수정
