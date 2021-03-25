@@ -140,6 +140,16 @@ export function addWishlist(id) {
   };
 }
 
+export function loadWishlist() {
+  const request = axios
+    .get(`${USER_SERVER}/loadWishList`)
+    .then((response) => response.data);
+  return {
+    type: LOAD_CART,
+    payload: request,
+  };
+}
+
 export function addCart(id) {
   const request = axios
     .get(`${USER_SERVER}/addCart/${id}`)

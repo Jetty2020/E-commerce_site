@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadCart, removeCart } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
-// import { products } from '../../../_datas/productsData.json';
 import styled from 'styled-components';
 import { Button, Checkbox, Icon } from 'antd';
 import Numeral from 'numeral';

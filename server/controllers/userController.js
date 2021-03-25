@@ -426,8 +426,6 @@ export const loadCart = async (req, res) => {
         },
       ],
     });
-    // const findCart = await findUser.getCart();
-    // findProduct.addUserCart(producter);
     let cartArray = [];
     const CartFunc = await findUser.dataValues.Cart.map((cartCompo) => {
       cartArray.push({
@@ -437,11 +435,11 @@ export const loadCart = async (req, res) => {
         price: cartCompo.dataValues.price,
         rate: cartCompo.dataValues.rate,
         quantity: 1,
-      })
+      });
     });
     return res.status(200).send({
       success: true,
-      cart: cartArray
+      cart: cartArray,
     });
   } catch (error) {
     return res
@@ -493,6 +491,43 @@ export const addWishList = async (req, res) => {
       .status(401)
       .send(error)
       .json({ success: false, message: '존재하지 않은 상품입니다.' });
+  }
+};
+
+export const loadWishList = async (req, res) => {
+  const {
+    user: { id },
+  } = req;
+  try {
+    const findUser = await User.findOne({
+      where: parseInt(id, 10),
+      include: [
+        {
+          model: Product,
+          as: 'WishList',
+          attributes: ['id', 'productName', 'mainImg', 'price', 'rate'],
+        },
+      ],
+    });
+    let wishArray = [];
+    const WishFunc = await findUser.dataValues.WishList.map((wishCompo) => {
+      wishArray.push({
+        id: wishCompo.dataValues.id,
+        productName: wishCompo.dataValues.productName,
+        mainImg: wishCompo.dataValues.mainImg,
+        price: wishCompo.dataValues.price,
+        rate: wishCompo.dataValues.rate,
+      });
+    });
+    return res.status(200).send({
+      success: true,
+      wish: wishArray,
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: 'Error occurred at loadWishList' });
   }
 };
 

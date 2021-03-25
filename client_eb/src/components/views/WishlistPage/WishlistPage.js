@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadWishlist } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
@@ -66,17 +68,36 @@ const Wishlist = styled.div`
 `;
 
 function WishlistPage() {
-  const wishItem = products.filter((product) => product.wishlist === true);
-  const [wishlists, setWishlists] = useState(wishItem);
+  const dispatch = useDispatch();
+  // const wishItem = products.filter((product) => product.wishlist === true);
+  const [wishlists, setWishlists] = useState();
   const onRemove = (id) => {
     setWishlists(wishlists.filter((item) => item.id !== id));
   };
+
+  if (!wishlists) {
+    dispatch(loadWishlist())
+      .then((response) => {
+        if (response.payload.success) {
+          if (response.payload.wish) {
+            setWishlists(response.payload.wish);
+          } else {
+            setWishlists([]);
+          }
+        } else {
+          console.log(response.payload);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
       <h2 style={{ fontWeight: 'bold' }}>위시리스트</h2>
 
-      {wishlists.length > 0 ? (
+      {wishlists && wishlists.length > 0 ? (
         <Ul>
           {wishlists.map((product) => (
             <Li key={product.id}>
@@ -101,7 +122,7 @@ function WishlistPage() {
                     <span className="rate">{product.rate}% </span>
                     <span className="discount">
                       {Numeral(
-                        product.price * (1 - product.rate * 0.01),
+                        product.price * (1 - product.rate * 0.01)
                       ).format(0, 0)}
                       원
                     </span>
@@ -122,14 +143,12 @@ function WishlistPage() {
                 )}
               </Link>
 
-              {product.wishlist && (
-                <Wishlist
-                  className="wishlist"
-                  onClick={() => onRemove(product.id)}
-                >
-                  <Icon type="close" />
-                </Wishlist>
-              )}
+              <Wishlist
+                className="wishlist"
+                onClick={() => onRemove(product.id)}
+              >
+                <Icon type="close" />
+              </Wishlist>
             </Li>
           ))}
         </Ul>
