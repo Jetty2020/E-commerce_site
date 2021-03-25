@@ -8,8 +8,8 @@ import RegisterPage from './views/RegisterPage/RegisterPage.js';
 import NavBar from './views/NavBar/NavBar';
 import Footer from './views/Footer/Footer';
 import AdminPage from './views/AdminPage/AdminPage';
-import UploadProduct from './views/AdminPage/Sections/UploadProduct';
-import UpdateProduct from './views/AdminPage/Sections/UpdateProduct';
+import UploadPage from './views/UploadPage/UploadPage';
+import UpdatePage from './views/UpdatePage/UpdatePage';
 import DetailProductPage from './views/DetailProductPage/DetailProductPage';
 import SubPage from './views/SubPage/SubPage';
 import SearchResultPage from './views/SearchResultPage/SearchResultPage';
@@ -46,12 +46,12 @@ function App() {
             <Route
               exact
               path="/admin/upload"
-              component={Auth(UploadProduct, true)}
+              component={Auth(UploadPage, true)}
             />
             <Route
               exact
               path="/admin/update/:productId"
-              component={Auth(UpdateProduct, true)}
+              component={Auth(UpdatePage, true)}
             />
             <Route exact path="/sub/all" component={Auth(SubPage, null)} />
             <Route exact path="/sub/best" component={Auth(SubPage, null)} />

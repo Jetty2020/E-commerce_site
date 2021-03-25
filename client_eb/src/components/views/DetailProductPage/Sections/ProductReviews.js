@@ -3,7 +3,51 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addReview, loadReview } from '../../../../_actions/review_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import styled from 'styled-components';
 import { Button, Input, Rate } from 'antd';
+
+const ReviewButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 10xp 5px;
+`;
+const ReviewContainer = styled.div`
+  overflow: hidden;
+  width: 75%;
+  margin: 10px auto;
+  .rate {
+    min-width: 155px;
+    font-size: 1.5rem;
+  }
+  .review_input {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .review_button {
+    font-size: 0.8rem;
+    width: 49.5%;
+    &:first-child {
+      margin-right: 0.25%;
+    }
+    &:last-child {
+      margin-left: 0.25%;
+    }
+  }
+  @media only screen and (min-width: 1000px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: unset;
+    .rate {
+      margin-right: 10px;
+    }
+    .review_input {
+      width: 440px;
+      float: unset;
+    }
+  }
+`;
 
 function ProductReviews({ id, onClickReview }) {
   const { userData } = useSelector((state) => state.user);
@@ -30,16 +74,9 @@ function ProductReviews({ id, onClickReview }) {
 
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          margin: '5px',
-        }}
-      >
+      <ReviewButtonContainer>
         {!reviewInput && <Button onClick={showReviewInput}>리뷰쓰기</Button>}
-      </div>
+      </ReviewButtonContainer>
       {reviewInput && (
         <Formik
           initialValues={{
@@ -57,13 +94,17 @@ function ProductReviews({ id, onClickReview }) {
               dispatch(addReview(id, dataToSubmit))
                 .then((response) => {
                   if (response.payload.success) {
-                    setReviews([{
-                      id: response.payload.review.id,
-                      text: values.review,
-                      date: response.payload.review.date,
-                      rate,
-                      user: { userID: userData.userID },
-                    }].concat(reviews));
+                    setReviews(
+                      [
+                        {
+                          id: response.payload.review.id,
+                          text: values.review,
+                          date: response.payload.review.date,
+                          rate,
+                          user: { userID: userData.userID },
+                        },
+                      ].concat(reviews),
+                    );
                   } else {
                   }
                 })
@@ -89,52 +130,56 @@ function ProductReviews({ id, onClickReview }) {
               handleReset,
             } = props;
             return (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  margin: '0 0 30px',
-                }}
-              >
-                <Input
-                  type="text"
-                  name="review"
-                  disabled={isSubmitting}
-                  value={values.review}
-                  style={{ width: '60%' }}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.review && touched.review
-                      ? 'text-input error'
-                      : 'text-input'
-                  }
-                />
+              <ReviewContainer>
+                <Rate className="rate" />
+                <div>
+                  <Input
+                    type="text"
+                    name="review"
+                    disabled={isSubmitting}
+                    value={values.review}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`review_input
+                      ${
+                        errors.review && touched.review
+                          ? 'text-input error'
+                          : ' text-input'
+                      }
+                    `}
+                  />
+                  {errors.review && touched.review && (
+                    <div
+                      className="input-feedback"
+                      style={{ padding: '13px 5px 0', fontSize: '0.725rem' }}
+                    >
+                      {errors.review}
+                    </div>
+                  )}
+                </div>
                 <Button
                   type="primary"
-                  style={{ margin: '0 10px', fontSize: '0.85rem' }}
+                  className="review_button"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
-                  작성하기
+                  등록
                 </Button>
-                {errors.review && touched.review && (
-                  <div
-                    className="input-feedback"
-                    style={{ marginTop: '5px', marginLeft: '105px' }}
-                  >
-                    {errors.review}
-                  </div>
-                )}
-              </div>
+                <Button
+                  className="review_button"
+                  onClick={() => setReviewInput(false)}
+                >
+                  취소
+                </Button>
+              </ReviewContainer>
             );
           }}
         </Formik>
       )}
 
-      <ul>
-        {reviews &&
-          reviews.map((review) => (
+      {reviews ? (
+        <ul>
+          {reviews.map((review) => (
             <li
               key={review.id}
               style={{
@@ -175,7 +220,12 @@ function ProductReviews({ id, onClickReview }) {
               </div>
             </li>
           ))}
-      </ul>
+        </ul>
+      ) : (
+        <p style={{ margin: '60px 0', textAlign: 'center' }}>
+          작성된 리뷰가 없습니다.
+        </p>
+      )}
     </>
   );
 }
