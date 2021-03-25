@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchProduct } from '../../../_actions/product_actions';
-// import { products } from "../../../_datas/productsData.json";
-// import { Input } from "antd";
-import ProductsList from '../../utils/ProductsList';
+import ProductsList from '../../common/ProductsList';
 
 function SearchResultPage(props) {
   const dispatch = useDispatch();

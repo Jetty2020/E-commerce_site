@@ -11,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 
+import GlobalStyle from './components/styles/global';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -29,6 +30,7 @@ ReactDOM.render(
   >
     <BrowserRouter>
       <App />
+      <GlobalStyle />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

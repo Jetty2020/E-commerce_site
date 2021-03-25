@@ -7,9 +7,9 @@ import {
 } from '../../../_actions/product_actions';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ProductsPages from '../../utils/ProductsPages';
+import ProductsPages from '../../common/ProductsPages';
 import Numeral from 'numeral';
-import { Button, Checkbox, Select, Icon, Modal } from 'antd';
+import { Button, Checkbox, Select, Icon } from 'antd';
 
 const { Option } = Select;
 const Table = styled.div`
@@ -163,6 +163,8 @@ const AdminPage = () => {
 
   // 페이지 이동 시 브라우저 상단으로 이동
   useEffect(() => {
+    // currentProducts(products);
+    // console.log(products.length);
     window.scrollTo(0, 0);
   }, [currentPage]);
 
@@ -213,7 +215,7 @@ const AdminPage = () => {
         {products ? (
           products.map((product) => (
             <div key={product.id}>
-              <TableRow products={currentProducts(products)}>
+              <TableRow>
                 {/* 체크박스 */}
                 <Checkbox
                   style={{ width: '5%', textAlign: 'center' }}
@@ -357,12 +359,12 @@ const AdminPage = () => {
         </Button>
       </div>
 
-      {/* <ProductsPages
+      <ProductsPages
         productsPerPage={productsPerPage}
-        totalProducts={products.length}
+        totalProducts={48}
         currentPage={currentPage}
         paginate={setCurrentPage}
-      /> */}
+      />
     </div>
   );
 };
