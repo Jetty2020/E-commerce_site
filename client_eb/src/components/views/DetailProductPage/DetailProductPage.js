@@ -1,22 +1,32 @@
-import React, { useState } from "react";
-// import { products } from '../../../_datas/productsData.json';
-import { useDispatch } from "react-redux";
-import { productDetail } from "../../../_actions/product_actions";
-import { Row, Col } from "antd";
-import ProductImage from "./Sections/ProductImage";
-import ProductInfo from "./Sections/ProductInfo";
-import ProductDetails from "./Sections/ProductDetails";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { productDetail } from '../../../_actions/product_actions';
+import styled from 'styled-components';
+import ProductImage from './Sections/ProductImage';
+import ProductInfo from './Sections/ProductInfo';
+import ProductDetails from './Sections/ProductDetails';
+
+const DetailContainer = styled.div`
+  width: 80%;
+  margin: 3rem auto 20px;
+
+  @media only screen and (min-width: 1000px) {
+    width: 60%;
+    min-width: 1000px;
+  }
+`;
+const DetailInfo = styled.div`
+  display: unset;
+
+  @media only screen and (min-width: 1000px) {
+    display: flex;
+    justify-content: center;
+  }
+`;
 
 function DetailProductPage(props) {
   let productId = props.match.params.productId;
 
-  // const product = () => {
-  //   for (let product of products) {
-  //     if (product.id === productId) {
-  //       return product;
-  //     }
-  //   }
-  // };
   const dispatch = useDispatch();
   const [productDe, setProductDe] = useState();
   let dataToSubmit = {
@@ -37,29 +47,18 @@ function DetailProductPage(props) {
   }
 
   return (
-    <>
+    <DetailContainer>
       {productDe && (
-        <div
-          className="postPage"
-          style={{
-            width: "80%",
-            padding: "3rem 4rem",
-            margin: "0 auto",
-          }}
-        >
-          <Row gutter={[2, 2]}>
-            <Col lg={12} xs={24} style={{ width: "60%" }}>
-              <ProductImage product={productDe} />
-            </Col>
-            <Col lg={12} xs={24} style={{ maxWidth: "40%" }}>
-              <ProductInfo product={productDe} />
-            </Col>
-          </Row>
+        <>
+          <DetailInfo>
+            <ProductImage product={productDe} />
+            <ProductInfo product={productDe} />
+          </DetailInfo>
 
           <ProductDetails product={productDe} />
-        </div>
+        </>
       )}
-    </>
+    </DetailContainer>
   );
 }
 
