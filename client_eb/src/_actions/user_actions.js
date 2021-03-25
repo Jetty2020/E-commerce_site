@@ -11,11 +11,11 @@ import {
   FIND_ID,
   FIND_PASSWORD,
   ADD_WISHLIST,
+  LOAD_WISHLIST,
+  REMOVE_WISHLIST,
   ADD_CART,
   LOAD_CART,
   REMOVE_CART,
-  REMOVE_CART_ITEM_USER,
-  ON_SUCCESS_BUY_USER,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -145,7 +145,17 @@ export function loadWishlist() {
     .get(`${USER_SERVER}/loadWishList`)
     .then((response) => response.data);
   return {
-    type: LOAD_CART,
+    type: LOAD_WISHLIST,
+    payload: request,
+  };
+}
+
+export function removeWishlist(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeWishList/${id}`)
+    .then((response) => response.data);
+  return {
+    type: REMOVE_WISHLIST,
     payload: request,
   };
 }
@@ -177,37 +187,6 @@ export function removeCart(id) {
     .then((response) => response.data);
   return {
     type: REMOVE_CART,
-    payload: request,
-  };
-}
-
-export function removeCartItem(id) {
-  const request = axios
-    .get(`/api/users/removeFromCart?_id=${id}`)
-    .then((response) => {
-      response.data.cart.forEach((item) => {
-        response.data.cartDetail.forEach((k, i) => {
-          if (item.id === k._id) {
-            response.data.cartDetail[i].quantity = item.quantity;
-          }
-        });
-      });
-      return response.data;
-    });
-
-  return {
-    type: REMOVE_CART_ITEM_USER,
-    payload: request,
-  };
-}
-
-export function onSuccessBuy(data) {
-  const request = axios
-    .post(`${USER_SERVER}/successBuy`, data)
-    .then((response) => response.data);
-
-  return {
-    type: ON_SUCCESS_BUY_USER,
     payload: request,
   };
 }

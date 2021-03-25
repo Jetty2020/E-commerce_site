@@ -533,12 +533,11 @@ export const loadWishList = async (req, res) => {
 
 export const removeWishList = async (req, res) => {
   const {
-    body: { productId },
+    params: { productId },
     user: { id: producter },
   } = req;
-
+  console.log(productId, producter);
   try {
-    console.log(productId, producter);
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
@@ -551,6 +550,6 @@ export const removeWishList = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: '존재하지 않은 상품입니다.' });
+      .json({ success: false, message: 'Error occurred at removeWishList' });
   }
 };

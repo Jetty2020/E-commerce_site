@@ -26,7 +26,7 @@ const REMOVE_CART = "/removeCart/:productId";
 
 const ADD_WISHLIST = "/addWishList/:productId";
 const LOAD_WISHLIST = "/loadWishList";
-const REMOVE_WISHLIST = "/removeWishList";
+const REMOVE_WISHLIST = "/removeWishList/:productId";
 
 
 

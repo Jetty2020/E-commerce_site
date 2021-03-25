@@ -10,6 +10,8 @@ export const FIND_ID = "find_id";
 export const FIND_PASSWORD = "find_password";
 
 export const ADD_WISHLIST = "add_wishlist";
+export const LOAD_WISHLIST = "load_wishlist";
+export const REMOVE_WISHLIST = "remove_wishlist";
 
 export const ADD_CART = "add_cart";
 export const LOAD_CART = "load_cart";
