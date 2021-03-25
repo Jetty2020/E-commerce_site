@@ -15,6 +15,7 @@ export const loadQnA = async (req, res) => {
         }
       ],
       where: { productId },
+      order: [['id', 'DESC']],
     });
     if (QnAs) {
       return res.status(200).json({
@@ -57,6 +58,7 @@ export const addQnA = async (req, res) => {
     });
     return res.status(200).send({
       success: true,
+      QnA: createQnA.dataValues,
     });
   } catch (error) {
     return res
@@ -108,7 +110,6 @@ export const removeQnA = async (req, res) => {
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    console.log(findProduct.id, QnAId);
 
     await QnA.destroy({
       where: {

@@ -12,6 +12,7 @@ const Ul = styled.ul`
 const Li = styled.li`
   position: relative;
   width: 300px;
+  height: 500px;
   margin: 0 5px 60px;
   cursor: pointer;
 `;

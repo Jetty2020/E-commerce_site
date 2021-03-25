@@ -19,8 +19,8 @@ const EDIT_USER_EMAIL = "/editUserEmail";
 const DELETE_USER = "/deleteUser";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
-const ADD_CART = "/addCart";
-const ADD_WISHLIST = "/addWishList";
+const ADD_CART = "/addCart/:productId";
+const ADD_WISHLIST = "/addWishList/:productId";
 const REMOVE_CART = "/removeCart";
 const REMOVE_WISHLIST = "/removeWishList";
 

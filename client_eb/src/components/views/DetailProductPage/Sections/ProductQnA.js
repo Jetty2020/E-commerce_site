@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addQnA, loadQnA } from '../../../../_actions/QnA_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Icon, Input, Checkbox } from 'antd';
 
 const ProductQnA = ({ id }) => {
+  const { userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [QnAs, setQnAs] = useState();
   if (!QnAs) {
@@ -56,6 +57,13 @@ const ProductQnA = ({ id }) => {
               dispatch(addQnA(id, dataToSubmit))
                 .then((response) => {
                   if (response.payload.success) {
+                    setQnAs([{
+                      id: response.payload.QnA.id,
+                      text: values.QnA,
+                      date: response.payload.QnA.date,
+                      secret: values.secret,
+                      user: { userID: userData.userID },
+                    }].concat(QnAs));
                   } else {
                     console.log(response.payload);
                   }

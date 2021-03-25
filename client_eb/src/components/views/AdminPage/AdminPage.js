@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   loadProduct,
@@ -6,10 +6,10 @@ import {
   editProduct,
 } from '../../../_actions/product_actions';
 import { Link } from 'react-router-dom';
-import Numeral from 'numeral';
 import styled from 'styled-components';
+import ProductsPages from '../../utils/ProductsPages';
+import Numeral from 'numeral';
 import { Button, Checkbox, Select, Icon, Modal } from 'antd';
-import RecommendProduct from './Sections/RecommendProduct';
 
 const { Option } = Select;
 const Table = styled.div`
@@ -53,7 +53,7 @@ const AdminPage = () => {
       });
   }
 
-  // 상품 카테고리
+  //상품 카테고리
   const [category, setCategory] = useState('all');
   const onChangeCategory = (value) => {
     setCategory(value);
@@ -151,17 +151,20 @@ const AdminPage = () => {
     }
   };
 
-  //추천 상품 모달
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const showModal = () => {
-  //   setIsModalVisible(true);
-  // };
-  // const handleOk = () => {
-  //   setIsModalVisible(false);
-  // };
-  // const handleCancel = () => {
-  //   setIsModalVisible(false);
-  // };
+  // 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+  const lastPage = currentPage * productsPerPage;
+  const firstPage = lastPage - productsPerPage;
+
+  const currentProducts = (items) => {
+    return items.slice(firstPage, lastPage);
+  };
+
+  // 페이지 이동 시 브라우저 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
@@ -171,7 +174,7 @@ const AdminPage = () => {
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
-          margin: '1rem 0',
+          margin: '2rem 0 1rem',
         }}
       >
         <Select
@@ -207,10 +210,10 @@ const AdminPage = () => {
           <div style={{ width: '12.5%' }}>배송구분</div>
           <div style={{ width: '12.5%' }}>선택</div>
         </Table>
-        {products &&
+        {products ? (
           products.map((product) => (
             <div key={product.id}>
-              <TableRow>
+              <TableRow products={currentProducts(products)}>
                 {/* 체크박스 */}
                 <Checkbox
                   style={{ width: '5%', textAlign: 'center' }}
@@ -317,14 +320,25 @@ const AdminPage = () => {
                 </div>
               </TableRow>
             </div>
-          ))}
+          ))
+        ) : (
+          <p
+            style={{
+              padding: '45px 0 30px',
+              textAlign: 'center',
+              borderTop: '1px solid #adb5bd',
+            }}
+          >
+            등록된 상품이 없습니다.
+          </p>
+        )}
       </div>
 
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          margin: '20px 0',
+          margin: '20px 0 60px',
         }}
       >
         <div>
@@ -332,16 +346,7 @@ const AdminPage = () => {
             <Link to="/admin/upload">상품 등록</Link>
           </Button>
           <Button style={{ marginLeft: '5px' }}>추천상품 등록</Button>
-          {/* <Modal
-            title="추천상품"
-            visible={isModalVisible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            okText="완료"
-            cancelText="취소"
-          >
-            <RecommendProduct products={products} />
-          </Modal> */}
+          <Button style={{ marginLeft: '5px' }}>추천상품 삭제</Button>
         </div>
         <Button
           type="primary"
@@ -351,6 +356,13 @@ const AdminPage = () => {
           선택상품 삭제
         </Button>
       </div>
+
+      {/* <ProductsPages
+        productsPerPage={productsPerPage}
+        totalProducts={products.length}
+        currentPage={currentPage}
+        paginate={setCurrentPage}
+      /> */}
     </div>
   );
 };
