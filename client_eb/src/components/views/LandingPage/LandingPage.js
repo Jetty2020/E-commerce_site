@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
-import ProductsList from '../../utils/ProductsList';
+import ProductsList from '../../common/ProductsList';
 import VisualSlider from './Sections/VisualSlider';
-import './LandingPage.css';
 import { useDispatch } from 'react-redux';
 import { loadProduct } from '../../../_actions/product_actions';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadProduct } from '../../../../_actions/product_actions';
-import ProductsList from '../../../utils/ProductsList';
-import ProductsPages from '../../../utils/ProductsPages';
+import ProductsList from '../../../common/ProductsList';
+import ProductsPages from '../../../common/ProductsPages';
 
 function DiscountPage() {
   const dispatch = useDispatch();
