@@ -48,7 +48,14 @@ function ProductsPages({
 }) {
   // page number
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
+  let i = 1, maxPage = Math.ceil(totalProducts / productsPerPage);
+  if (currentPage > 5) {
+    i = currentPage - 4;
+  }
+  if (maxPage > currentPage + 4) {
+    maxPage = currentPage + 4;
+  }
+  for (i; i <= maxPage; i++) {
     pageNumbers.push(i);
   }
 
