@@ -95,7 +95,7 @@ function ProductsPages({
             <PageButton onClick={() => paginate(currentPage + 1)}>
               <Icon type="right" />
             </PageButton>
-            <PageButton onClick={() => paginate(pageNumbers.length)}>
+            <PageButton onClick={() => paginate(Math.ceil(totalProducts / productsPerPage))}>
               <Icon type="double-right" />
             </PageButton>
           </>
