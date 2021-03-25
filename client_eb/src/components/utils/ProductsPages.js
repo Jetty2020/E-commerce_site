@@ -19,7 +19,7 @@ const PageLi = styled.li`
   }
 `;
 const PageNumber = styled.div`
-  padding: 0 7px 2px;
+  padding: 0 7px 1px;
 
   &.active {
     border: 1px solid #308ade;
@@ -33,6 +33,11 @@ const PageButton = styled.button`
   margin: 0 4px;
   padding: 3px 7px 0;
   cursor: pointer;
+
+  &.inactive {
+    color: #ababab;
+    cursor: default;
+  }
 `;
 
 function ProductsPages({
@@ -51,13 +56,23 @@ function ProductsPages({
     <>
       <PageUl>
         {currentPage > 1 ? (
-          <PageButton onClick={() => paginate(currentPage - 1)}>
-            <Icon type="left" />
-          </PageButton>
+          <>
+            <PageButton onClick={() => paginate(1)}>
+              <Icon type="double-left" />
+            </PageButton>
+            <PageButton onClick={() => paginate(currentPage - 1)}>
+              <Icon type="left" />
+            </PageButton>
+          </>
         ) : (
-          <PageButton style={{ color: '#ababab', cursor: 'default' }}>
-            <Icon type="left" />
-          </PageButton>
+          <>
+            <PageButton className="inactive">
+              <Icon type="double-left" />
+            </PageButton>
+            <PageButton className="inactive">
+              <Icon type="left" />
+            </PageButton>
+          </>
         )}
         {pageNumbers.map((number) => (
           <PageLi key={number} onClick={() => paginate(number)}>
@@ -69,13 +84,23 @@ function ProductsPages({
           </PageLi>
         ))}
         {currentPage < pageNumbers.length ? (
-          <PageButton onClick={() => paginate(currentPage + 1)}>
-            <Icon type="right" />
-          </PageButton>
+          <>
+            <PageButton onClick={() => paginate(currentPage + 1)}>
+              <Icon type="right" />
+            </PageButton>
+            <PageButton onClick={() => paginate(pageNumbers.length)}>
+              <Icon type="double-right" />
+            </PageButton>
+          </>
         ) : (
-          <PageButton style={{ color: '#ababab', cursor: 'default' }}>
-            <Icon type="right" />
-          </PageButton>
+          <>
+            <PageButton className="inactive">
+              <Icon type="right" />
+            </PageButton>
+            <PageButton className="inactive">
+              <Icon type="double-right" />
+            </PageButton>
+          </>
         )}
       </PageUl>
     </>

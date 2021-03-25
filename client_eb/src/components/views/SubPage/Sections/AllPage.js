@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadProduct } from '../../../../_actions/product_actions';
 import ProductsList from '../../../utils/ProductsList';
@@ -21,7 +21,7 @@ function AllPage() {
       });
   }
 
-  // pagination
+  // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const lastPage = currentPage * productsPerPage;
@@ -30,6 +30,11 @@ function AllPage() {
   const currentProducts = (items) => {
     return items.slice(firstPage, lastPage);
   };
+
+  // 페이지 이동 시 브라우저 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   return (
     <div>
