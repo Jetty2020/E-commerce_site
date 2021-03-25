@@ -11,10 +11,10 @@ import {
   DELETE_USER,
   ADD_WISHLIST,
   ADD_CART,
-  GET_CART_ITEMS_USER,
+  LOAD_CART,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
-} from "../_actions/types";
+} from '../_actions/types';
 
 const init = {
   userData: null,
@@ -46,13 +46,9 @@ export default function userReducer(state = init, action) {
       return { ...state, addWishlist: action.payload };
     case ADD_CART:
       return { ...state, addCart: action.payload };
+    case LOAD_CART:
+      return { ...state, loadCart: action.payload };
 
-
-    case GET_CART_ITEMS_USER:
-      return {
-        ...state,
-        cartDetail: action.payload,
-      };
     case REMOVE_CART_ITEM_USER:
       return {
         ...state,

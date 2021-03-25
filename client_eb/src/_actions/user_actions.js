@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -12,11 +12,11 @@ import {
   FIND_PASSWORD,
   ADD_WISHLIST,
   ADD_CART,
-  GET_CART_ITEMS_USER,
+  LOAD_CART,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
-} from "./types";
-import { USER_SERVER } from "../components/Config.js";
+} from './types';
+import { USER_SERVER } from '../components/Config.js';
 
 export function registerUser(dataToSubmit) {
   const request = axios
@@ -150,26 +150,12 @@ export function addCart(id) {
   };
 }
 
-export function getCartItems(cartItems, userCart) {
+export function loadCart() {
   const request = axios
-    .get(`/api/product/products_by_id?id=${cartItems}&type=array`)
-    .then((response) => {
-      //Make CartDetail inside Redux Store
-      // We need to add quantity data to Product Information that come from Product Collection.
-
-      userCart.forEach((cartItem) => {
-        response.data.forEach((productDetail, i) => {
-          if (cartItem.id === productDetail._id) {
-            response.data[i].quantity = cartItem.quantity;
-          }
-        });
-      });
-
-      return response.data;
-    });
-
+    .get(`${USER_SERVER}/loadCart`)
+    .then((response) => response.data);
   return {
-    type: GET_CART_ITEMS_USER,
+    type: LOAD_CART,
     payload: request,
   };
 }

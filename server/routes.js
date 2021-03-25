@@ -20,6 +20,7 @@ const DELETE_USER = "/deleteUser";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 const ADD_CART = "/addCart/:productId";
+const LOAD_CART = "/loadCart";
 const ADD_WISHLIST = "/addWishList/:productId";
 const REMOVE_CART = "/removeCart";
 const REMOVE_WISHLIST = "/removeWishList";
@@ -86,6 +87,7 @@ const routes = {
   userDetail: USER_DETAIL,
 
   addCart: ADD_CART,
+  loadCart: LOAD_CART,
   removeCart: REMOVE_CART,
   addWishList: ADD_WISHLIST,
   removeWishList: REMOVE_WISHLIST,

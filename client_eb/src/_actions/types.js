@@ -8,8 +8,11 @@ export const EDIT_USER_EMAIL = "edit_user_email";
 export const DELETE_USER = "delete_user";
 export const FIND_ID = "find_id";
 export const FIND_PASSWORD = "find_password";
+
 export const ADD_WISHLIST = "add_wishlist";
+
 export const ADD_CART = "add_cart";
+export const LOAD_CART = "load_cart";
 
 
 export const LOAD_PRODUCT = "load_product";
@@ -26,6 +29,5 @@ export const ADD_REVIEW = "add_review";
 export const LOAD_QNA = "load_QnA";
 export const ADD_QNA = "add_QnA";
 
-export const GET_CART_ITEMS_USER = "get_cart_items_user";
 export const REMOVE_CART_ITEM_USER = "remove_cart_item_user";
 export const ON_SUCCESS_BUY_USER = "on_success_buy_user";

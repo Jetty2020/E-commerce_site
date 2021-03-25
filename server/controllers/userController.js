@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
-import moment from "moment";
-import { Product, User, Sequelize as Op } from "../models";
-import { mailSender, generateRandom } from "../util";
-import dotenv from "dotenv";
+import jwt from 'jsonwebtoken';
+import moment from 'moment';
+import { Product, User, Sequelize as Op } from '../models';
+import { mailSender, generateRandom } from '../util';
+import dotenv from 'dotenv';
 dotenv.config();
 
 export const authSuccess = async (req, res) => {
@@ -19,11 +19,11 @@ export const authSuccess = async (req, res) => {
       password,
     });
   } catch (err) {
-    console.log("authSuccess");
+    console.log('authSuccess');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at authSuccess",
+      message: 'Error occurred at authSuccess',
     });
   }
 };
@@ -44,7 +44,7 @@ export const register = async (req, res) => {
   } = req;
   try {
     const user = await User.findOne({
-      attributes: ["id"],
+      attributes: ['id'],
       where: {
         userID,
       },
@@ -52,8 +52,8 @@ export const register = async (req, res) => {
     if (!user) {
       //이매일 중복 확인
       const hash = await generateRandom(111111, 999999);
-      const subject = "회원가입을 위한 인증번호를 입력해주세요.";
-      const text = "오른쪽 숫자 6자리를 입력해주세요 : " + hash;
+      const subject = '회원가입을 위한 인증번호를 입력해주세요.';
+      const text = '오른쪽 숫자 6자리를 입력해주세요 : ' + hash;
       User.create({
         userID,
         name,
@@ -68,15 +68,15 @@ export const register = async (req, res) => {
     } else {
       return res.status(200).json({
         success: false,
-        message: "The userID is already exsisted.",
+        message: 'The userID is already exsisted.',
       });
     }
   } catch (err) {
-    console.log("register");
+    console.log('register');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at register",
+      message: 'Error occurred at register',
     });
   }
 };
@@ -87,7 +87,7 @@ export const login = async (req, res) => {
   } = req;
   try {
     const userState = await User.findOne({
-      attributes: ["id", "userID", "userEmail", "userPassword"],
+      attributes: ['id', 'userID', 'userEmail', 'userPassword'],
       where: {
         userID,
       },
@@ -95,17 +95,17 @@ export const login = async (req, res) => {
     if (!userState) {
       return res.status(200).json({
         success: false,
-        message: "Auth failed, email is not found",
+        message: 'Auth failed, email is not found',
       });
     } else {
       const { dataValues: user } = userState;
       if (user.userPassword !== password) {
         return res
           .status(200)
-          .json({ success: false, message: "Wrong password" });
+          .json({ success: false, message: 'Wrong password' });
       } else {
         var token = jwt.sign(user.id, process.env.SALT).substr(3, 20);
-        var tokenExp = moment().add(0.5, "hour").valueOf();
+        var tokenExp = moment().add(0.5, 'hour').valueOf();
         User.update(
           {
             token,
@@ -115,16 +115,16 @@ export const login = async (req, res) => {
             where: { id: user.id },
           }
         );
-        res.cookie("w_authExp", tokenExp);
+        res.cookie('w_authExp', tokenExp);
         if (!user.emailChecked) {
-          return res.status(200).cookie("w_auth", token).json({
+          return res.status(200).cookie('w_auth', token).json({
             success: true,
             emailChecked: false,
             userId: user.id,
-            message: "Email unchecked account",
+            message: 'Email unchecked account',
           });
         } else {
-          return res.cookie("w_auth", token).status(200).json({
+          return res.cookie('w_auth', token).status(200).json({
             success: true,
             emailChecked: true,
             userId: user.id,
@@ -133,11 +133,11 @@ export const login = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log("login");
+    console.log('login');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at login",
+      message: 'Error occurred at login',
     });
   }
 };
@@ -152,11 +152,11 @@ export const editPassword = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log("editPassword");
+    console.log('editPassword');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at editPassword",
+      message: 'Error occurred at editPassword',
     });
   }
 };
@@ -167,19 +167,19 @@ export const editUserSendMail = async (req, res) => {
   } = req;
   try {
     const hash = await generateRandom(111111, 999999);
-    const subject = "이메일 변경을 위한 인증번호입니다";
-    const text = "오른쪽 숫자 6자리를 입력해주세요 : " + hash;
+    const subject = '이메일 변경을 위한 인증번호입니다';
+    const text = '오른쪽 숫자 6자리를 입력해주세요 : ' + hash;
     mailSender.sendGmail(userEmail, subject, text, hash);
     User.update({ emailHash: hash }, { where: { userID } });
     return res.status(200).json({
       success: true,
     });
   } catch (err) {
-    console.log("editUserSendMail");
+    console.log('editUserSendMail');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at editUserSendMail",
+      message: 'Error occurred at editUserSendMail',
     });
   }
 };
@@ -190,7 +190,7 @@ export const editUserEmail = async (req, res) => {
   } = req;
   try {
     const { dataValues: user } = await User.findOne({
-      attributes: ["emailHash"],
+      attributes: ['emailHash'],
       where: {
         userID,
       },
@@ -212,15 +212,15 @@ export const editUserEmail = async (req, res) => {
     } else {
       return res.status(200).json({
         success: false,
-        message: "Wrong emailHash!",
+        message: 'Wrong emailHash!',
       });
     }
   } catch (err) {
-    console.log("editUserEmail");
+    console.log('editUserEmail');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at editUserEmail",
+      message: 'Error occurred at editUserEmail',
     });
   }
 };
@@ -232,7 +232,7 @@ export const checkEmail = async (req, res) => {
   } = req;
   try {
     const { dataValues: user } = await User.findOne({
-      attributes: ["userID", "userEmail", "userPassword", "emailHash"],
+      attributes: ['userID', 'userEmail', 'userPassword', 'emailHash'],
       where: {
         id,
       },
@@ -253,16 +253,16 @@ export const checkEmail = async (req, res) => {
     } else {
       return res.status(200).json({
         success: false,
-        message: "Wrong emailHash!",
+        message: 'Wrong emailHash!',
       });
     }
   } catch (err) {
-    console.log("checkEmail");
+    console.log('checkEmail');
     console.log(err);
     return res
       .status(400)
       .send(err)
-      .json({ success: false, message: "Error occurred at checkEmail" });
+      .json({ success: false, message: 'Error occurred at checkEmail' });
   }
 };
 
@@ -278,11 +278,11 @@ export const deleteUser = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log("deleteUser");
+    console.log('deleteUser');
     console.log(err);
     return res.status(400).send(err).json({
       success: false,
-      message: "Error occurred at deleteUser",
+      message: 'Error occurred at deleteUser',
     });
   }
 };
@@ -291,27 +291,29 @@ export const findID = async (req, res) => {
   const {
     body: { email },
   } = req;
-  const subject = "요청하신 ID 입니다";
+  const subject = '요청하신 ID 입니다';
   try {
     const { dataValues: user } = await User.findOne({
-      attributes: ["userEmail", "userID"],
+      attributes: ['userEmail', 'userID'],
       where: {
         userEmail: email,
       },
     });
-    const userID = user.userID.slice(0, user.userID.length - 3) + "***";
-    const text = "회원님의 ID 입니다 : " + userID;
+    const userID = user.userID.slice(0, user.userID.length - 3) + '***';
+    const text = '회원님의 ID 입니다 : ' + userID;
     mailSender.sendGmail(email, subject, text);
     return res.status(200).json({
       success: true,
     });
   } catch (err) {
-    console.log("findID");
+    console.log('findID');
     console.log(err);
-    return res
-      // .status(400)
-      // .send(err)
-      .json({ success: false, message: "Error occurred at findID" });
+    return (
+      res
+        // .status(400)
+        // .send(err)
+        .json({ success: false, message: 'Error occurred at findID' })
+    );
   }
 };
 
@@ -321,19 +323,21 @@ export const findPassword = async (req, res) => {
   } = req;
   try {
     const user = await User.findOne({
-      attributes: ["userID"],
+      attributes: ['userID'],
       where: {
         userEmail: email,
       },
     });
     console.log(user);
     if (user.dataValues.userID !== userID) {
-      return res
-      .json({ success: 2, message: "ID와 Email이 매칭되지 않았습니다." });
+      return res.json({
+        success: 2,
+        message: 'ID와 Email이 매칭되지 않았습니다.',
+      });
     }
-    const subject = "새 비밀번호입니다";
+    const subject = '새 비밀번호입니다';
     const newPassword = await generateRandom(111111, 999999);
-    const text = "새로운 비밀번호 : " + newPassword;
+    const text = '새로운 비밀번호 : ' + newPassword;
     User.update(
       {
         userPassword: newPassword,
@@ -347,12 +351,14 @@ export const findPassword = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log("findPassword");
+    console.log('findPassword');
     console.log(err);
-    return res
-      // .status(400)
-      // .send(err)
-      .json({ success: false, message: "Error occurred at findPassword" });
+    return (
+      res
+        // .status(400)
+        // .send(err)
+        .json({ success: false, message: 'Error occurred at findPassword' })
+    );
   }
 };
 
@@ -374,12 +380,12 @@ export const logout = (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log("logout");
+    console.log('logout');
     console.log(err);
     return res
       .status(400)
       .send(err)
-      .json({ success: false, message: "Error occurred at logout" });
+      .json({ success: false, message: 'Error occurred at logout' });
   }
 };
 
@@ -401,9 +407,52 @@ export const addCart = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: "존재하지 않은 상품입니다." });
+      .json({ success: false, message: '존재하지 않은 상품입니다.' });
   }
 };
+
+export const loadCart = async (req, res) => {
+  const {
+    user: { id },
+  } = req;
+  try {
+    const findUser = await User.findOne({
+      where: parseInt(id, 10),
+      include: [
+        {
+          model: Product,
+          as: 'Cart',
+          attributes: ['id', 'productName', 'mainImg', 'price', 'rate'],
+        },
+      ],
+    });
+    // const findCart = await findUser.getCart();
+    // findProduct.addUserCart(producter);
+    let cartArray = [];
+    const CartFunc = await findUser.dataValues.Cart.map((cartCompo) => {
+      cartArray.push({
+        id: cartCompo.dataValues.id,
+        productName: cartCompo.dataValues.productName,
+        mainImg: cartCompo.dataValues.mainImg,
+        price: cartCompo.dataValues.price,
+        rate: cartCompo.dataValues.rate,
+        quantity: 1,
+      })
+    });
+    // console.log(findUser.dataValues.Cart);
+    console.log(cartArray);
+    return res.status(200).send({
+      success: true,
+      cart: cartArray
+    });
+  } catch (error) {
+    return res
+      .status(401)
+      .send(error)
+      .json({ success: false, message: 'Error occurred at loadCart' });
+  }
+};
+
 export const removeCart = async (req, res) => {
   const {
     body: { productId },
@@ -424,7 +473,7 @@ export const removeCart = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: "존재하지 않은 상품입니다." });
+      .json({ success: false, message: '존재하지 않은 상품입니다.' });
   }
 };
 
@@ -438,8 +487,7 @@ export const addWishList = async (req, res) => {
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    const findWishList = await 
-    findProduct.addWishList(producter);
+    const findWishList = await findProduct.addWishList(producter);
     return res.status(200).send({
       success: true,
     });
@@ -447,7 +495,7 @@ export const addWishList = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: "존재하지 않은 상품입니다." });
+      .json({ success: false, message: '존재하지 않은 상품입니다.' });
   }
 };
 
@@ -471,6 +519,6 @@ export const removeWishList = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: "존재하지 않은 상품입니다." });
+      .json({ success: false, message: '존재하지 않은 상품입니다.' });
   }
 };
