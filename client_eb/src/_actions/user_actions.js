@@ -13,6 +13,7 @@ import {
   ADD_WISHLIST,
   ADD_CART,
   LOAD_CART,
+  REMOVE_CART,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
 } from './types';
@@ -156,6 +157,16 @@ export function loadCart() {
     .then((response) => response.data);
   return {
     type: LOAD_CART,
+    payload: request,
+  };
+}
+
+export function removeCart(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeCart/${id}`)
+    .then((response) => response.data);
+  return {
+    type: REMOVE_CART,
     payload: request,
   };
 }

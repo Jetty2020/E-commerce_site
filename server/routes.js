@@ -22,7 +22,7 @@ const EDIT_USER = "/edit";
 const ADD_CART = "/addCart/:productId";
 const LOAD_CART = "/loadCart";
 const ADD_WISHLIST = "/addWishList/:productId";
-const REMOVE_CART = "/removeCart";
+const REMOVE_CART = "/removeCart/:productId";
 const REMOVE_WISHLIST = "/removeWishList";
 
 

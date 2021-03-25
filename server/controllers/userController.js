@@ -439,8 +439,6 @@ export const loadCart = async (req, res) => {
         quantity: 1,
       })
     });
-    // console.log(findUser.dataValues.Cart);
-    console.log(cartArray);
     return res.status(200).send({
       success: true,
       cart: cartArray
@@ -455,12 +453,11 @@ export const loadCart = async (req, res) => {
 
 export const removeCart = async (req, res) => {
   const {
-    body: { productId },
+    params: { productId },
     user: { id: producter },
   } = req;
 
   try {
-    console.log(productId, producter);
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
@@ -473,7 +470,7 @@ export const removeCart = async (req, res) => {
     return res
       .status(401)
       .send(error)
-      .json({ success: false, message: '존재하지 않은 상품입니다.' });
+      .json({ success: false, message: 'Error occurred at removeCart' });
   }
 };
 

@@ -13,6 +13,7 @@ export const ADD_WISHLIST = "add_wishlist";
 
 export const ADD_CART = "add_cart";
 export const LOAD_CART = "load_cart";
+export const REMOVE_CART = "remove_cart";
 
 
 export const LOAD_PRODUCT = "load_product";

@@ -12,6 +12,7 @@ import {
   ADD_WISHLIST,
   ADD_CART,
   LOAD_CART,
+  REMOVE_CART,
   REMOVE_CART_ITEM_USER,
   ON_SUCCESS_BUY_USER,
 } from '../_actions/types';
@@ -48,6 +49,8 @@ export default function userReducer(state = init, action) {
       return { ...state, addCart: action.payload };
     case LOAD_CART:
       return { ...state, loadCart: action.payload };
+    case REMOVE_CART:
+      return { ...state, removeCart: action.payload };
 
     case REMOVE_CART_ITEM_USER:
       return {

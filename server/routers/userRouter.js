@@ -66,8 +66,8 @@ userRouter.get(
 
 userRouter.get(routes.addCart, auth, addCart);
 userRouter.get(routes.loadCart, auth, loadCart);
-userRouter.delete(routes.removeCart, auth, removeCart);
+userRouter.get(routes.removeCart, auth, removeCart);
 userRouter.get(routes.addWishList, auth, addWishList);
-userRouter.delete(routes.removeWishList, auth, removeWishList);
+userRouter.get(routes.removeWishList, auth, removeWishList);
 
 export default userRouter;

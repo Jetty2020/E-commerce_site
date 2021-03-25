@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loadCart } from '../../../_actions/user_actions';
+import { loadCart, removeCart } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
 // import { products } from '../../../_datas/productsData.json';
 import styled from 'styled-components';
@@ -86,6 +86,19 @@ const MyCartPage = () => {
 
   //선택상품 삭제
   const onRemoveSelect = useCallback(() => {
+    checkedID.map((id) => {
+      // console.log(id);
+      dispatch(removeCart(id))
+        .then((response) => {
+          if (response.payload.success) {
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    });
     setMyCart(myCart.filter((product) => !checkedID.includes(product.id)));
   }, [myCart]);
 
