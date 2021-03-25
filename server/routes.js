@@ -19,10 +19,14 @@ const EDIT_USER_EMAIL = "/editUserEmail";
 const DELETE_USER = "/deleteUser";
 const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
+
 const ADD_CART = "/addCart/:productId";
+const LOAD_CART = "/loadCart";
+const REMOVE_CART = "/removeCart/:productId";
+
 const ADD_WISHLIST = "/addWishList/:productId";
-const REMOVE_CART = "/removeCart";
-const REMOVE_WISHLIST = "/removeWishList";
+const LOAD_WISHLIST = "/loadWishList";
+const REMOVE_WISHLIST = "/removeWishList/:productId";
 
 
 
@@ -40,8 +44,6 @@ const REMOVE_QNA = "/removeQnA/:id";
 
 const HOME = "/";
 const LOAD_PRODUCT = "/load/:sector";
-const MAKE_EVENT_PRODUCT = "/makeEvent";
-const REMOVE_EVENT_PRODUCT = "/removeEvent";
 const UPLOAD_PRODUCT = "/upload";
 const EDIT_PRODUCT = "/edit";
 const SEARCH_PRODUCT = "/search";
@@ -86,16 +88,17 @@ const routes = {
   userDetail: USER_DETAIL,
 
   addCart: ADD_CART,
+  loadCart: LOAD_CART,
   removeCart: REMOVE_CART,
+
   addWishList: ADD_WISHLIST,
+  loadWishList: LOAD_WISHLIST,
   removeWishList: REMOVE_WISHLIST,
 
   // PRODUCTS
 
   products: PRODUCTS,
   loadProduct: LOAD_PRODUCT,
-  makeEventProduct: MAKE_EVENT_PRODUCT,
-  removeEventProduct: REMOVE_EVENT_PRODUCT,
   searchProduct: SEARCH_PRODUCT,
   productDetail: PRODUCT_DETAIL,
   uploadProduct: UPLOAD_PRODUCT,

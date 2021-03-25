@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -11,12 +11,13 @@ import {
   FIND_ID,
   FIND_PASSWORD,
   ADD_WISHLIST,
+  LOAD_WISHLIST,
+  REMOVE_WISHLIST,
   ADD_CART,
-  GET_CART_ITEMS_USER,
-  REMOVE_CART_ITEM_USER,
-  ON_SUCCESS_BUY_USER,
-} from "./types";
-import { USER_SERVER } from "../components/Config.js";
+  LOAD_CART,
+  REMOVE_CART,
+} from './types';
+import { USER_SERVER } from '../components/Config.js';
 
 export function registerUser(dataToSubmit) {
   const request = axios
@@ -139,6 +140,26 @@ export function addWishlist(id) {
   };
 }
 
+export function loadWishlist() {
+  const request = axios
+    .get(`${USER_SERVER}/loadWishList`)
+    .then((response) => response.data);
+  return {
+    type: LOAD_WISHLIST,
+    payload: request,
+  };
+}
+
+export function removeWishlist(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeWishList/${id}`)
+    .then((response) => response.data);
+  return {
+    type: REMOVE_WISHLIST,
+    payload: request,
+  };
+}
+
 export function addCart(id) {
   const request = axios
     .get(`${USER_SERVER}/addCart/${id}`)
@@ -150,57 +171,22 @@ export function addCart(id) {
   };
 }
 
-export function getCartItems(cartItems, userCart) {
+export function loadCart() {
   const request = axios
-    .get(`/api/product/products_by_id?id=${cartItems}&type=array`)
-    .then((response) => {
-      //Make CartDetail inside Redux Store
-      // We need to add quantity data to Product Information that come from Product Collection.
-
-      userCart.forEach((cartItem) => {
-        response.data.forEach((productDetail, i) => {
-          if (cartItem.id === productDetail._id) {
-            response.data[i].quantity = cartItem.quantity;
-          }
-        });
-      });
-
-      return response.data;
-    });
-
-  return {
-    type: GET_CART_ITEMS_USER,
-    payload: request,
-  };
-}
-
-export function removeCartItem(id) {
-  const request = axios
-    .get(`/api/users/removeFromCart?_id=${id}`)
-    .then((response) => {
-      response.data.cart.forEach((item) => {
-        response.data.cartDetail.forEach((k, i) => {
-          if (item.id === k._id) {
-            response.data.cartDetail[i].quantity = item.quantity;
-          }
-        });
-      });
-      return response.data;
-    });
-
-  return {
-    type: REMOVE_CART_ITEM_USER,
-    payload: request,
-  };
-}
-
-export function onSuccessBuy(data) {
-  const request = axios
-    .post(`${USER_SERVER}/successBuy`, data)
+    .get(`${USER_SERVER}/loadCart`)
     .then((response) => response.data);
-
   return {
-    type: ON_SUCCESS_BUY_USER,
+    type: LOAD_CART,
+    payload: request,
+  };
+}
+
+export function removeCart(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeCart/${id}`)
+    .then((response) => response.data);
+  return {
+    type: REMOVE_CART,
     payload: request,
   };
 }

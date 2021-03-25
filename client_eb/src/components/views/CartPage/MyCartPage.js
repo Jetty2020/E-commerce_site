@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadCart, removeCart } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
-import { products } from '../../../_datas/productsData.json';
 import styled from 'styled-components';
 import { Button, Checkbox, Icon } from 'antd';
 import Numeral from 'numeral';
@@ -28,11 +29,28 @@ const TableRow = styled.div`
 `;
 
 const MyCartPage = () => {
-  const CART = products.filter((product) => product.cart === true);
-  const [myCart, setMyCart] = useState(CART);
+  const dispatch = useDispatch();
+  // const CART = products.filter((product) => product.cart === true);
+  const [myCart, setMyCart] = useState();
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
-
+  if (!myCart) {
+    dispatch(loadCart())
+      .then((response) => {
+        if (response.payload.success) {
+          if (response.payload.cart) {
+            setMyCart(response.payload.cart);
+          } else {
+            setMyCart([]);
+          }
+        } else {
+          console.log(response.payload);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
   //상품 선택
   const onCheckAll = useCallback(() => {
     setChecked(!checked);
@@ -49,8 +67,8 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, checked: !product.checked }
-            : product,
-        ),
+            : product
+        )
       );
       let index = myCart.findIndex((product) => product.id === id);
       if (!myCart[index].checked) {
@@ -59,14 +77,27 @@ const MyCartPage = () => {
         checkedID.splice(checkedID.indexOf(id), 1);
       }
     },
-    [myCart],
+    [myCart]
   );
 
-  console.log(myCart.reduce((acc, cur) => acc.quantity + cur.quantity));
-  console.log(myCart.map((product) => product.quantity));
+  // console.log(myCart.reduce((acc, cur) => acc.quantity + cur.quantity));
+  // console.log(myCart.map((product) => product.quantity));
 
   //선택상품 삭제
   const onRemoveSelect = useCallback(() => {
+    checkedID.map((id) => {
+      // console.log(id);
+      dispatch(removeCart(id))
+        .then((response) => {
+          if (response.payload.success) {
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    });
     setMyCart(myCart.filter((product) => !checkedID.includes(product.id)));
   }, [myCart]);
 
@@ -80,11 +111,11 @@ const MyCartPage = () => {
                 ...product,
                 quantity: e.currentTarget.value,
               }
-            : product,
-        ),
+            : product
+        )
       );
     },
-    [myCart],
+    [myCart]
   );
   const onIncrease = useCallback(
     (id) => {
@@ -92,11 +123,11 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, quantity: product.quantity + 1 }
-            : product,
-        ),
+            : product
+        )
       );
     },
-    [myCart],
+    [myCart]
   );
   const onDecrease = useCallback(
     (id) => {
@@ -104,11 +135,11 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, quantity: product.quantity - 1 }
-            : product,
-        ),
+            : product
+        )
       );
     },
-    [myCart],
+    [myCart]
   );
 
   return (
@@ -132,7 +163,7 @@ const MyCartPage = () => {
           <div style={{ width: '15%' }}>주문금액</div>
           <div style={{ width: '15%' }}>배송구분</div>
         </Table>
-        {myCart.length > 0 ? (
+        {myCart && myCart.length > 0 ? (
           myCart.map((product) => (
             <TableRow key={product.id}>
               {/* 체크박스 */}
@@ -208,7 +239,7 @@ const MyCartPage = () => {
                         {product.rate}%{' '}
                       </span>
                       {Numeral(
-                        product.price * (1 - product.rate * 0.01),
+                        product.price * (1 - product.rate * 0.01)
                       ).format(0, 0)}
                       원
                     </p>
@@ -296,15 +327,16 @@ const MyCartPage = () => {
           {/* 총 주문금액 */}
           <div style={{ width: '32.6%' }}>
             <p>
-              {myCart.length > 0
+              {myCart && myCart.length > 0
                 ? Numeral(
                     myCart.reduce(
                       (acc, cur) =>
                         acc.price * acc.quantity +
-                        cur.price * (1 - cur.rate * 0.01) * cur.quantity,
-                    ),
+                        cur.price * (1 - cur.rate * 0.01) * cur.quantity
+                    )
                   ).format(0, 0)
                 : '0'}
+              원
             </p>
             <p
               style={{
@@ -313,9 +345,9 @@ const MyCartPage = () => {
                 color: '#adb5bd',
               }}
             >
-              {myCart.length > 0
+              {myCart && myCart.length > 0
                 ? Numeral(
-                    myCart.reduce((acc, cur) => acc.quantity + cur.quantity),
+                    myCart.reduce((acc, cur) => acc.quantity + cur.quantity)
                   ).format(0, 0)
                 : '0'}
               개
@@ -324,7 +356,7 @@ const MyCartPage = () => {
           <Icon type="plus" style={{ width: '1%' }} />
           {/* 총 배송비 */}
           <div style={{ width: '32.6%' }}>
-            {myCart.length > 0 ? '2,500원' : '0원'}
+            {myCart && myCart.length > 0 ? '2,500원' : '0원'}
           </div>
           <Icon
             type="pause"
@@ -332,14 +364,14 @@ const MyCartPage = () => {
           />
           {/* 총 결제금액 */}
           <div style={{ width: '32.6%' }}>
-            {myCart.length > 0
+            {myCart && myCart.length > 0
               ? Numeral(
                   myCart.reduce(
                     (acc, cur) =>
                       acc.price * acc.quantity +
                       cur.price * (1 - cur.rate * 0.01) * cur.quantity +
-                      2500,
-                  ),
+                      2500
+                  )
                 ).format(0, 0)
               : '0'}
             원

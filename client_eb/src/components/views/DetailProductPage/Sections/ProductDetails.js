@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
-import './ProductDetails.css';
+import styled from 'styled-components';
 import ProductReviews from './ProductReviews';
 import ProductQnA from './ProductQnA';
+
+const TabsBox = styled.div`
+  margin-top: 100px;
+  padding-top: 3px;
+`;
+const TabsList = styled.ul`
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
+`;
+const Tab = styled.li`
+  width: 100%;
+  padding-bottom: 15px;
+  text-align: center;
+  cursor: pointer;
+  color: ${(props) => props.color};
+  border-bottom: ${(props) => props.borderBottom};
+`;
 
 function ProductDetails(props) {
   //tabs
   const content1 = () => {
     return (
       <div style={{ width: '80%', margin: '30px auto' }}>
-        <img style={{ width: '100%' }} src={props.product.descImg} alt='descImg' />
+        <img
+          style={{ width: '100%' }}
+          src={props.product.descImg}
+          alt="descImg"
+        />
       </div>
     );
   };
@@ -37,22 +59,25 @@ function ProductDetails(props) {
 
   return (
     <>
-      <div className="tabs_box" style={{ paddingTop: '3px' }}>
-        <ul className="tabs_list">
+      <TabsBox>
+        <TabsList>
           {tabs.map((tab) => (
-            <li
+            <Tab
               key={tab.id}
-              className={`tab ${tab.selected ? 'on' : 'off'}`}
+              color={`${tab.selected ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.3)'}`}
+              borderBottom={`${
+                tab.selected ? '3px solid #1890ff' : '3px solid #ddd'
+              } `}
               onClick={() => onSelectTab(tab.id)}
             >
               {tab.title}
-            </li>
+            </Tab>
           ))}
-        </ul>
+        </TabsList>
         {tabs.map((tab) => (
           <div key={tab.id}>{tab.selected ? tab.content : null}</div>
         ))}
-      </div>
+      </TabsBox>
     </>
   );
 }

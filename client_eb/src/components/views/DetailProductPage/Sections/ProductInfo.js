@@ -1,8 +1,19 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addWishlist, addCart } from '../../../../_actions/user_actions';
+import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import Numeral from 'numeral';
+
+const InfoContainer = styled.div`
+  width: 80%;
+  margin: 0 auto;
+
+  @media only screen and (min-width: 1000px) {
+    width: 50%;
+    padding: 0 2.5%;
+  }
+`;
 
 function ProductInfo(props) {
   const dispatch = useDispatch();
@@ -48,7 +59,7 @@ function ProductInfo(props) {
   };
 
   return (
-    <div>
+    <InfoContainer>
       <h3
         style={{ fontSize: '1.5rem', fontWeight: 'bold', padding: '15px 8px' }}
       >
@@ -158,7 +169,7 @@ function ProductInfo(props) {
           </td>
         </tr>
       </table>
-    </div>
+    </InfoContainer>
   );
 }
 

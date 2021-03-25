@@ -78,56 +78,6 @@ export const loadProduct = async (req, res) => {
   }
 };
 
-export const makeEventProduct = async (req, res) => {
-  try {
-    const {
-      body: { sector, id },
-    } = req;
-    if (sector === "newProduct") {
-      id.map((id) => Product.update({ newProduct: true }, { where: { id } }));
-    } else if (sector === "bestProduct") {
-      id.map((id) => Product.update({ bestProduct: true }, { where: { id } }));
-    } else if (sector === "recoProduct") {
-      id.map((id) => Product.update({ recoProduct: true }, { where: { id } }));
-    }
-    return res.status(200).json({
-      success: true,
-    });
-  } catch (err) {
-    console.log("makeEventProduct");
-    console.log(err);
-    return res.json({
-      success: false,
-      message: "Error occurred at makeEventProduct",
-    });
-  }
-};
-
-export const removeEventProduct = async (req, res) => {
-  try {
-    const {
-      body: { sector, id },
-    } = req;
-    if (sector === "newProduct") {
-      id.map((id) => Product.update({ newProduct: false }, { where: { id } }));
-    } else if (sector === "bestProduct") {
-      id.map((id) => Product.update({ bestProduct: false }, { where: { id } }));
-    } else if (sector === "recoProduct") {
-      id.map((id) => Product.update({ recoProduct: false }, { where: { id } }));
-    }
-    return res.status(200).json({
-      success: true,
-    });
-  } catch (err) {
-    console.log("makeEventProduct");
-    console.log(err);
-    return res.json({
-      success: false,
-      message: "Error occurred at makeEventProduct",
-    });
-  }
-};
-
 export const productDetail = async (req, res) => {
   try {
     const {
@@ -194,20 +144,52 @@ export const searchProduct = async (req, res) => {
   }
 };
 
-export const editProduct = (req, res) => {
+export const editProduct = async (req, res) => {
   const {
-    body: { id, rate, price },
+    body: { id, rate, price, category },
   } = req;
   try {
-    Product.update(
-      {
-        rate,
-        price,
-      },
+    const productOne = await Product.findOne(
       {
         where: {
           id,
         },
+      }
+    );
+
+    if (category === 'BnN') {
+      productOne.update(
+      {
+        bestProduct: true,
+        newProduct: true,
+      }
+    );
+    } else if (category === 'Best') {
+      productOne.update(
+      {
+        bestProduct: true,
+        newProduct: false,
+      }
+    );
+    } else if (category === 'New') {
+      productOne.update(
+      {
+        bestProduct: false,
+        newProduct: true,
+      }
+    );
+    } else {
+      productOne.update(
+      {
+        bestProduct: false,
+        newProduct: false,
+      }
+    );
+    }
+    productOne.update(
+      {
+        rate,
+        price,
       }
     );
     return res.status(200).json({

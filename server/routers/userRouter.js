@@ -15,8 +15,10 @@ import {
   findID,
   findPassword,
   addCart,
+  loadCart,
   removeCart,
   addWishList,
+  loadWishList,
   removeWishList,
 } from "../controllers/userController";
 import {
@@ -64,8 +66,11 @@ userRouter.get(
 );
 
 userRouter.get(routes.addCart, auth, addCart);
-userRouter.delete(routes.removeCart, auth, removeCart);
+userRouter.get(routes.loadCart, auth, loadCart);
+userRouter.get(routes.removeCart, auth, removeCart);
+
 userRouter.get(routes.addWishList, auth, addWishList);
-userRouter.delete(routes.removeWishList, auth, removeWishList);
+userRouter.get(routes.loadWishList, auth, loadWishList);
+userRouter.get(routes.removeWishList, auth, removeWishList);
 
 export default userRouter;

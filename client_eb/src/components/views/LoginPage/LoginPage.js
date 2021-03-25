@@ -111,6 +111,7 @@ function LoginPage(props) {
                     window.localStorage.setItem('rememberPW', values.password);
                   } else {
                     localStorage.removeItem('rememberMe');
+                    localStorage.removeItem('rememberPW');
                   }
                   props.history.push('/');
                 } else {
