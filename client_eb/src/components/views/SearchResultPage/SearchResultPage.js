@@ -43,7 +43,7 @@ function SearchResultPage(props) {
           <p
             style={{ marginRight: '5px', textAlign: 'right', color: '#adb5bd' }}
           >
-            총 10 개의 상품이 검색되었습니다.
+            총 {search.length} 개의 상품이 검색되었습니다.
           </p>
 
           {/* products */}
