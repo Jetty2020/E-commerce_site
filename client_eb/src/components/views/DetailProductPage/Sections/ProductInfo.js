@@ -25,7 +25,7 @@ function ProductInfo(props) {
     setQuantity(quantity + 1);
   }, [quantity]);
   const onDecrease = useCallback(() => {
-    setQuantity(quantity > 0 ? quantity - 1 : 0);
+    setQuantity(quantity > 1 ? quantity - 1 : 1);
   }, [quantity]);
 
   //위시리스트 추가

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { productDetail } from '../../../../_actions/product_actions';
+import { productDetail } from '../../../_actions/product_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Typography, Button, Form, Input, Select } from 'antd';
-import { editProduct } from '../../../../_actions/product_actions';
+import { editProduct } from '../../../_actions/product_actions';
 import { combineReducers } from 'redux';
 
 const { Title } = Typography;
 const { Option } = Select;
 
-function UpdateProduct(props) {
+function UpdatePage(props) {
   const dispatch = useDispatch(); //dispatch for redux
   let productId = props.match.params.productId;
   const [category, setCategory] = useState('');
@@ -64,7 +64,7 @@ function UpdateProduct(props) {
             }}
             validationSchema={Yup.object().shape({
               rate: Yup.number('할인율을 숫자로 입력해 주세요').integer(
-                '할인율을 정확히 입력해 주세요'
+                '할인율을 정확히 입력해 주세요',
               ),
               price: Yup.number('가격을 숫자로 입력해 주세요')
                 .positive('가격을 양수로 입력해 주세요')
@@ -211,4 +211,4 @@ function UpdateProduct(props) {
   );
 }
 
-export default UpdateProduct;
+export default UpdatePage;

@@ -3,7 +3,7 @@ import { Typography, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { withRouter } from 'react-router-dom';
-import { uploadProduct } from '../../../../_actions/product_actions';
+import { uploadProduct } from '../../../_actions/product_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import ImageUploader from 'react-images-upload';
 const { Title } = Typography;
 const { TextArea } = Input;
 
-function UploadProduct(props) {
+function UploadPage(props) {
   const dispatch = useDispatch(); //dispatch for redux
 
   const [formErrorMessage, setFormErrorMessage] = useState('');
@@ -192,4 +192,4 @@ function UploadProduct(props) {
   );
 }
 
-export default withRouter(UploadProduct);
+export default withRouter(UploadPage);
