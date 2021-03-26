@@ -19,7 +19,11 @@ function VisualSlider() {
   const Wrap = styled.div`
     position: relative;
     overflow: hidden;
-    margin-top: -7px;
+    margin-top: -27px;
+
+    @media only screen and (min-width: 1000px) {
+      margin-top: -7px;
+    }
 
     //dots
     .slick-dots.slick-thumb {
