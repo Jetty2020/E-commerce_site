@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadProduct } from '../../../../_actions/product_actions';
 import ProductsList from '../../../common/ProductsList';
@@ -7,19 +7,21 @@ import ProductsPages from '../../../common/ProductsPages';
 function NewPage() {
   const dispatch = useDispatch();
   const [newProducts, setNewProducts] = useState();
-  if (!newProducts) {
-    dispatch(loadProduct('newProduct'))
-      .then((response) => {
-        if (response.payload.success) {
-          setNewProducts(response.payload.product);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  useEffect(() => {
+    if (!newProducts) {
+      dispatch(loadProduct('newProduct'))
+        .then((response) => {
+          if (response.payload.success) {
+            setNewProducts(response.payload.product);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, []);
 
   // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,9 +29,12 @@ function NewPage() {
   const lastPage = currentPage * productsPerPage;
   const firstPage = lastPage - productsPerPage;
 
-  const currentProducts = (items) => {
-    return items.slice(firstPage, lastPage);
-  };
+  const currentProducts = useCallback(
+    (items) => {
+      return items.slice(firstPage, lastPage);
+    },
+    [currentPage],
+  );
 
   // 브라우저 상단으로 이동
   useEffect(() => {

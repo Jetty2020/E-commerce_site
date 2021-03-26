@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadProduct, deleteProduct } from '../../../_actions/product_actions';
 import { Link } from 'react-router-dom';
@@ -55,63 +55,65 @@ const AdminPage = () => {
 
   //상품 카테고리
   const [category, setCategory] = useState('all');
-  const onChangeCategory = (value) => {
-    setCategory(value);
+  const onChangeCategory = useCallback(
+    (value) => {
+      setCategory(value);
+      const myBestProducts = productStore.filter(
+        (product) => product.bestProduct === true,
+      );
+      const myNewProducts = productStore.filter(
+        (product) => product.newProduct === true,
+      );
+      const myDiscountedProducts = productStore.filter(
+        (product) => product.rate > 0,
+      );
+      const myRecommendedProducts = productStore.filter(
+        (product) => product.recoProduct === true,
+      );
 
-    const myBestProducts = productStore.filter(
-      (product) => product.bestProduct === true,
-    );
-    const myNewProducts = productStore.filter(
-      (product) => product.newProduct === true,
-    );
-    const myDiscountedProducts = productStore.filter(
-      (product) => product.rate > 0,
-    );
-    const myRecommendedProducts = productStore.filter(
-      (product) => product.recoProduct === true,
-    );
-
-    if (value === 'all') {
-      return (
-        setProducts(productStore),
-        setProductsLength(productStore.length),
-        setCurrentPage(1)
-      );
-    }
-    if (value === 'best') {
-      return (
-        setProducts(myBestProducts),
-        setProductsLength(myBestProducts.length),
-        setCurrentPage(1)
-      );
-    }
-    if (value === 'new') {
-      return (
-        setProducts(myNewProducts),
-        setProductsLength(myNewProducts.length),
-        setCurrentPage(1)
-      );
-    }
-    if (value === 'discount') {
-      return (
-        setProducts(myDiscountedProducts),
-        setProductsLength(myDiscountedProducts.length),
-        setCurrentPage(1)
-      );
-    }
-    if (value === 'recommend') {
-      return (
-        setProducts(myRecommendedProducts),
-        setProductsLength(myRecommendedProducts.length),
-        setCurrentPage(1)
-      );
-    }
-  };
+      if (value === 'all') {
+        return (
+          setProducts(productStore),
+          setProductsLength(productStore.length),
+          setCurrentPage(1)
+        );
+      }
+      if (value === 'best') {
+        return (
+          setProducts(myBestProducts),
+          setProductsLength(myBestProducts.length),
+          setCurrentPage(1)
+        );
+      }
+      if (value === 'new') {
+        return (
+          setProducts(myNewProducts),
+          setProductsLength(myNewProducts.length),
+          setCurrentPage(1)
+        );
+      }
+      if (value === 'discount') {
+        return (
+          setProducts(myDiscountedProducts),
+          setProductsLength(myDiscountedProducts.length),
+          setCurrentPage(1)
+        );
+      }
+      if (value === 'recommend') {
+        return (
+          setProducts(myRecommendedProducts),
+          setProductsLength(myRecommendedProducts.length),
+          setCurrentPage(1)
+        );
+      }
+    },
+    [products, category, productsLength],
+  );
 
   //상품 선택
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
-  const onCheckAll = () => {
+  const onCheckAll = useCallback(() => {
     setChecked(!checked);
     if (products) {
       setProducts(
@@ -123,42 +125,48 @@ const AdminPage = () => {
         setCheckedID([]);
       }
     }
-  };
-  const onCheckProduct = (id) => {
-    if (products) {
-      setProducts(
-        products.map((product) =>
-          product.id === id
-            ? { ...product, checked: !product.checked }
-            : product,
-        ),
-      );
-      let index = products.findIndex((product) => product.id === id);
-      if (!products[index].checked) {
-        setCheckedID((checkedID) => checkedID.concat(id));
-      } else {
-        checkedID.splice(checkedID.indexOf(id), 1);
+  }, [checked, products]);
+  const onCheckProduct = useCallback(
+    (id) => {
+      if (products) {
+        setProducts(
+          products.map((product) =>
+            product.id === id
+              ? { ...product, checked: !product.checked }
+              : product,
+          ),
+        );
+        let index = products.findIndex((product) => product.id === id);
+        if (!products[index].checked) {
+          setCheckedID((checkedID) => checkedID.concat(id));
+        } else {
+          checkedID.splice(checkedID.indexOf(id), 1);
+        }
       }
-    }
-  };
+    },
+    [checked, checkedID, products],
+  );
 
   //상품 삭제
-  const onRemove = (id) => {
-    if (products) {
-      setProducts(products.filter((product) => product.id !== id));
-      dispatch(deleteProduct(id))
-        .then((response) => {
-          if (response.payload.success) {
-            alert('해당 상품이 삭제되었습니다.');
-          } else {
-            console.log(response.payload);
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
-    }
-  };
+  const onRemove = useCallback(
+    (id) => {
+      if (products) {
+        setProducts(products.filter((product) => product.id !== id));
+        dispatch(deleteProduct(id))
+          .then((response) => {
+            if (response.payload.success) {
+              alert('해당 상품이 삭제되었습니다.');
+            } else {
+              console.log(response.payload);
+            }
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      }
+    },
+    [products],
+  );
   const onRemoveSelect = async () => {
     if (products) {
       setProducts(

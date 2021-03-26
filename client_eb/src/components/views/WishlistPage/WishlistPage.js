@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadWishlist, removeWishlist } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,6 @@ const Li = styled.li`
   width: 300px;
   margin: 0 5px 60px;
   cursor: pointer;
-
   &:hover .wishlist {
     display: block;
   }
@@ -83,23 +82,25 @@ function WishlistPage() {
     setWishlists(wishlists.filter((item) => item.id !== id));
   };
 
-  if (!wishlists) {
-    dispatch(loadWishlist())
-      .then((response) => {
-        if (response.payload.success) {
-          if (response.payload.wish) {
-            setWishlists(response.payload.wish);
+  useEffect(() => {
+    if (!wishlists) {
+      dispatch(loadWishlist())
+        .then((response) => {
+          if (response.payload.success) {
+            if (response.payload.wish) {
+              setWishlists(response.payload.wish);
+            } else {
+              setWishlists([]);
+            }
           } else {
-            setWishlists([]);
+            console.log(response.payload);
           }
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [wishlists]);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>

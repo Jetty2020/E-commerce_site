@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { productDetail } from '../../../_actions/product_actions';
@@ -19,38 +19,43 @@ function UpdatePage(props) {
   let dataToSubmit = {
     productId,
   };
-  if (!productDe) {
-    dispatch(productDetail(dataToSubmit))
-      .then((response) => {
-        if (response.payload.success) {
-          setProductDe(response.payload.product);
-          if (
-            response.payload.product.bestProduct &&
-            response.payload.product.newProduct
-          ) {
-            setCategory('BnN');
-            console.log(1);
-          } else if (response.payload.product.bestProduct) {
-            setCategory('Best');
-            console.log(2);
-          } else if (response.payload.product.newProduct) {
-            setCategory('New');
-            console.log(3);
+  useEffect(() => {
+    if (!productDe) {
+      dispatch(productDetail(dataToSubmit))
+        .then((response) => {
+          if (response.payload.success) {
+            setProductDe(response.payload.product);
+            if (
+              response.payload.product.bestProduct &&
+              response.payload.product.newProduct
+            ) {
+              setCategory('BnN');
+              console.log(1);
+            } else if (response.payload.product.bestProduct) {
+              setCategory('Best');
+              console.log(2);
+            } else if (response.payload.product.newProduct) {
+              setCategory('New');
+              console.log(3);
+            } else {
+              setCategory('All');
+              console.log(4);
+            }
           } else {
-            setCategory('All');
-            console.log(4);
+            console.log(response.payload);
           }
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
-  const onChange = (value) => {
-    setCategory(value);
-  };
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [productDe, category]);
+  const onChange = useCallback(
+    (value) => {
+      setCategory(value);
+    },
+    [category],
+  );
   return (
     <>
       {productDe && (

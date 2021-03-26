@@ -1,19 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useCallback } from 'react';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { searchProduct } from '../../../../_actions/product_actions';
 import { Menu, Badge, Input } from 'antd';
 import { USER_SERVER } from '../../../Config';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const SubMenu = Menu.SubMenu;
+const { Search } = Input;
 const SearchBar1 = styled.div`
   margin-top: 15px;
   padding: 0 20px;
-
   @media only screen and (min-width: 1000px) {
     position: absolute;
     top: 18px;
@@ -27,7 +26,6 @@ const SearchBar2 = styled.div`
   position: absolute;
   bottom: -45px;
   padding: 0 20px;
-
   @media only screen and (min-width: 1000px) {
     top: 18px;
     right: 280px;
@@ -38,10 +36,9 @@ const SearchBar2 = styled.div`
 
 function RightMenu(props) {
   const dispatch = useDispatch();
-  const { Search } = Input;
   const user = useSelector((state) => state.user);
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     Axios.get(`${USER_SERVER}/logout`).then((response) => {
       if (response.status === 200) {
         props.history.push('/login');
@@ -49,7 +46,7 @@ function RightMenu(props) {
         alert('Log Out Failed');
       }
     });
-  };
+  }, [props]);
 
   const onSearch = (value) => {
     if (value.length < 2) {

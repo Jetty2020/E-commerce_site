@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addQnA, loadQnA } from '../../../../_actions/QnA_actions';
 import { Formik } from 'formik';
@@ -64,27 +64,29 @@ const ProductQnA = ({ id }) => {
   const { userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [QnAs, setQnAs] = useState();
-  if (!QnAs) {
-    dispatch(loadQnA(id))
-      .then((response) => {
-        if (response.payload.success) {
-          setQnAs(response.payload.QnA);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  useEffect(() => {
+    if (!QnAs) {
+      dispatch(loadQnA(id))
+        .then((response) => {
+          if (response.payload.success) {
+            setQnAs(response.payload.QnA);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [QnAs]);
   const [QnAInput, setQnAInput] = useState(false);
-  const showQnAInput = () => {
+  const toggleQnAInput = useCallback(() => {
     setQnAInput(!QnAInput);
-  };
+  }, [QnAInput]);
   return (
     <>
       <QnAButtonContainer>
-        {!QnAInput && <Button onClick={showQnAInput}>Q&amp;A 쓰기</Button>}
+        {!QnAInput && <Button onClick={toggleQnAInput}>Q&amp;A 쓰기</Button>}
       </QnAButtonContainer>
 
       {QnAInput && (
@@ -123,7 +125,7 @@ const ProductQnA = ({ id }) => {
                 .catch((err) => {
                   alert(err);
                 });
-              showQnAInput();
+              toggleQnAInput();
               setSubmitting(true);
               setQnAInput(false);
             }, 0);
@@ -182,10 +184,7 @@ const ProductQnA = ({ id }) => {
                 >
                   등록
                 </Button>
-                <Button
-                  className="qna_button"
-                  onClick={() => setQnAInput(false)}
-                >
+                <Button className="qna_button" onClick={toggleQnAInput}>
                   취소
                 </Button>
               </QnAContainer>

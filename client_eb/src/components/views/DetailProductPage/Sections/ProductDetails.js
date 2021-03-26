@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import ProductReviews from './ProductReviews';
 import ProductQnA from './ProductQnA';
@@ -23,7 +23,7 @@ const Tab = styled.li`
 
 function ProductDetails(props) {
   // 탭메뉴 콘텐츠
-  const content1 = () => {
+  const content1 = useCallback(() => {
     return (
       <div style={{ width: '80%', margin: '30px auto' }}>
         <img
@@ -33,13 +33,13 @@ function ProductDetails(props) {
         />
       </div>
     );
-  };
-  const content2 = () => {
+  }, []);
+  const content2 = useCallback(() => {
     return <ProductReviews id={props.product.id} />;
-  };
-  const content3 = () => {
+  }, []);
+  const content3 = useCallback(() => {
     return <ProductQnA id={props.product.id} />;
-  };
+  }, []);
 
   const [tabs, setTabs] = useState([
     { id: 1, title: '상품 설명', content: content1(), selected: true },
@@ -47,15 +47,18 @@ function ProductDetails(props) {
     { id: 3, title: '상품 Q&A', content: content3(), selected: false },
   ]);
 
-  const onSelectTab = (id) => {
-    setTabs(
-      tabs.map((tab) =>
-        tab.id === id
-          ? { ...tab, selected: true }
-          : { ...tab, selected: false },
-      ),
-    );
-  };
+  const onSelectTab = useCallback(
+    (id) => {
+      setTabs(
+        tabs.map((tab) =>
+          tab.id === id
+            ? { ...tab, selected: true }
+            : { ...tab, selected: false },
+        ),
+      );
+    },
+    [tabs],
+  );
 
   return (
     <>

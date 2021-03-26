@@ -23,10 +23,8 @@ const InfoTitle = styled.h3`
 `;
 const Info = styled.div`
   padding: 20px 0;
-
   .info_detail {
     line-height: 40px;
-
     span {
       display: inline-block;
       width: 100px;
@@ -97,7 +95,7 @@ function UserInfoPage(props) {
     setUser({ ...user, modify: !user.modify });
   }, [user]);
   const [deleteUserModal, setDeleteUserModal] = useState(false);
-  const deleteOk = () => {
+  const deleteOk = useCallback(() => {
     let dataToSubmit = {
       userID: userData.userID,
     };
@@ -110,22 +108,22 @@ function UserInfoPage(props) {
       }
     });
     setDeleteUserModal(false);
-  };
-  const deleteCancel = () => {
+  }, [userData]);
+  const deleteCancel = useCallback(() => {
     setDeleteUserModal(false);
-  };
-  const onWithdraw = () => {
+  }, [deleteUserModal]);
+  const onWithdraw = useCallback(() => {
     setDeleteUserModal(true);
-  };
+  }, [deleteUserModal]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
+  const showModal = useCallback(() => {
     setIsModalVisible(true);
     setUser({ ...user });
-  };
-  const handleCancel = () => {
+  }, [isModalVisible, user]);
+  const handleCancel = useCallback(() => {
     setIsModalVisible(false);
-  };
+  }, [isModalVisible]);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>

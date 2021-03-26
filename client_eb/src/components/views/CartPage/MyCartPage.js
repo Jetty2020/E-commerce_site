@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadCart, removeCart } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
@@ -33,23 +33,26 @@ const MyCartPage = () => {
   const [myCart, setMyCart] = useState();
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
-  if (!myCart) {
-    dispatch(loadCart())
-      .then((response) => {
-        if (response.payload.success) {
-          if (response.payload.cart) {
-            setMyCart(response.payload.cart);
+  useEffect(() => {
+    if (!myCart) {
+      dispatch(loadCart())
+        .then((response) => {
+          if (response.payload.success) {
+            if (response.payload.cart) {
+              setMyCart(response.payload.cart);
+            } else {
+              setMyCart([]);
+            }
           } else {
-            setMyCart([]);
+            console.log(response.payload);
           }
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [myCart]);
+
   //상품 선택
   const onCheckAll = useCallback(() => {
     setChecked(!checked);
