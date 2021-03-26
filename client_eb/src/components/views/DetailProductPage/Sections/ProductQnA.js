@@ -14,13 +14,19 @@ const QnAButtonContainer = styled.div`
 `;
 const QnAContainer = styled.div`
   width: 75%;
-  margin: 0 auto;
+  margin: 10px auto;
   .secret {
     width: 100%;
+    margin-bottom: 3px;
   }
   .qna_input {
     width: 100%;
     margin: 5px 0;
+  }
+  .qna_error {
+    margin-bottom: 22px;
+    padding-top: 10px;
+    font-size: 0.725rem;
   }
   .qna_button {
     width: 49.5%;
@@ -33,17 +39,20 @@ const QnAContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 0 0 30px;
     .secret {
       all: unset;
     }
     .qna_input {
-      width: 420px;
+      width: 440px;
       margin: 0 5px;
+    }
+    .qna_error {
+      margin-bottom: unset;
+      padding-top: 14px;
+      padding-left: 7px;
     }
     .qna_button {
       width: unset;
-      margin: unset;
       &:last-child {
         margin-left: 5px;
       }
@@ -145,29 +154,26 @@ const ProductQnA = ({ id }) => {
                     비밀글
                   </label>
                 </Checkbox>
-                <Input
-                  type="text"
-                  name="QnA"
-                  disabled={isSubmitting}
-                  value={values.QnA}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={`qna_input
+                <div>
+                  <Input
+                    type="text"
+                    name="QnA"
+                    disabled={isSubmitting}
+                    value={values.QnA}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`qna_input
                     ${
                       errors.QnA && touched.QnA
                         ? 'text-input error'
                         : 'text-input'
                     }
                   `}
-                />
-                {errors.QnA && touched.QnA && (
-                  <div
-                    className="input-feedback"
-                    style={{ marginTop: '5px', marginLeft: '105px' }}
-                  >
-                    {errors.QnA}
-                  </div>
-                )}
+                  />
+                  {errors.QnA && touched.QnA && (
+                    <div className="qna_error input-feedback">{errors.QnA}</div>
+                  )}
+                </div>
                 <Button
                   type="primary"
                   className="qna_button"

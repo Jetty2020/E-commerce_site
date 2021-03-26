@@ -13,7 +13,6 @@ const ReviewButtonContainer = styled.div`
   margin: 10xp 5px;
 `;
 const ReviewContainer = styled.div`
-  overflow: hidden;
   width: 75%;
   margin: 10px auto;
   .rate {
@@ -24,27 +23,36 @@ const ReviewContainer = styled.div`
     width: 100%;
     margin: 5px 0;
   }
+  .review_error {
+    margin-bottom: 22px;
+    padding-top: 10px;
+    font-size: 0.725rem;
+  }
   .review_button {
-    font-size: 0.8rem;
     width: 49.5%;
-    &:first-child {
-      margin-right: 0.25%;
-    }
     &:last-child {
-      margin-left: 0.25%;
+      margin-left: 0.5%;
     }
   }
   @media only screen and (min-width: 1000px) {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: unset;
     .rate {
       margin-right: 10px;
     }
     .review_input {
       width: 440px;
-      float: unset;
+      margin-right: 5px;
+    }
+    .review_error {
+      margin-bottom: unset;
+    }
+    .review_button {
+      width: unset;
+      &:last-child {
+        margin-right: 5px;
+      }
     }
   }
 `;
@@ -144,15 +152,12 @@ function ProductReviews({ id, onClickReview }) {
                       ${
                         errors.review && touched.review
                           ? 'text-input error'
-                          : ' text-input'
+                          : 'text-input'
                       }
                     `}
                   />
                   {errors.review && touched.review && (
-                    <div
-                      className="input-feedback"
-                      style={{ padding: '13px 5px 0', fontSize: '0.725rem' }}
-                    >
+                    <div className="review_error input-feedback">
                       {errors.review}
                     </div>
                   )}
