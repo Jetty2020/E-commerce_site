@@ -7,8 +7,83 @@ import visual03 from '../../../images/visual03.png';
 import visual04 from '../../../images/visual04.png';
 import { Icon } from 'antd';
 
+const Wrap = styled.div`
+  position: relative;
+  overflow: hidden;
+  margin-top: -27px;
+
+  @media only screen and (min-width: 1000px) {
+    margin-top: -7px;
+  }
+  .slick-dots.slick-thumb {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      position: relative;
+      display: inline-block;
+      &.slick-active {
+        span {
+          filter: none;
+        }
+      }
+    }
+  }
+`;
+//슬라이드
+const Slide = styled.div`
+  width: 100%;
+  height: 500px;
+  text-align: center;
+  img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    vertical-align: top;
+  }
+`;
+//이전, 다음 슬라이드 버튼
+const defaultButtonStyle = css`
+  position: absolute;
+  top: calc(50% - 25px);
+  padding: 0 10px;
+  font-size: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  opacity: 0.5;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+const PrevButton = styled.button`
+  ${defaultButtonStyle} left: 40px;
+`;
+const NextButton = styled.button`
+  ${defaultButtonStyle} right: 40px;
+`;
+//페이지네이션
+const Pagination = styled.a`
+  display: block;
+  width: 50px;
+  height: 50px;
+`;
+const Page = styled.span`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  border-radius: 50%;
+  filter: grayscale(1);
+`;
+
 function VisualSlider() {
-  //sample
   const images = [
     { src: visual01, title: '1' },
     { src: visual02, title: '2' },
@@ -16,87 +91,9 @@ function VisualSlider() {
     { src: visual04, title: '4' },
   ];
 
-  const Wrap = styled.div`
-    position: relative;
-    overflow: hidden;
-    margin-top: -27px;
-
-    @media only screen and (min-width: 1000px) {
-      margin-top: -7px;
-    }
-
-    //dots
-    .slick-dots.slick-thumb {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translate(-50%);
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      li {
-        position: relative;
-        display: inline-block;
-        &.slick-active {
-          span {
-            filter: none;
-          }
-        }
-      }
-    }
-  `;
-  //slide
-  const Slide = styled.div`
-    width: 100%;
-    height: 500px;
-    text-align: center;
-    img {
-      width: 100%;
-      height: 500px;
-      object-fit: cover;
-      vertical-align: top;
-    }
-  `;
-  //prev, next button
-  const defaultButtonStyle = css`
-    position: absolute;
-    top: calc(50% - 25px);
-    padding: 0 10px;
-    font-size: 40px;
-    border: none;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    opacity: 0.5;
-    outline: none;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.8;
-    }
-  `;
-  const PrevButton = styled.button`
-    ${defaultButtonStyle} left: 40px;
-  `;
-  const NextButton = styled.button`
-    ${defaultButtonStyle} right: 40px;
-  `;
-  //pagination
-  const Pagination = styled.a`
-    display: block;
-    width: 50px;
-    height: 50px;
-  `;
-  const Page = styled.span`
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    border-radius: 50%;
-    filter: grayscale(1);
-  `;
-
   const slickRef = useRef(null);
-  const prevSlide = useCallback(() => slickRef.current.slickPrev(), []);
-  const nextSlide = useCallback(() => slickRef.current.slickNext(), []);
+  const prevSlide = useCallback(() => slickRef.current.slickPrev(), [slickRef]);
+  const nextSlide = useCallback(() => slickRef.current.slickNext(), [slickRef]);
 
   const settings = {
     autoplay: true,
