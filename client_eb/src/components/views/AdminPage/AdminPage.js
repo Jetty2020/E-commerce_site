@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  loadProduct,
-  deleteProduct,
-  editProduct,
-} from '../../../_actions/product_actions';
+import { loadProduct, deleteProduct } from '../../../_actions/product_actions';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProductsPages from '../../common/ProductsPages';
@@ -38,44 +34,76 @@ const AdminPage = () => {
   const dispatch = useDispatch();
   const [productStore, setProductStore] = useState();
   const [products, setProducts] = useState();
-  if (!products) {
-    dispatch(loadProduct('all'))
-      .then((response) => {
-        if (response.payload.success) {
-          setProducts(response.payload.product);
-          setProductStore(response.payload.product);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  const [productsLength, setProductsLength] = useState();
+  useEffect(() => {
+    if (!products) {
+      dispatch(loadProduct('all'))
+        .then((response) => {
+          if (response.payload.success) {
+            setProducts(response.payload.product);
+            setProductsLength(response.payload.product.length);
+            setProductStore(response.payload.product);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [products]);
 
   //상품 카테고리
   const [category, setCategory] = useState('all');
   const onChangeCategory = (value) => {
     setCategory(value);
+
+    const myBestProducts = productStore.filter(
+      (product) => product.bestProduct === true,
+    );
+    const myNewProducts = productStore.filter(
+      (product) => product.newProduct === true,
+    );
+    const myDiscountedProducts = productStore.filter(
+      (product) => product.rate > 0,
+    );
+    const myRecommendedProducts = productStore.filter(
+      (product) => product.recoProduct === true,
+    );
+
     if (value === 'all') {
-      return setProducts(productStore);
+      return (
+        setProducts(productStore),
+        setProductsLength(productStore.length),
+        setCurrentPage(1)
+      );
     }
     if (value === 'best') {
-      return setProducts(
-        productStore.filter((product) => product.bestProduct === true),
+      return (
+        setProducts(myBestProducts),
+        setProductsLength(myBestProducts.length),
+        setCurrentPage(1)
       );
     }
     if (value === 'new') {
-      return setProducts(
-        productStore.filter((product) => product.newProduct === true),
+      return (
+        setProducts(myNewProducts),
+        setProductsLength(myNewProducts.length),
+        setCurrentPage(1)
       );
     }
     if (value === 'discount') {
-      return setProducts(productStore.filter((product) => product.rate > 0));
+      return (
+        setProducts(myDiscountedProducts),
+        setProductsLength(myDiscountedProducts.length),
+        setCurrentPage(1)
+      );
     }
     if (value === 'recommend') {
-      return setProducts(
-        productStore.filter((product) => product.recoProduct === true),
+      return (
+        setProducts(myRecommendedProducts),
+        setProductsLength(myRecommendedProducts.length),
+        setCurrentPage(1)
       );
     }
   };
@@ -151,22 +179,16 @@ const AdminPage = () => {
     }
   };
 
-  // 페이지네이션
+  //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const lastPage = currentPage * productsPerPage;
   const firstPage = lastPage - productsPerPage;
 
-  const currentProducts = (items) => {
-    return items.slice(firstPage, lastPage);
-  };
-
-  // 페이지 이동 시 브라우저 상단으로 이동
+  //브라우저 상단으로 이동
   useEffect(() => {
-    // currentProducts(products);
-    // console.log(products.length);
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [currentPage, category]);
 
   return (
     <div style={{ width: '75%', margin: '3rem auto' }}>
@@ -213,116 +235,123 @@ const AdminPage = () => {
           <div style={{ width: '12.5%' }}>선택</div>
         </Table>
         {products ? (
-          products.map((product) => (
-            <div key={product.id}>
-              <TableRow>
-                {/* 체크박스 */}
-                <Checkbox
-                  style={{ width: '5%', textAlign: 'center' }}
-                  checked={product.checked}
-                  onClick={() => onCheckProduct(product.id)}
-                />
+          products
+            .map((product) => (
+              <div key={product.id}>
+                <TableRow>
+                  {/* 체크박스 */}
+                  <Checkbox
+                    style={{ width: '5%', textAlign: 'center' }}
+                    checked={product.checked}
+                    onClick={() => onCheckProduct(product.id)}
+                  />
 
-                {/* 상품 정보 */}
-                <Link to={`/product/${product.id}`} style={{ width: '31.5%' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={product.mainImg}
-                      width="100px"
-                      height="100px"
-                      alt="img"
-                    />
-                    <div style={{ marginLeft: '15px' }}>
-                      {product.recoProduct ? (
-                        <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
-                          <Icon type="like" />
-                          <span> 추천 상품</span>
+                  {/* 상품 정보 */}
+                  <Link
+                    to={`/product/${product.id}`}
+                    style={{ width: '31.5%' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <img
+                        src={product.mainImg}
+                        width="100px"
+                        height="100px"
+                        alt="img"
+                      />
+                      <div style={{ marginLeft: '15px' }}>
+                        {product.recoProduct ? (
+                          <p style={{ fontSize: '0.75rem', color: '#3e91f7' }}>
+                            <Icon type="like" />
+                            <span> 추천 상품</span>
+                          </p>
+                        ) : null}
+                        <p style={{ fontWeight: 'bold', color: '#555' }}>
+                          {product.productName}
                         </p>
-                      ) : null}
-                      <p style={{ fontWeight: 'bold', color: '#555' }}>
-                        {product.productName}
-                      </p>
+                      </div>
                     </div>
+                  </Link>
+
+                  {/* 카테고리 */}
+                  <div
+                    style={{
+                      width: '12.5%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <p>
+                      {product.bestProduct && product.newProduct
+                        ? 'Best & New'
+                        : product.bestProduct
+                        ? 'Best'
+                        : product.newProduct
+                        ? 'New'
+                        : 'All'}
+                    </p>
                   </div>
-                </Link>
 
-                {/* 카테고리 */}
-                <div
-                  style={{
-                    width: '12.5%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <p>
-                    {product.bestProduct && product.newProduct
-                      ? 'Best & New'
-                      : product.bestProduct
-                      ? 'Best'
-                      : product.newProduct
-                      ? 'New'
-                      : 'All'}
-                  </p>
-                </div>
+                  {/* 재고 수량 */}
+                  <div style={{ width: '12.5%', textAlign: 'center' }}>
+                    <p>{Numeral(product.stock).format(0, 0)}개</p>
+                  </div>
 
-                {/* 재고 수량 */}
-                <div style={{ width: '12.5%', textAlign: 'center' }}>
-                  <p>{Numeral(product.stock).format(0, 0)}개</p>
-                </div>
+                  {/* 판매금액 */}
+                  <div style={{ width: '12.5%', textAlign: 'center' }}>
+                    {product.rate > 0 ? (
+                      <>
+                        <p>
+                          <span
+                            style={{ color: '#fa5252', fontWeight: 'bold' }}
+                          >
+                            {product.rate}%{' '}
+                          </span>
+                          {Numeral(
+                            product.price * (1 - product.rate * 0.01),
+                          ).format(0, 0)}
+                          원
+                        </p>
+                        <p
+                          style={{
+                            fontSize: '0.75rem',
+                            color: '#868e96',
+                            textDecoration: 'line-through',
+                          }}
+                        >
+                          {Numeral(product.price).format(0, 0)}원
+                        </p>
+                      </>
+                    ) : (
+                      <p>{Numeral(product.price).format(0, 0)}원</p>
+                    )}
+                  </div>
 
-                {/* 판매금액 */}
-                <div style={{ width: '12.5%', textAlign: 'center' }}>
-                  {product.rate > 0 ? (
-                    <>
-                      <p>
-                        <span style={{ color: '#fa5252', fontWeight: 'bold' }}>
-                          {product.rate}%{' '}
-                        </span>
-                        {Numeral(
-                          product.price * (1 - product.rate * 0.01),
-                        ).format(0, 0)}
-                        원
-                      </p>
-                      <p
-                        style={{
-                          fontSize: '0.75rem',
-                          color: '#868e96',
-                          textDecoration: 'line-through',
-                        }}
+                  {/* 배송구분 */}
+                  <div style={{ width: '12.5%', textAlign: 'center' }}>
+                    <p>기본배송</p>
+                  </div>
+
+                  {/* 선택 */}
+                  <div style={{ width: '12.5%', textAlign: 'center' }}>
+                    <p style={{ margin: '2.5px 0' }}>
+                      <Button style={{ fontSize: '0.75rem' }}>
+                        <Link to={`/admin/update/${product.id}`}>수정</Link>
+                      </Button>
+                    </p>
+                    <p style={{ margin: '2.5px 0' }}>
+                      <Button
+                        type="primary"
+                        style={{ fontSize: '0.75rem' }}
+                        onClick={() => onRemove(product.id)}
                       >
-                        {Numeral(product.price).format(0, 0)}원
-                      </p>
-                    </>
-                  ) : (
-                    <p>{Numeral(product.price).format(0, 0)}원</p>
-                  )}
-                </div>
-
-                {/* 배송구분 */}
-                <div style={{ width: '12.5%', textAlign: 'center' }}>
-                  <p>기본배송</p>
-                </div>
-
-                {/* 선택 */}
-                <div style={{ width: '12.5%', textAlign: 'center' }}>
-                  <p style={{ margin: '2.5px 0' }}>
-                    <Button style={{ fontSize: '0.75rem' }}>
-                      <Link to={`/admin/update/${product.id}`}>수정</Link>
-                    </Button>
-                  </p>
-                  <p style={{ margin: '2.5px 0' }}>
-                    <Button
-                      type="primary"
-                      style={{ fontSize: '0.75rem' }}
-                      onClick={() => onRemove(product.id)}
-                    >
-                      삭제
-                    </Button>
-                  </p>
-                </div>
-              </TableRow>
-            </div>
-          ))
+                        삭제
+                      </Button>
+                    </p>
+                  </div>
+                </TableRow>
+              </div>
+            ))
+            .slice(firstPage, lastPage)
         ) : (
           <p
             style={{
@@ -361,7 +390,7 @@ const AdminPage = () => {
 
       <ProductsPages
         productsPerPage={productsPerPage}
-        totalProducts={48}
+        totalProducts={productsLength}
         currentPage={currentPage}
         paginate={setCurrentPage}
       />

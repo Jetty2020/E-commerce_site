@@ -30,7 +30,6 @@ const TableRow = styled.div`
 
 const MyCartPage = () => {
   const dispatch = useDispatch();
-  // const CART = products.filter((product) => product.cart === true);
   const [myCart, setMyCart] = useState();
   const [checked, setChecked] = useState(false);
   const [checkedID, setCheckedID] = useState([]);
@@ -67,8 +66,8 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, checked: !product.checked }
-            : product
-        )
+            : product,
+        ),
       );
       let index = myCart.findIndex((product) => product.id === id);
       if (!myCart[index].checked) {
@@ -77,16 +76,12 @@ const MyCartPage = () => {
         checkedID.splice(checkedID.indexOf(id), 1);
       }
     },
-    [myCart]
+    [myCart],
   );
-
-  // console.log(myCart.reduce((acc, cur) => acc.quantity + cur.quantity));
-  // console.log(myCart.map((product) => product.quantity));
 
   //선택상품 삭제
   const onRemoveSelect = useCallback(() => {
     checkedID.map((id) => {
-      // console.log(id);
       dispatch(removeCart(id))
         .then((response) => {
           if (response.payload.success) {
@@ -111,11 +106,11 @@ const MyCartPage = () => {
                 ...product,
                 quantity: e.currentTarget.value,
               }
-            : product
-        )
+            : product,
+        ),
       );
     },
-    [myCart]
+    [myCart],
   );
   const onIncrease = useCallback(
     (id) => {
@@ -123,11 +118,11 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, quantity: product.quantity + 1 }
-            : product
-        )
+            : product,
+        ),
       );
     },
-    [myCart]
+    [myCart],
   );
   const onDecrease = useCallback(
     (id) => {
@@ -135,11 +130,11 @@ const MyCartPage = () => {
         myCart.map((product) =>
           product.id === id
             ? { ...product, quantity: product.quantity - 1 }
-            : product
-        )
+            : product,
+        ),
       );
     },
-    [myCart]
+    [myCart],
   );
 
   return (
@@ -239,7 +234,7 @@ const MyCartPage = () => {
                         {product.rate}%{' '}
                       </span>
                       {Numeral(
-                        product.price * (1 - product.rate * 0.01)
+                        product.price * (1 - product.rate * 0.01),
                       ).format(0, 0)}
                       원
                     </p>
@@ -332,8 +327,8 @@ const MyCartPage = () => {
                     myCart.reduce(
                       (acc, cur) =>
                         acc.price * acc.quantity +
-                        cur.price * (1 - cur.rate * 0.01) * cur.quantity
-                    )
+                        cur.price * (1 - cur.rate * 0.01) * cur.quantity,
+                    ),
                   ).format(0, 0)
                 : '0'}
               원
@@ -347,7 +342,7 @@ const MyCartPage = () => {
             >
               {myCart && myCart.length > 0
                 ? Numeral(
-                    myCart.reduce((acc, cur) => acc.quantity + cur.quantity)
+                    myCart.reduce((acc, cur) => acc.quantity + cur.quantity),
                   ).format(0, 0)
                 : '0'}
               개
@@ -370,8 +365,8 @@ const MyCartPage = () => {
                     (acc, cur) =>
                       acc.price * acc.quantity +
                       cur.price * (1 - cur.rate * 0.01) * cur.quantity +
-                      2500
-                  )
+                      2500,
+                  ),
                 ).format(0, 0)
               : '0'}
             원

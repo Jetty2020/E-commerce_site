@@ -37,7 +37,6 @@ const Info = styled.div`
 const Sns = styled.div`
   width: 150px;
   margin: 0 auto;
-
   button {
     width: 40px;
     height: 40px;
@@ -58,7 +57,7 @@ const Sns = styled.div`
 
 function UserInfoPage(props) {
   const { userData } = useSelector((state) => state.user);
-  const dispatch = useDispatch(); //dispatch for redux
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState({
     role: '',
@@ -290,12 +289,10 @@ function UserInfoPage(props) {
                       values,
                       touched,
                       errors,
-                      dirty,
                       isSubmitting,
                       handleChange,
                       handleBlur,
                       handleSubmit,
-                      handleReset,
                     } = props;
                     return (
                       <div className="info_detail">
@@ -455,12 +452,10 @@ function UserInfoPage(props) {
             values,
             touched,
             errors,
-            dirty,
             // isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
           } = props;
           return (
             <Form onSubmit={handleSubmit}>

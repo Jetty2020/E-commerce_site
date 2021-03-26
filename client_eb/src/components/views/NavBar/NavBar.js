@@ -8,11 +8,9 @@ import logo from '../../images/logo.png';
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-
   const showDrawer = () => {
     setVisible(true);
   };
-
   const onClose = () => {
     setVisible(false);
   };

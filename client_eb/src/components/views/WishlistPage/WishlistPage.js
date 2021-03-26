@@ -4,7 +4,6 @@ import { loadWishlist, removeWishlist } from '../../../_actions/user_actions';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from 'antd';
-import { products } from '../../../_datas/productsData.json';
 import Numeral from 'numeral';
 
 const Ul = styled.ul`
@@ -69,19 +68,18 @@ const Wishlist = styled.div`
 
 function WishlistPage() {
   const dispatch = useDispatch();
-  // const wishItem = products.filter((product) => product.wishlist === true);
   const [wishlists, setWishlists] = useState();
   const onRemove = (id) => {
     dispatch(removeWishlist(id))
-        .then((response) => {
-          if (response.payload.success) {
-          } else {
-            console.log(response.payload);
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
+      .then((response) => {
+        if (response.payload.success) {
+        } else {
+          console.log(response.payload);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
     setWishlists(wishlists.filter((item) => item.id !== id));
   };
 
@@ -132,7 +130,7 @@ function WishlistPage() {
                     <span className="rate">{product.rate}% </span>
                     <span className="discount">
                       {Numeral(
-                        product.price * (1 - product.rate * 0.01)
+                        product.price * (1 - product.rate * 0.01),
                       ).format(0, 0)}
                       원
                     </span>

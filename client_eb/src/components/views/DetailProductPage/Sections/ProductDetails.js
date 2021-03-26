@@ -22,7 +22,7 @@ const Tab = styled.li`
 `;
 
 function ProductDetails(props) {
-  //tabs
+  // 탭메뉴 콘텐츠
   const content1 = () => {
     return (
       <div style={{ width: '80%', margin: '30px auto' }}>

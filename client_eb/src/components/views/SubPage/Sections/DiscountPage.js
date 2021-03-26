@@ -31,7 +31,7 @@ function DiscountPage() {
     return items.slice(firstPage, lastPage);
   };
 
-  // 페이지 이동 시 브라우저 상단으로 이동
+  // 브라우저 상단으로 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
@@ -40,7 +40,7 @@ function DiscountPage() {
     <div>
       <h2 style={{ margin: '70px 20px 30px' }}>Discount</h2>
 
-      {/* products */}
+      {/* 할인 상품 */}
       {discountProducts && (
         <div>
           <ProductsList products={currentProducts(discountProducts)} />

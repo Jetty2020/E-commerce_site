@@ -10,10 +10,9 @@ import { useDispatch } from 'react-redux';
 import ImageUploader from 'react-images-upload';
 
 const { Title } = Typography;
-const { TextArea } = Input;
 
 function UploadPage(props) {
-  const dispatch = useDispatch(); //dispatch for redux
+  const dispatch = useDispatch();
 
   const [formErrorMessage, setFormErrorMessage] = useState('');
   const [fileData, setFileData] = useState([]);
@@ -58,11 +57,11 @@ function UploadPage(props) {
                 // props.history.push("/");
                 alert('상품이 업로드되었습니다.');
               } else {
-                setFormErrorMessage('Error occurred'); //에러 메세지 세팅
+                setFormErrorMessage('잘못 입력되었습니다. 다시 확인해 주세요.'); //에러 메세지 세팅
               }
             })
             .catch((err) => {
-              setFormErrorMessage('Error occurred');
+              setFormErrorMessage('잘못 입력되었습니다. 다시 확인해 주세요.');
               setTimeout(() => {
                 //일정 시간이 지난 후 함수 실행 setTimeout(실행시킬 함수, 시간)
                 setFormErrorMessage('');
@@ -77,12 +76,10 @@ function UploadPage(props) {
           values,
           touched,
           errors,
-          // dirty,
           isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          // handleReset,
         } = props;
         return (
           <div style={{ maxWidth: '450px', margin: '3rem auto' }}>
@@ -183,7 +180,6 @@ function UploadPage(props) {
                   <Link to="/admin">취소</Link>
                 </Button>
               </div>
-              {/* </Form> */}
             </form>
           </div>
         );

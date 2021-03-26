@@ -17,7 +17,7 @@ import MyCartPage from './views/CartPage/MyCartPage';
 import WishlistPage from './views/WishlistPage/WishlistPage';
 import UserInfoPage from './views/UserInfoPage/UserInfoPage';
 
-// 페이지 이동 시 브라우저 상단으로 이동
+// 브라우저 상단으로 이동
 function _ScrollToTop(props) {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -25,7 +25,6 @@ function _ScrollToTop(props) {
   }, [pathname]);
   return props.children;
 }
-
 const ScrollToTop = withRouter(_ScrollToTop);
 
 function App() {

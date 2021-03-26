@@ -69,11 +69,11 @@ function LandingPage() {
 
   return (
     <div>
-      {/* Visual Image */}
+      {/* 비주얼 슬라이더 */}
       <VisualSlider />
       {}
       <div style={{ width: '75%', margin: '0 auto' }}>
-        {/* Recommendation Products */}
+        {/* 추천 상품 */}
         <div style={{ margin: '8rem 0 4rem' }}>
           <h2 style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
             추천 상품
@@ -81,8 +81,24 @@ function LandingPage() {
           {RECOMMEND && <ProductsList products={RECOMMEND} />}
         </div>
 
-        {/* New & Best Products */}
+        {/* Best & New 상품 */}
         <Tabs defaultActiveKey="1">
+          <TabPane
+            tab={
+              <h2
+                style={{
+                  padding: '0 2.5rem',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                베스트 상품
+              </h2>
+            }
+            key="1"
+          >
+            {BEST && <ProductsList products={BEST} />}
+          </TabPane>
           <TabPane
             tab={
               <h2
@@ -96,29 +112,13 @@ function LandingPage() {
                 새로 나온 상품
               </h2>
             }
-            key="1"
+            key="2"
           >
             {NEW && <ProductsList products={NEW} />}
           </TabPane>
-          <TabPane
-            tab={
-              <h2
-                style={{
-                  padding: '0 2.5rem',
-                  fontSize: '1.5rem',
-                  fontWeight: 'bold',
-                }}
-              >
-                베스트 상품
-              </h2>
-            }
-            key="2"
-          >
-            <ProductsList products={BEST} />
-          </TabPane>
         </Tabs>
 
-        {/* Discounted Products */}
+        {/* 할인 상품 */}
         <div style={{ margin: '4rem 0 8rem' }}>
           <h2 style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
             할인 상품
