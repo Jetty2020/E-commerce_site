@@ -57,23 +57,20 @@ function LoginPage(props) {
     ? localStorage.getItem('rememberPW')
     : '';
 
-  //modal
+  //계정 찾기 모달
   const [isEmailModal, setIsEmailModal] = useState(false);
-
   const showEmailModal = () => {
     setIsEmailModal(true);
   };
-
   const emailModalCancel = () => {
     setIsEmailModal(false);
   };
 
+  //비밀번호 찾기 모달
   const [isPasswordModal, setIsPasswordModal] = useState(false);
-
   const showPasswordModal = () => {
     setIsPasswordModal(true);
   };
-
   const passwordModalCancel = () => {
     setIsPasswordModal(false);
   };
@@ -86,10 +83,10 @@ function LoginPage(props) {
           password: initialPW,
         }}
         validationSchema={Yup.object().shape({
-          userID: Yup.string().required('ID is required'),
+          userID: Yup.string().required('ID를 입력해 주세요'),
           password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
+            .min(6, '비밀번호를 최소 6자리 이상 입력해 주세요')
+            .required('비밀번호를 입력해 주세요'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -115,11 +112,11 @@ function LoginPage(props) {
                   }
                   props.history.push('/');
                 } else {
-                  setFormErrorMessage('이메일과 비밀번호를 확인해 주세요.');
+                  setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
                 }
               })
               .catch((err) => {
-                setFormErrorMessage('Check out your Account or Password again');
+                setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
                 setTimeout(() => {
                   setFormErrorMessage('');
                 }, 3000);
@@ -133,12 +130,10 @@ function LoginPage(props) {
             values,
             touched,
             errors,
-            dirty,
             isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
           } = props;
           return (
             <div className="app">
@@ -297,12 +292,9 @@ function LoginPage(props) {
             values,
             touched,
             errors,
-            dirty,
-            isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
           } = props;
           return (
             <Modal
@@ -342,11 +334,11 @@ function LoginPage(props) {
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email('이메일 형식을 맞춰주세요.')
-            .required('이메일 값이 비었습니다.'),
+            .email('이메일을 올바르게 입력해 주세요')
+            .required('이메일을 입력해 주세요'),
           userID: Yup.string()
-            .min(6, 'ID는 6글자 이상입니다.')
-            .required('ID 값이 비었습니다.'),
+            .min(6, 'ID를 최소 6자리 이상 입력해 주세요')
+            .required('ID를 입력해 주세요'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           let dataToSubmit = {
@@ -356,11 +348,11 @@ function LoginPage(props) {
           setIsPasswordModal(false);
           dispatch(findPassword(dataToSubmit)).then((response) => {
             if (response.payload.success === 2) {
-              alert('ID와 Email을 다시 확인해주세요.');
+              alert('ID와 이메일을 다시 확인해 주세요');
             } else if (response.payload.success) {
-              alert('메일을 전송하였습니다.');
+              alert('메일을 전송하였습니다');
             } else {
-              alert('에러가 발생했습니다.');
+              alert('잘못된 접근입니다');
             }
           });
         }}
@@ -370,12 +362,9 @@ function LoginPage(props) {
             values,
             touched,
             errors,
-            dirty,
-            isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
           } = props;
           return (
             <Modal

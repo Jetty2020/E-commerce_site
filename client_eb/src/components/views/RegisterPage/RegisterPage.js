@@ -62,18 +62,14 @@ function RegisterPage(props) {
             userID: values.userID,
             password: values.password,
             name: values.name,
-            // image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
           };
-
           dispatch(registerUser(dataToSubmit)).then((response) => {
             if (response.payload.success) {
               props.history.push('/login');
             } else {
-              // console.log(response.payload.err);
               alert(response.payload.message);
             }
           });
-
           setSubmitting(false);
         }, 500);
       }}
@@ -83,12 +79,10 @@ function RegisterPage(props) {
           values,
           touched,
           errors,
-          dirty,
           isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          handleReset,
         } = props;
         return (
           <div className="app">
@@ -129,7 +123,7 @@ function RegisterPage(props) {
               >
                 <Input
                   id="email"
-                  placeholder="shop@example.com"
+                  placeholder="29concept@example.com"
                   type="email"
                   value={values.email}
                   onChange={handleChange}

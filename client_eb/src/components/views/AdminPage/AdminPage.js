@@ -179,13 +179,13 @@ const AdminPage = () => {
     }
   };
 
-  // 페이지네이션
+  //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const lastPage = currentPage * productsPerPage;
   const firstPage = lastPage - productsPerPage;
 
-  // 브라우저 상단으로 이동
+  //브라우저 상단으로 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage, category]);

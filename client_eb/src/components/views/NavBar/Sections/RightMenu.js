@@ -87,7 +87,7 @@ function RightMenu(props) {
         <Menu mode={props.mode}>
           <SubMenu title={<span>My Page</span>}>
             <Menu.Item key="userInfo">
-              <Link to="/user/info">Profile</Link>
+              <Link to="/user/info">My Page</Link>
             </Menu.Item>
             <Menu.Item key="cart">
               <Link to="/user/cart">

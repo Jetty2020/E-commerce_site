@@ -46,9 +46,10 @@ function ProductsPages({
   paginate,
   currentPage,
 }) {
-  // page number
+  //페이지 수
   const pageNumbers = [];
-  let i = 1, maxPage = Math.ceil(totalProducts / productsPerPage);
+  let i = 1,
+    maxPage = Math.ceil(totalProducts / productsPerPage);
   if (currentPage > 5) {
     i = currentPage - 4;
   }
@@ -95,7 +96,11 @@ function ProductsPages({
             <PageButton onClick={() => paginate(currentPage + 1)}>
               <Icon type="right" />
             </PageButton>
-            <PageButton onClick={() => paginate(Math.ceil(totalProducts / productsPerPage))}>
+            <PageButton
+              onClick={() =>
+                paginate(Math.ceil(totalProducts / productsPerPage))
+              }
+            >
               <Icon type="double-right" />
             </PageButton>
           </>

@@ -12,7 +12,7 @@ const { Title } = Typography;
 const { Option } = Select;
 
 function UpdatePage(props) {
-  const dispatch = useDispatch(); //dispatch for redux
+  const dispatch = useDispatch();
   let productId = props.match.params.productId;
   const [category, setCategory] = useState('');
   const [productDe, setProductDe] = useState();
