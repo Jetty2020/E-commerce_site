@@ -30,11 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     recoProduct: {
       type: DataTypes.BOOLEAN,
     },
-    // created_at: {
-    //   type: DataTypes.DATE,
-    //   allowNull: true,
-    //   defaultValue: sequelize.literal('now()'),
-    // },
   }, {
     timestamps: false,
     charset: 'utf8',

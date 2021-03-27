@@ -141,7 +141,6 @@ export const googleLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { sub : gglID, name }
   } = profile;
-  console.log(profile);
   try {
     const userState = await User.findOne({
       attributes: ['id'],

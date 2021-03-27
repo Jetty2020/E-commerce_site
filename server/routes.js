@@ -17,7 +17,6 @@ const EDIT_PASSWORD = "/editPassword";
 const EDIT_USER_SEND_MAIL = "/editUserSendMail";
 const EDIT_USER_EMAIL = "/editUserEmail";
 const DELETE_USER = "/deleteUser";
-const USER_DETAIL = "/detail";
 const EDIT_USER = "/edit";
 
 const ADD_CART = "/addCart/:productId";
@@ -51,9 +50,6 @@ const PRODUCT_DETAIL = "/productDetail";
 const DETAIL_PRODUCT = "/detail";
 const DELETE_PRODUCT = "/delete/:productID";
 
-// API
-const API = "/api";
-
 // Kakao
 
 const KAKAO = "/oauth/kakao";
@@ -85,7 +81,6 @@ const routes = {
   findPassword: FIND_PASSWORD,
   logout: LOGOUT,
   editUser: EDIT_USER,
-  userDetail: USER_DETAIL,
 
   addCart: ADD_CART,
   loadCart: LOAD_CART,
@@ -115,8 +110,6 @@ const routes = {
   addQnA: ADD_QNA,
   editQnA: EDIT_QNA,
   removeQnA: REMOVE_QNA,
-
-  api: API,
 
   //SNS_LOGINS
   kakao: KAKAO,

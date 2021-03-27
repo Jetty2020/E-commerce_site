@@ -7,9 +7,6 @@ export const uploadProduct = async (req, res) => {
   } = req;
   const { files } = req;
   try {
-    // console.log("req",req);
-    console.log("req.file1", req.files[0].location);
-    console.log("req.file2", req.files[1].location);
     const { dataValues: product } = await Product.create({
       productName,
       mainImg: files[0].location,
@@ -211,7 +208,6 @@ export const deleteProduct = (req, res) => {
     params: { productID },
   } = req;
   try {
-    console.log(productID);
     Product.destroy({
       where: {
         id: productID,
@@ -299,8 +295,6 @@ export const removeComment = async (req, res) => {
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    console.log(findProduct.id, commentId);
-
     await Comment.destroy({
       where: {
         id: commentId,

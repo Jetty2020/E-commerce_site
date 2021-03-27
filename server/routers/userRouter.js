@@ -44,20 +44,19 @@ userRouter.post(routes.editUserEmail, editUserEmail);
 userRouter.post(routes.deleteUser, deleteUser);
 userRouter.get(routes.logout, auth, logout);
 
+//snsLogin
 userRouter.get(routes.kakao, kakaoLogin);
 userRouter.get(
   routes.kakaoCallback,
   passport.authenticate("kakao", { failureRedirect: routes.login }),
   postKakaoLogin
 );
-
 userRouter.get(routes.naver, naverLogin);
 userRouter.get(
   routes.naverCallback,
   passport.authenticate("naver", { failureRedirect: routes.login }),
   postNaverLogin
 );
-
 userRouter.get(routes.google, googleLogin);
 userRouter.get(
   routes.googleCallback,
@@ -65,10 +64,12 @@ userRouter.get(
   postGoogleLogin
 );
 
+//cart
 userRouter.get(routes.addCart, auth, addCart);
 userRouter.get(routes.loadCart, auth, loadCart);
 userRouter.get(routes.removeCart, auth, removeCart);
 
+//Wishlist
 userRouter.get(routes.addWishList, auth, addWishList);
 userRouter.get(routes.loadWishList, auth, loadWishList);
 userRouter.get(routes.removeWishList, auth, removeWishList);

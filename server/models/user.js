@@ -55,10 +55,6 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: sequelize.literal('now()'),
 		},
-		// product: {
-		// 	type: DataTypes.TEXT,
-		// 	allowNull: true,
-		// },
 	}, {
 		timestamps: false,
 		charset: 'utf8',

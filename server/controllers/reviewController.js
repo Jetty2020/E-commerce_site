@@ -1,5 +1,5 @@
 // import db from "../db";
-import { Product, User, Review, Sequelize } from "../models";
+import { Product, User, Review } from "../models";
 import moment from "moment";
 
 export const loadReview = async (req, res) => {
@@ -104,13 +104,11 @@ export const removeReview = async (req, res) => {
     const {
       body: { reviewId },
       params: { id: productId },
-      user: { id: producter },
     } = req;
 
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
     });
-    console.log(findProduct.id, reviewId);
 
     await Review.destroy({
       where: {

@@ -1,5 +1,5 @@
 // import db from "../db";
-import { Product, User, QnA, Sequelize } from "../models";
+import { Product, User, QnA } from "../models";
 import moment from "moment";
 
 export const loadQnA = async (req, res) => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-import { Product, User, Sequelize as Op } from '../models';
+import { Product, User } from '../models';
 import { mailSender, generateRandom } from '../util';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -27,16 +27,6 @@ export const authSuccess = async (req, res) => {
     });
   }
 };
-
-// export const userDetail = async (req, res) => {
-//   res.status(200).json({
-//     userID: req.user[0].userID, //수정
-//     isAdmin: req.user.role === 0 ? false : true,
-//     isAuth: true,
-//     email: req.user[0].userEmail,
-//     name: req.user[0].name,
-//   });
-// };
 
 export const register = async (req, res) => {
   const {
@@ -310,8 +300,6 @@ export const findID = async (req, res) => {
     console.log(err);
     return (
       res
-        // .status(400)
-        // .send(err)
         .json({ success: false, message: 'Error occurred at findID' })
     );
   }
@@ -328,7 +316,6 @@ export const findPassword = async (req, res) => {
         userEmail: email,
       },
     });
-    console.log(user);
     if (user.dataValues.userID !== userID) {
       return res.json({
         success: 2,
@@ -355,8 +342,6 @@ export const findPassword = async (req, res) => {
     console.log(err);
     return (
       res
-        // .status(400)
-        // .send(err)
         .json({ success: false, message: 'Error occurred at findPassword' })
     );
   }
@@ -536,7 +521,6 @@ export const removeWishList = async (req, res) => {
     params: { productId },
     user: { id: producter },
   } = req;
-  console.log(productId, producter);
   try {
     const findProduct = await Product.findOne({
       where: parseInt(productId, 10),
