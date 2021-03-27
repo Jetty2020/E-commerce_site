@@ -186,7 +186,7 @@ function ProductReviews({ id, onClickReview }) {
         </Formik>
       )}
 
-      {reviews ? (
+      {reviews === [] ? (
         <ul>
           {reviews.map((review) => (
             <li
