@@ -62,6 +62,9 @@ function ProductReviews({ id, onClickReview }) {
   const dispatch = useDispatch();
   const [reviews, setReviews] = useState();
   const [rate, setRate] = useState(3);
+  const changeRate = (value) => {
+    setRate(value);
+  }
   useEffect(() => {
     if (!reviews) {
       dispatch(loadReview(id))
@@ -141,7 +144,9 @@ function ProductReviews({ id, onClickReview }) {
             } = props;
             return (
               <ReviewContainer>
-                <Rate className="rate" />
+                <Rate 
+                  onChange={changeRate}
+                  />
                 <div>
                   <Input
                     type="text"
