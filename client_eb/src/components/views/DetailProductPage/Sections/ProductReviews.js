@@ -82,7 +82,11 @@ function ProductReviews({ id, onClickReview }) {
   }, [reviews]);
   const [reviewInput, setReviewInput] = useState(false);
   const toggleReviewInput = useCallback(() => {
-    setReviewInput(!reviewInput);
+    if (userData.isAuth) {
+      setReviewInput(!reviewInput);
+    } else {
+      alert('로그인이 필요한 기능입니다.');
+    }
   }, [reviewInput]);
 
   return (

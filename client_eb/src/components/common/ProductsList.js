@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Col, Row } from 'antd';
 import Numeral from 'numeral';
 
 const Ul = styled.ul`
@@ -52,9 +52,15 @@ const Likes = styled.div`
 
 function ProductsList({ products }) {
   return (
-    <Ul>
+    <Row gutter={[16, 16]}>
       {products.map((product) => (
-        <Li key={product.id}>
+        <Col 
+          style={{pogition: "relative",magin: "0 8px 60px", width:"316px", height: "500px"}}
+          key={product.id} 
+          lg={6} 
+          md={8} 
+          xs={24}
+        >
           <Link to={`/product/${product.id}`}>
             {product.mainImg && (
               <img
@@ -73,7 +79,7 @@ function ProductsList({ products }) {
                 <span className="discount">
                   {Numeral(product.price * (1 - product.rate * 0.01)).format(
                     0,
-                    0,
+                    0
                   )}
                   원
                 </span>
@@ -93,9 +99,9 @@ function ProductsList({ products }) {
               </Likes>
             )}
           </Link>
-        </Li>
+        </Col>
       ))}
-    </Ul>
+    </Row>
   );
 }
 

@@ -81,7 +81,11 @@ const ProductQnA = ({ id }) => {
   }, [QnAs]);
   const [QnAInput, setQnAInput] = useState(false);
   const toggleQnAInput = useCallback(() => {
-    setQnAInput(!QnAInput);
+    if (userData.isAuth) {
+      setQnAInput(!QnAInput);
+    } else {
+      alert('로그인이 필요한 기능입니다.');
+    }
   }, [QnAInput]);
   return (
     <>
