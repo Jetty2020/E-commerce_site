@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchProduct } from '../../../_actions/product_actions';
 import ProductsList from '../../common/ProductsList';
@@ -11,20 +11,22 @@ function SearchResultPage(props) {
   let dataToSubmit = {
     searchKey,
   };
-  if (!search || keyword !== searchKey) {
-    dispatch(searchProduct(dataToSubmit))
-      .then((response) => {
-        if (response.payload.success) {
-          setKeyword(searchKey);
-          setSearch(response.payload.product);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  useEffect(() => {
+    if (!search || keyword !== searchKey) {
+      dispatch(searchProduct(dataToSubmit))
+        .then((response) => {
+          if (response.payload.success) {
+            setKeyword(searchKey);
+            setSearch(response.payload.product);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [searchKey]);
 
   return (
     <div
@@ -44,7 +46,7 @@ function SearchResultPage(props) {
             총 {search.length} 개의 상품이 검색되었습니다.
           </p>
 
-          {/* products */}
+          {/* 검색 결과 */}
           {search && <ProductsList products={search} />}
         </>
       ) : (

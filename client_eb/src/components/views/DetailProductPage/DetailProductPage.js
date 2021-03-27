@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { productDetail } from '../../../_actions/product_actions';
 import styled from 'styled-components';
@@ -9,7 +9,6 @@ import ProductDetails from './Sections/ProductDetails';
 const DetailContainer = styled.div`
   width: 80%;
   margin: 3rem auto 20px;
-
   @media only screen and (min-width: 1000px) {
     width: 60%;
     min-width: 1000px;
@@ -17,7 +16,6 @@ const DetailContainer = styled.div`
 `;
 const DetailInfo = styled.div`
   display: unset;
-
   @media only screen and (min-width: 1000px) {
     display: flex;
     justify-content: center;
@@ -26,25 +24,26 @@ const DetailInfo = styled.div`
 
 function DetailProductPage(props) {
   let productId = props.match.params.productId;
-
   const dispatch = useDispatch();
   const [productDe, setProductDe] = useState();
   let dataToSubmit = {
     productId,
   };
-  if (!productDe) {
-    dispatch(productDetail(dataToSubmit))
-      .then((response) => {
-        if (response.payload.success) {
-          setProductDe(response.payload.product);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  useEffect(() => {
+    if (!productDe) {
+      dispatch(productDetail(dataToSubmit))
+        .then((response) => {
+          if (response.payload.success) {
+            setProductDe(response.payload.product);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [productDe]);
 
   return (
     <DetailContainer>

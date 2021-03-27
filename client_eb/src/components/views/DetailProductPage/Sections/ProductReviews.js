@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview, loadReview } from '../../../../_actions/review_actions';
 import { Formik } from 'formik';
@@ -62,28 +62,30 @@ function ProductReviews({ id, onClickReview }) {
   const dispatch = useDispatch();
   const [reviews, setReviews] = useState();
   const [rate, setRate] = useState(3);
-  if (!reviews) {
-    dispatch(loadReview(id))
-      .then((response) => {
-        if (response.payload.success) {
-          setReviews(response.payload.review);
-        } else {
-          console.log(response.payload);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
+  useEffect(() => {
+    if (!reviews) {
+      dispatch(loadReview(id))
+        .then((response) => {
+          if (response.payload.success) {
+            setReviews(response.payload.review);
+          } else {
+            console.log(response.payload);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [reviews]);
   const [reviewInput, setReviewInput] = useState(false);
-  const showReviewInput = () => {
+  const toggleReviewInput = useCallback(() => {
     setReviewInput(!reviewInput);
-  };
+  }, [reviewInput]);
 
   return (
     <>
       <ReviewButtonContainer>
-        {!reviewInput && <Button onClick={showReviewInput}>리뷰쓰기</Button>}
+        {!reviewInput && <Button onClick={toggleReviewInput}>리뷰쓰기</Button>}
       </ReviewButtonContainer>
       {reviewInput && (
         <Formik
@@ -119,7 +121,7 @@ function ProductReviews({ id, onClickReview }) {
                 .catch((err) => {
                   alert(err);
                 });
-              showReviewInput();
+              toggleReviewInput();
               setSubmitting(true);
               setReviewInput(false);
             }, 0);
@@ -170,10 +172,7 @@ function ProductReviews({ id, onClickReview }) {
                 >
                   등록
                 </Button>
-                <Button
-                  className="review_button"
-                  onClick={() => setReviewInput(false)}
-                >
+                <Button className="review_button" onClick={toggleReviewInput}>
                   취소
                 </Button>
               </ReviewContainer>

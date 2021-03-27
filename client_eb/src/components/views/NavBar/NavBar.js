@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
@@ -8,12 +8,12 @@ import logo from '../../images/logo.png';
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const showDrawer = () => {
+  const showDrawer = useCallback(() => {
     setVisible(true);
-  };
-  const onClose = () => {
+  }, [visible]);
+  const onClose = useCallback(() => {
     setVisible(false);
-  };
+  }, [visible]);
 
   return (
     <nav

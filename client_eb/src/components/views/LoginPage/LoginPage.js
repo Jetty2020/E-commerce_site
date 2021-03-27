@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import {
   loginUser,
@@ -45,9 +45,9 @@ function LoginPage(props) {
   const [formErrorMessage, setFormErrorMessage] = useState('');
   const [rememberMe, setRememberMe] = useState(rememberMeChecked);
 
-  const handleRememberMe = () => {
+  const handleRememberMe = useCallback(() => {
     setRememberMe(!rememberMe);
-  };
+  }, [rememberMe]);
 
   const initialID = localStorage.getItem('rememberMe')
     ? localStorage.getItem('rememberMe')
@@ -59,21 +59,21 @@ function LoginPage(props) {
 
   //계정 찾기 모달
   const [isEmailModal, setIsEmailModal] = useState(false);
-  const showEmailModal = () => {
+  const showEmailModal = useCallback(() => {
     setIsEmailModal(true);
-  };
-  const emailModalCancel = () => {
+  }, [isEmailModal]);
+  const emailModalCancel = useCallback(() => {
     setIsEmailModal(false);
-  };
+  }, [isEmailModal]);
 
   //비밀번호 찾기 모달
   const [isPasswordModal, setIsPasswordModal] = useState(false);
-  const showPasswordModal = () => {
+  const showPasswordModal = useCallback(() => {
     setIsPasswordModal(true);
-  };
-  const passwordModalCancel = () => {
+  }, [isPasswordModal]);
+  const passwordModalCancel = useCallback(() => {
     setIsPasswordModal(false);
-  };
+  }, [isPasswordModal]);
 
   return (
     <>
@@ -88,42 +88,48 @@ function LoginPage(props) {
             .min(6, '비밀번호를 최소 6자리 이상 입력해 주세요')
             .required('비밀번호를 입력해 주세요'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            let dataToSubmit = {
-              userID: values.userID,
-              password: values.password,
-            };
+        onSubmit={useCallback(
+          (values, { setSubmitting }) => {
+            setTimeout(() => {
+              let dataToSubmit = {
+                userID: values.userID,
+                password: values.password,
+              };
 
-            dispatch(loginUser(dataToSubmit))
-              .then((response) => {
-                if (response.payload.success) {
-                  console.log(initialID[0]);
-                  window.localStorage.setItem(
-                    'userId',
-                    response.payload.userId,
-                  );
-                  if (rememberMe === true) {
-                    window.localStorage.setItem('rememberMe', values.userID);
-                    window.localStorage.setItem('rememberPW', values.password);
+              dispatch(loginUser(dataToSubmit))
+                .then((response) => {
+                  if (response.payload.success) {
+                    console.log(initialID[0]);
+                    window.localStorage.setItem(
+                      'userId',
+                      response.payload.userId,
+                    );
+                    if (rememberMe === true) {
+                      window.localStorage.setItem('rememberMe', values.userID);
+                      window.localStorage.setItem(
+                        'rememberPW',
+                        values.password,
+                      );
+                    } else {
+                      localStorage.removeItem('rememberMe');
+                      localStorage.removeItem('rememberPW');
+                    }
+                    props.history.push('/');
                   } else {
-                    localStorage.removeItem('rememberMe');
-                    localStorage.removeItem('rememberPW');
+                    setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
                   }
-                  props.history.push('/');
-                } else {
+                })
+                .catch((err) => {
                   setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
-                }
-              })
-              .catch((err) => {
-                setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
-                setTimeout(() => {
-                  setFormErrorMessage('');
-                }, 3000);
-              });
-            setSubmitting(false);
-          }, 500);
-        }}
+                  setTimeout(() => {
+                    setFormErrorMessage('');
+                  }, 3000);
+                });
+              setSubmitting(false);
+            }, 500);
+          },
+          [props],
+        )}
       >
         {(props) => {
           const {
@@ -273,19 +279,22 @@ function LoginPage(props) {
             .email('이메일 형식을 맞춰주세요.')
             .required('이메일 값이 비었습니다.'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          let dataToSubmit = {
-            email: values.email,
-          };
-          setIsEmailModal(false);
-          dispatch(findID(dataToSubmit)).then((response) => {
-            if (response.payload.success) {
-              alert('메일을 전송하였습니다.');
-            } else {
-              alert('등록되지 않은 이메일입니다.');
-            }
-          });
-        }}
+        onSubmit={useCallback(
+          (values, { setSubmitting }) => {
+            let dataToSubmit = {
+              email: values.email,
+            };
+            setIsEmailModal(false);
+            dispatch(findID(dataToSubmit)).then((response) => {
+              if (response.payload.success) {
+                alert('메일을 전송하였습니다.');
+              } else {
+                alert('등록되지 않은 이메일입니다.');
+              }
+            });
+          },
+          [props],
+        )}
       >
         {(props) => {
           const {
@@ -340,22 +349,25 @@ function LoginPage(props) {
             .min(6, 'ID를 최소 6자리 이상 입력해 주세요')
             .required('ID를 입력해 주세요'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          let dataToSubmit = {
-            email: values.email,
-            userID: values.userID,
-          };
-          setIsPasswordModal(false);
-          dispatch(findPassword(dataToSubmit)).then((response) => {
-            if (response.payload.success === 2) {
-              alert('ID와 이메일을 다시 확인해 주세요');
-            } else if (response.payload.success) {
-              alert('메일을 전송하였습니다');
-            } else {
-              alert('잘못된 접근입니다');
-            }
-          });
-        }}
+        onSubmit={useCallback(
+          (values, { setSubmitting }) => {
+            let dataToSubmit = {
+              email: values.email,
+              userID: values.userID,
+            };
+            setIsPasswordModal(false);
+            dispatch(findPassword(dataToSubmit)).then((response) => {
+              if (response.payload.success === 2) {
+                alert('ID와 이메일을 다시 확인해 주세요');
+              } else if (response.payload.success) {
+                alert('메일을 전송하였습니다');
+              } else {
+                alert('잘못된 접근입니다');
+              }
+            });
+          },
+          [props],
+        )}
       >
         {(props) => {
           const {

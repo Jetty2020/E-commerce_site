@@ -1,5 +1,4 @@
-import React from 'react';
-// import moment from 'moment';
+import React, { useCallback } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
@@ -55,24 +54,27 @@ function RegisterPage(props) {
           .oneOf([Yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
           .required('비밀번호를 확인해 주세요'),
       })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          let dataToSubmit = {
-            email: values.email,
-            userID: values.userID,
-            password: values.password,
-            name: values.name,
-          };
-          dispatch(registerUser(dataToSubmit)).then((response) => {
-            if (response.payload.success) {
-              props.history.push('/login');
-            } else {
-              alert(response.payload.message);
-            }
-          });
-          setSubmitting(false);
-        }, 500);
-      }}
+      onSubmit={useCallback(
+        (values, { setSubmitting }) => {
+          setTimeout(() => {
+            let dataToSubmit = {
+              email: values.email,
+              userID: values.userID,
+              password: values.password,
+              name: values.name,
+            };
+            dispatch(registerUser(dataToSubmit)).then((response) => {
+              if (response.payload.success) {
+                props.history.push('/login');
+              } else {
+                alert(response.payload.message);
+              }
+            });
+            setSubmitting(false);
+          }, 500);
+        },
+        [props],
+      )}
     >
       {(props) => {
         const {

@@ -1,11 +1,43 @@
 import React from 'react';
-import { Icon } from 'antd';
-import './Footer.css';
+import styled from 'styled-components';
+
+const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 0 5rem;
+  font-size: 0.725rem;
+  letter-spacing: -0.5px;
+  .company {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: bold;
+  }
+  ul {
+    margin-bottom: 1.5rem;
+    li {
+      display: inline-block;
+      margin: 0 1rem;
+      cursor: pointer;
+    }
+  }
+  button {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    text-decoration: underline;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  .copyright {
+    margin-top: 2rem;
+  }
+`;
 
 function Footer() {
   return (
-    <div className="footer">
-      <p className="company">Company</p>
+    <FooterContainer>
+      <p className="company">29CONCEPT</p>
       <ul>
         <li>회사소개</li>
         <li>이용약관</li>
@@ -14,7 +46,7 @@ function Footer() {
         <li>고객센터</li>
       </ul>
       <p>
-        서울특별시 성동구 상왕십리동 &nbsp; | &nbsp; 대표 홍길동 &nbsp; | &nbsp;
+        서울특별시 영등포구 당산로 &nbsp; | &nbsp; 대표 홍길동 &nbsp; | &nbsp;
         고객센터 1599-0000 &nbsp; | &nbsp; FAX 02-0000-0000
       </p>
       <p>
@@ -22,7 +54,7 @@ function Footer() {
         2021-서울-12345 <button>사업자 정보확인</button>
       </p>
       <p className="copyright">&copy; 2021 Company all rights reserved</p>
-    </div>
+    </FooterContainer>
   );
 }
 
