@@ -70,7 +70,7 @@ export const postKakaoLogin = (req, res) => {
   return res
   .cookie("w_auth", token)
   .cookie("w_authExp", tokenExp)
-  .redirect("http://localhost:3000");
+  .redirect("https://a29concept.herokuapp.com/");
 };
 
 export const naverLogin = passport.authenticate("naver");
@@ -132,7 +132,7 @@ export const postNaverLogin = (req, res) => {
   return res
   .cookie("w_auth", token)
   .cookie("w_authExp", tokenExp)
-  .redirect("http://localhost:3000");
+  .redirect("https://a29concept.herokuapp.com/");
 };
 
 export const googleLogin = passport.authenticate("google", { scope: ['profile'] });
@@ -182,5 +182,5 @@ export const postGoogleLogin = (req, res) => {
   return res
   .cookie("w_auth", token)
   .cookie("w_authExp", tokenExp)
-  .redirect("http://localhost:3000");
+  .redirect("https://a29concept.herokuapp.com/");
 };

@@ -1,6 +1,4 @@
-import db from './db';
 import nodemailer from 'nodemailer';
-import { User } from './models';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +12,7 @@ export const generateRandom = function () {
 export const mailSender = {
   // 메일발송 함수
   sendGmail: function (email, subject, text) {
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
       service: 'gmail',
       prot: 587,
       host: 'smtp.gmlail.com',
@@ -26,7 +24,7 @@ export const mailSender = {
       },
     });
     // 메일 옵션
-    var mailOptions = {
+    let mailOptions = {
       from: `${process.env.MAILID}`,
       to: email, // 수신할 이메일
       subject, // 메일 제목
