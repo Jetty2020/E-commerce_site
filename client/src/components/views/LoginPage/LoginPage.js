@@ -88,48 +88,40 @@ function LoginPage(props) {
             .min(6, '비밀번호를 최소 6자리 이상 입력해 주세요')
             .required('비밀번호를 입력해 주세요'),
         })}
-        onSubmit={useCallback(
-          (values, { setSubmitting }) => {
-            setTimeout(() => {
-              let dataToSubmit = {
-                userID: values.userID,
-                password: values.password,
-              };
-
-              dispatch(loginUser(dataToSubmit))
-                .then((response) => {
-                  if (response.payload.success) {
-                    console.log(initialID[0]);
-                    window.localStorage.setItem(
-                      'userId',
-                      response.payload.userId
-                    );
-                    if (rememberMe === true) {
-                      window.localStorage.setItem('rememberMe', values.userID);
-                      window.localStorage.setItem(
-                        'rememberPW',
-                        values.password
-                      );
-                    } else {
-                      localStorage.removeItem('rememberMe');
-                      localStorage.removeItem('rememberPW');
-                    }
-                    props.history.push('/');
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            let dataToSubmit = {
+              userID: values.userID,
+              password: values.password,
+            };
+            dispatch(loginUser(dataToSubmit))
+              .then((response) => {
+                if (response.payload.success) {
+                  window.localStorage.setItem(
+                    'userId',
+                    response.payload.userId
+                  );
+                  if (rememberMe === true) {
+                    window.localStorage.setItem('rememberMe', values.userID);
+                    window.localStorage.setItem('rememberPW', values.password);
                   } else {
-                    setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
+                    localStorage.removeItem('rememberMe');
+                    localStorage.removeItem('rememberPW');
                   }
-                })
-                .catch((err) => {
+                  props.history.push('/');
+                } else {
                   setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
-                  setTimeout(() => {
-                    setFormErrorMessage('');
-                  }, 3000);
-                });
-              setSubmitting(false);
-            }, 500);
-          },
-          [props]
-        )}
+                }
+              })
+              .catch((err) => {
+                setFormErrorMessage('이메일과 비밀번호를 확인해 주세요');
+                setTimeout(() => {
+                  setFormErrorMessage('');
+                }, 3000);
+              });
+            setSubmitting(false);
+          }, 500);
+        }}
       >
         {(props) => {
           const {

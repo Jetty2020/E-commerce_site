@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useCallback } from 'react';
 import Axios from 'axios';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Menu, Badge, Input } from 'antd';
 import { USER_SERVER } from '../../../Config';
@@ -35,7 +34,6 @@ const SearchBar2 = styled.div`
 `;
 
 function RightMenu(props) {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const logoutHandler = useCallback(() => {

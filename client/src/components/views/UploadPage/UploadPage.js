@@ -18,11 +18,9 @@ function UploadPage(props) {
   const [fileData, setFileData] = useState([]);
   const onFileHandler = useCallback(
     (event) => {
-      // setFileData(event[0]);
       setFileData(event);
-      console.log(fileData);
     },
-    [fileData],
+    [fileData]
   );
   return (
     <Formik
@@ -45,39 +43,34 @@ function UploadPage(props) {
           .integer('재고수량을 정확히 입력해 주세요')
           .required('재고수량을 입력해 주세요'),
       })}
-      onSubmit={useCallback(
-        (values, { setSubmitting }) => {
-          setTimeout(() => {
-            var dataForm = new FormData();
-            fileData.map((file) => dataForm.append('file', file, file.name));
-            dataForm.append('productName', values.name);
-            // dataForm.append("productDes", values.description);
-            dataForm.append('price', values.price);
-            dataForm.append('stock', values.stock);
-            console.log(dataForm);
-            dispatch(uploadProduct(dataForm))
-              .then((response) => {
-                if (response.payload.success) {
-                  // props.history.push("/admin");
-                  alert('상품이 업로드되었습니다.');
-                } else {
-                  setFormErrorMessage(
-                    '잘못 입력되었습니다. 다시 확인해 주세요.',
-                  ); //에러 메세지 세팅
-                }
-              })
-              .catch((err) => {
-                setFormErrorMessage('잘못 입력되었습니다. 다시 확인해 주세요.');
-                setTimeout(() => {
-                  //일정 시간이 지난 후 함수 실행 setTimeout(실행시킬 함수, 시간)
-                  setFormErrorMessage('');
-                }, 3000);
-              });
-            setSubmitting(false);
-          }, 500);
-        },
-        [props],
-      )}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          var dataForm = new FormData();
+          fileData.map((file) => dataForm.append('file', file, file.name));
+          dataForm.append('productName', values.name);
+          // dataForm.append("productDes", values.description);
+          dataForm.append('price', values.price);
+          dataForm.append('stock', values.stock);
+          console.log(dataForm);
+          dispatch(uploadProduct(dataForm))
+            .then((response) => {
+              if (response.payload.success) {
+                // props.history.push("/admin");
+                alert('상품이 업로드되었습니다.');
+              } else {
+                setFormErrorMessage('잘못 입력되었습니다. 다시 확인해 주세요.'); //에러 메세지 세팅
+              }
+            })
+            .catch((err) => {
+              setFormErrorMessage('잘못 입력되었습니다. 다시 확인해 주세요.');
+              setTimeout(() => {
+                //일정 시간이 지난 후 함수 실행 setTimeout(실행시킬 함수, 시간)
+                setFormErrorMessage('');
+              }, 3000);
+            });
+          setSubmitting(false);
+        }, 500);
+      }}
     >
       {(props) => {
         const {
