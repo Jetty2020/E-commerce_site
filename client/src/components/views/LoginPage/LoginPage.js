@@ -14,14 +14,13 @@ import logo from '../../images/logo.png';
 import sns_img from '../../images/bg_sns.png';
 
 const { Title } = Typography;
-
 const Sns = styled.div`
   width: 150px;
   margin: 0 auto;
-
-  button {
+  a {
     width: 40px;
     height: 40px;
+    display: inline-block;
     text-indent: -9999px;
     background: url(${sns_img}) no-repeat;
     margin: 0.3rem;
@@ -29,12 +28,12 @@ const Sns = styled.div`
     border-radius: 20px;
     outline: none;
     cursor: pointer;
-  }
-  .naver {
-    background-position-y: -40px;
-  }
-  .google {
-    background-position-y: -80px;
+    &.naver {
+      background-position-y: -40px;
+    }
+    &.google {
+      background-position-y: -80px;
+    }
   }
 `;
 
@@ -99,7 +98,7 @@ function LoginPage(props) {
                 if (response.payload.success) {
                   window.localStorage.setItem(
                     'userId',
-                    response.payload.userId
+                    response.payload.userId,
                   );
                   if (rememberMe === true) {
                     window.localStorage.setItem('rememberMe', values.userID);
@@ -227,12 +226,21 @@ function LoginPage(props) {
                 </Form.Item>
               </form>
               <Sns>
-                {/* <button onClick={KKOBtn}>카카오 로그인</button> */}
-                <a href="https://server-29concept.herokuapp.com/api/users/oauth/kakao">카카오 로그인</a>
-                <a href="https://server-29concept.herokuapp.com/api/users/oauth/naver">네이버 로그인</a>
-                <a href="https://server-29concept.herokuapp.com/api/users/oauth/google">구글 로그인</a>
-                {/* <button className="naver">네이버 로그인</button>
-                <button className="google">구글 로그인</button> */}
+                <a href="https://server-29concept.herokuapp.com/api/users/oauth/kakao">
+                  카카오 로그인
+                </a>
+                <a
+                  href="https://server-29concept.herokuapp.com/api/users/oauth/naver"
+                  className="naver"
+                >
+                  네이버 로그인
+                </a>
+                <a
+                  href="https://server-29concept.herokuapp.com/api/users/oauth/google"
+                  className="google"
+                >
+                  구글 로그인
+                </a>
               </Sns>
               <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
                 <span
@@ -287,7 +295,7 @@ function LoginPage(props) {
               }
             });
           },
-          [props]
+          [props],
         )}
       >
         {(props) => {
@@ -360,7 +368,7 @@ function LoginPage(props) {
               }
             });
           },
-          [props]
+          [props],
         )}
       >
         {(props) => {
