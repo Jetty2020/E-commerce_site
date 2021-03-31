@@ -9,12 +9,12 @@ import Numeral from 'numeral';
 const Ul = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 `;
 const Li = styled.li`
   position: relative;
   width: 300px;
-  margin: 0 5px 60px;
+  margin: 0 40px 60px 0;
   cursor: pointer;
   &:hover .wishlist {
     display: block;
