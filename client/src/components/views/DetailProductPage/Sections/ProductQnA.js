@@ -84,7 +84,7 @@ const ProductQnA = ({ id }) => {
     if (userData.isAuth) {
       setQnAInput(!QnAInput);
     } else {
-      alert('로그인이 필요한 기능입니다.');
+      alert('로그인이 필요합니다.');
     }
   }, [QnAInput]);
   return (
@@ -196,7 +196,7 @@ const ProductQnA = ({ id }) => {
           }}
         </Formik>
       )}
-      {QnAs ? (
+      {QnAs === [] ? (
         <ul>
           {QnAs.map((qna) => (
             <li
