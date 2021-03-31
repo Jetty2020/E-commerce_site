@@ -92,7 +92,7 @@ function ProductInfo(props) {
         if (response.payload.success) {
           alert('위시리스트에 추가되었습니다.');
         } else {
-          alert('에러가 발생했습니다.');
+          alert('로그인이 필요합니다.');
         }
       })
       .catch((err) => {
@@ -107,7 +107,7 @@ function ProductInfo(props) {
         if (response.payload.success) {
           alert('장바구니에 추가되었습니다.');
         } else {
-          alert('에러가 발생했습니다.');
+          alert('로그인이 필요합니다.');
         }
       })
       .catch((err) => {
