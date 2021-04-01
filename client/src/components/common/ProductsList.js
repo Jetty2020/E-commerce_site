@@ -4,18 +4,6 @@ import styled from 'styled-components';
 import { Icon, Col, Row } from 'antd';
 import Numeral from 'numeral';
 
-const Ul = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
-const Li = styled.li`
-  position: relative;
-  width: 300px;
-  height: 500px;
-  margin: 0 5px 60px;
-  cursor: pointer;
-`;
 const Name = styled.p`
   margin-top: 0.75rem;
   font-size: 1.075rem;
@@ -52,21 +40,23 @@ const Likes = styled.div`
 
 function ProductsList({ products }) {
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[36, 16]}>
       {products.map((product) => (
-        <Col 
-          style={{pogition: "relative",magin: "0 8px 60px", width:"316px", height: "500px"}}
-          key={product.id} 
-          lg={6} 
-          md={8} 
-          xs={24}
+        <Col
+          key={product.id}
+          span={6}
+          style={{ width: '340px', height: '520px' }}
         >
           <Link to={`/product/${product.id}`}>
             {product.mainImg && (
               <img
                 src={product.mainImg}
-                style={{ width: '300px', height: '370px', objectFit: 'cover' }}
-                alt="img"
+                style={{
+                  width: '300px',
+                  height: '370px',
+                  objectFit: 'cover',
+                }}
+                alt={product.productName}
               />
             )}
             {product.productName && <Name>{product.productName}</Name>}
@@ -79,7 +69,7 @@ function ProductsList({ products }) {
                 <span className="discount">
                   {Numeral(product.price * (1 - product.rate * 0.01)).format(
                     0,
-                    0
+                    0,
                   )}
                   원
                 </span>

@@ -64,7 +64,7 @@ function ProductReviews({ id, onClickReview }) {
   const [rate, setRate] = useState(3);
   const changeRate = (value) => {
     setRate(value);
-  }
+  };
   useEffect(() => {
     if (!reviews) {
       dispatch(loadReview(id))
@@ -85,7 +85,7 @@ function ProductReviews({ id, onClickReview }) {
     if (userData.isAuth) {
       setReviewInput(!reviewInput);
     } else {
-      alert('로그인이 필요한 기능입니다.');
+      alert('로그인이 필요합니다.');
     }
   }, [reviewInput]);
 
@@ -148,9 +148,7 @@ function ProductReviews({ id, onClickReview }) {
             } = props;
             return (
               <ReviewContainer>
-                <Rate 
-                  onChange={changeRate}
-                  />
+                <Rate onChange={changeRate} />
                 <div>
                   <Input
                     type="text"

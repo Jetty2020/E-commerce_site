@@ -33,7 +33,30 @@ const TableData = styled.td`
   font-size: ${(props) => props.fontSize};
   text-align: ${(props) => props.textAlign};
 `;
-const ProductQuantity = styled.div`
+const Price = styled.p`
+  margin-top: -0.5rem;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.65);
+`;
+const Discount = styled.div`
+  .rate {
+    font-size: 1rem;
+    color: #fa5252;
+    font-weight: bold;
+  }
+  .discount {
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  .price {
+    display: block;
+    margin-top: 0.15rem;
+    text-decoration: line-through;
+    font-size: 0.8rem;
+    color: #868e96;
+  }
+`;
+const Quantity = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -69,7 +92,7 @@ function ProductInfo(props) {
         if (response.payload.success) {
           alert('위시리스트에 추가되었습니다.');
         } else {
-          alert('에러가 발생했습니다.');
+          alert('로그인이 필요합니다.');
         }
       })
       .catch((err) => {
@@ -84,7 +107,7 @@ function ProductInfo(props) {
         if (response.payload.success) {
           alert('장바구니에 추가되었습니다.');
         } else {
-          alert('에러가 발생했습니다.');
+          alert('로그인이 필요합니다.');
         }
       })
       .catch((err) => {
@@ -99,7 +122,23 @@ function ProductInfo(props) {
       <Table>
         <TableRow>
           <TableData colSpan="2" fontSize="1rem" padding="0 8px 80px">
-            {Numeral(props.product.price).format(0, 0)}원
+            {props.product.price && !props.product.rate && (
+              <Price>{Numeral(props.product.price).format(0, 0)}원</Price>
+            )}
+            {props.product.rate > 0 && (
+              <Discount>
+                <span className="rate">{props.product.rate}% </span>
+                <span className="discount">
+                  {Numeral(
+                    props.product.price * (1 - props.product.rate * 0.01),
+                  ).format(0, 0)}
+                  원
+                </span>
+                <span className="price">
+                  {Numeral(props.product.price).format(0, 0)}원
+                </span>
+              </Discount>
+            )}
           </TableData>
         </TableRow>
         <TableRow style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
@@ -116,7 +155,7 @@ function ProductInfo(props) {
         </TableRow>
         <TableRow>
           <TableData>
-            <ProductQuantity>
+            <Quantity>
               <Icon
                 type="minus"
                 style={{ cursor: 'pointer' }}
@@ -128,15 +167,27 @@ function ProductInfo(props) {
                 style={{ cursor: 'pointer' }}
                 onClick={onIncrease}
               />
-            </ProductQuantity>
+            </Quantity>
           </TableData>
         </TableRow>
         <TableRow style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
-          <TableData colSpan="2" padding="50px 0 0" textAlign="right">
+          <TableData colSpan="2" padding="50px 10px 0" textAlign="right">
             총 구매금액{'  '}
-            <b style={{ fontSize: '1.1rem' }}>
-              {Numeral(props.product.price * quantity).format(0, 0)}원
-            </b>
+            {props.product.price && !props.product.rate && (
+              <b style={{ fontSize: '1.1rem' }}>
+                {Numeral(props.product.price * quantity).format(0, 0)}원
+              </b>
+            )}
+            {props.product.rate > 0 && (
+              <b style={{ fontSize: '1.1rem' }}>
+                {Numeral(
+                  props.product.price *
+                    (1 - props.product.rate * 0.01) *
+                    quantity,
+                ).format(0, 0)}
+                원
+              </b>
+            )}
           </TableData>
         </TableRow>
         <TableRow>
