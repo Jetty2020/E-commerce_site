@@ -40,19 +40,19 @@ const Likes = styled.div`
 
 function ProductsList({ products }) {
   return (
-    <Row gutter={[36, 16]}>
+    <Row gutter={[48, 16]}>
       {products.map((product) => (
         <Col
           key={product.id}
           span={6}
-          style={{ width: '340px', height: '520px' }}
+          style={{ width: '368px', height: '520px' }}
         >
           <Link to={`/product/${product.id}`}>
             {product.mainImg && (
               <img
                 src={product.mainImg}
                 style={{
-                  width: '300px',
+                  width: '100%',
                   height: '370px',
                   objectFit: 'cover',
                 }}
